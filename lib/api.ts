@@ -69,6 +69,10 @@ const TMDBApi = async () => {
         if (!path) {
             throw new Error("Poster path cannot be empty");
         }
+
+        if (!process.env.TMDB_IMAGE_BASE_URL) {
+            throw new Error("TMDB image base URL is not defined");
+        }
         
         return `${process.env.TMDB_IMAGE_BASE_URL}/${size}/${path}`;
     }

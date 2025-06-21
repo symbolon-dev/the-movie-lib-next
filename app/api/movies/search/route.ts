@@ -1,10 +1,9 @@
 import TMDBApi from '@/lib/api';
 import { NextResponse } from 'next/server';
 
-const api = await TMDBApi();
-
 export async function GET() {
     try {
+        const api = await TMDBApi();
         const movies = await api.searchMovies('');
         return NextResponse.json(movies);
     } catch (error) {
