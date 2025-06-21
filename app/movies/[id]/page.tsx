@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
     const unwrappedParams = React.use(params);
     const { id } = unwrappedParams;
-    
+
     const [movie, setMovie] = useState<MovieDetail | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const { fetchMovieDetails, isLoading: storeLoading } = useMovieStore();
@@ -23,22 +23,22 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
                 setIsLoading(false);
             }
         };
-        
+
         loadMovie();
     }, [id, fetchMovieDetails]);
 
     if (isLoading || storeLoading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <p className="text-xl">Lade Filmdaten...</p>
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-xl">Loading movie data...</p>
             </div>
         );
     }
 
     if (!movie) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <p className="text-xl text-red-500">Film konnte nicht geladen werden.</p>
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-xl text-red-500">Could not load movie.</p>
             </div>
         );
     }
@@ -53,6 +53,6 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
         </div>
     );
-}
+};
 
 export default Detail;

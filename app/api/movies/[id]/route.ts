@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
     _request: NextRequest,
-    { params }: { params: Promise<{ id: string }> } 
+    { params }: { params: Promise<{ id: string }> }, 
 ) {
     try {
         const api = await TMDBApi();

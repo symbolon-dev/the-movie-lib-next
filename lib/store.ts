@@ -18,7 +18,7 @@ export const useMovieStore = create<MovieState>((set) => ({
         try {
             set({ 
                 isLoading: true, 
-                error: undefined 
+                error: undefined, 
             });
 
             const response = await fetch('/api/movies/discover');
@@ -34,26 +34,26 @@ export const useMovieStore = create<MovieState>((set) => ({
 
             set({ 
                 movies: movies.results, 
-                isLoading: false
+                isLoading: false,
             });
         } catch (error) {
             console.error('Failed to fetch movies:', error);
             set({ 
-                error: error instanceof Error ? error.message : 'Ein unbekannter Fehler ist aufgetreten', 
-                isLoading: false 
+                error: error instanceof Error ? error.message : 'An unknown error occurred', 
+                isLoading: false, 
             });
         }
     },
 
     fetchMovieDetails: async (id: string) => {
         if (!id) {
-            throw new Error("Movie ID cannot be empty");
+            throw new Error('Movie ID cannot be empty');
         }
 
         try {
             set({ 
                 isLoading: true, 
-                error: undefined 
+                error: undefined, 
             });
 
             const response = await fetch(`/api/movies/${id}`);
@@ -70,16 +70,16 @@ export const useMovieStore = create<MovieState>((set) => ({
             const movie = json as MovieDetail;
 
             set({ 
-                isLoading: false 
+                isLoading: false, 
             });
 
             return movie;
         } catch (error) {
             console.error('Failed to fetch movie details:', error);
             set({ 
-                error: error instanceof Error ? error.message : 'Ein unbekannter Fehler ist aufgetreten', 
-                isLoading: false 
+                error: error instanceof Error ? error.message : 'An unknown error occurred', 
+                isLoading: false, 
             });
         }
-    }
+    },
 }));
