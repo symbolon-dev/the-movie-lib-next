@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { MovieResponseSchema, GenreSchema } from "@/lib/schema";
+import { MovieResponseSchema, GenreSchema, MovieDetailSchema } from "@/lib/schema";
 import { MovieDiscoverParams } from "@/types/movie";
 
 const TMDBApi = async () => {
@@ -7,8 +7,6 @@ const TMDBApi = async () => {
     const BASE_URL = process.env.TMDB_BASE_URL;
     
     const fetchFromTMDB = async <T>(endpoint: string, schema: z.ZodSchema<T>): Promise<T> => {
-        console.log(API_KEY);
-        
         if (!API_KEY || !BASE_URL) {
             throw new Error("TMDB API key or TMDB base URL is not defined");
         }
@@ -56,6 +54,13 @@ const TMDBApi = async () => {
         return fetchFromTMDB(`/search/movie?${params}`, MovieResponseSchema);
     }
 
+    const fetchMovieDetails = async (id: string) => {
+        if (!id) {
+            throw new Error("Movie ID cannot be empty");
+        }
+        return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
+    };
+
     const fetchMovieGenres = async () => {
         return fetchFromTMDB('/genre/movie/list', GenreSchema);
     };
@@ -72,6 +77,7 @@ const TMDBApi = async () => {
         fetchFromTMDB,
         discoverMovies,
         searchMovies,
+        fetchMovieDetails,
         fetchMovieGenres,
         fetchMoviePosterUrl
     };

@@ -14,10 +14,17 @@ const Home = () => {
         <>
             <h1>Discover Movies</h1>
             <div>
-                {movies?.results?.map((movie) => (
+                {movies?.map((movie) => (
                     <div key={movie.id}>
                         <h3>{movie.title}</h3>
                         <p>{movie.overview}</p>
+                        <button 
+                            onClick={() => window.location.href = `/movies/${movie.id}`}
+                            className='cursor-pointer'    
+                        >
+                            View Details
+                        </button>
+                        <br />
                         <br />
                     </div>
                 ))}

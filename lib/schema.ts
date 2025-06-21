@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const MovieSchema = z.object({
     adult: z.boolean(),
     backdrop_path: z.string(),
-    genre_ids: z.array(z.number()),
+    genre_ids: z.array(z.number()).default([]),
     id: z.number(),
     original_language: z.string(),
     original_title: z.string(),
@@ -18,7 +18,10 @@ export const MovieSchema = z.object({
 });
 
 export const MovieDetailSchema = MovieSchema.extend({
-    belongs_to_collection: z.string(),
+    belongs_to_collection: z.object({
+        id: z.number(),
+        name: z.string(),
+    }).nullable(),
     budget: z.number(),
     genres: z.array(z.object({
         id: z.number(),
@@ -28,7 +31,7 @@ export const MovieDetailSchema = MovieSchema.extend({
     imdb_id: z.string(),
     production_companies: z.array(z.object({
         id: z.number(),
-        logo_path: z.string(),
+        logo_path: z.string().nullable(),
         name: z.string(),
         origin_country: z.string()
     })),
