@@ -74,6 +74,7 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
                     <ArrowLeft className="h-5 w-5" />
                     <span>Back to Movies</span>
                 </Link>
+
                 <div className="relative mb-10 rounded-xl overflow-hidden h-[40vh] md:h-[50vh]">
                     {movie.backdrop_path ? (
                         <div className="absolute inset-0">

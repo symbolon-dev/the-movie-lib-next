@@ -28,17 +28,20 @@ A modern movie library application developed with Next.js 15 and using the TMDB 
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/the-movie-lib-next.git
 cd the-movie-lib-next
 ```
 
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 3. Create a `.env.local` file in the root directory with the following environment variables:
+
 ```
 TMDB_API_KEY=your_tmdb_api_key
 TMDB_BASE_URL=https://api.themoviedb.org/3
@@ -46,6 +49,7 @@ TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
 ```
 
 4. Start the development server:
+
 ```bash
 pnpm dev
 ```
