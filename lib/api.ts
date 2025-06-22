@@ -45,9 +45,9 @@ const TMDBApi = async () => {
 
     const discoverMovies = async (options?: MovieDiscoverParams) => {
         const params = new URLSearchParams({
-            page: options?.page?.toString() || '1',
-            sort_by: options?.sortBy || 'popularity.desc',
-            with_genres: options?.withGenres || '',
+            page: options?.page?.toString() ?? '1',
+            sort_by: options?.sortBy ?? 'popularity.desc',
+            with_genres: options?.withGenres ?? '',
         });
 
         return fetchFromTMDB(`/discover/movie?${params}`, MovieResponseSchema);

@@ -179,12 +179,12 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                             title: () => movie.title.toLowerCase(),
                             original_title: () => movie.original_title.toLowerCase(),
                             primary_release_date: () => dayjs(movie.release_date).valueOf(),
-                            popularity: () => Number(movie.popularity || 0),
-                            vote_average: () => Number(movie.vote_average || 0),
-                            vote_count: () => Number(movie.vote_count || 0),
+                            popularity: () => Number(movie.popularity ?? 0),
+                            vote_average: () => Number(movie.vote_average ?? 0),
+                            vote_count: () => Number(movie.vote_count ?? 0),
                         };
 
-                        return fieldMap[field]?.() || String(movie[field as keyof Movie] || '');
+                        return fieldMap[field]?.() || String(movie[field as keyof Movie] ?? '');
                     };
 
                     const valueA = getValue(a);

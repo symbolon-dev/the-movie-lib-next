@@ -13,7 +13,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieStore();
-    const [query, setQuery] = useState(searchQuery || '');
+    const [query, setQuery] = useState(searchQuery ?? '');
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;

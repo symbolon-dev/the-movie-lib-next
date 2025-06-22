@@ -59,7 +59,7 @@ export default function MovieCard({ movie, className = '' }: MovieCardProps) {
                 <p className="text-sm text-gray-400">{releaseYear}</p>
 
                 <p className="mt-2 line-clamp-2 text-sm text-gray-300">
-                    {movie.overview || 'No description available'}
+                    {movie.overview ?? 'No description available'}
                 </p>
             </div>
         </div>

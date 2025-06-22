@@ -47,7 +47,7 @@ const Home = () => {
                     </div>
                 )}
 
-                <MovieList movies={movies || []} isLoading={isLoading} />
+                <MovieList movies={movies ?? []} isLoading={isLoading} />
 
                 {totalPages > 1 && (
                     <Pagination
