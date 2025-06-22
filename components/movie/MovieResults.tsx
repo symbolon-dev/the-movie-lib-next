@@ -3,8 +3,8 @@
 import React, { useEffect } from 'react';
 
 import MovieList from '@/components/movie/MovieList';
-import ErrorMessage from '@/components/ui/ErrorMessage';
-import Pagination from '@/components/ui/Pagination';
+import ErrorMessage from '@/components/common/ErrorMessage';
+import Pagination from '@/components/common/Pagination';
 import { useMovieStore } from '@/lib/store';
 
 const MovieResults = () => {

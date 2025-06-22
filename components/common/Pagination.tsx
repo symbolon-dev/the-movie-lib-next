@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from './Button';
+import Button from '../ui/Button';
 
 type PaginationProps = {
     currentPage: number;
@@ -37,11 +37,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
                 <Button
                     key={pageNumber}
                     onClick={() => onPageChange(pageNumber)}
-                    className={`flex size-10 items-center justify-center p-0 ${
-                        pageNumber === currentPage
+                    className={`flex size-10 items-center justify-center p-0 ${pageNumber === currentPage
                             ? 'bg-blue-600 text-white'
                             : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    }`}
+                        }`}
                     aria-current={pageNumber === currentPage ? 'page' : undefined}
                 >
                     {pageNumber}
@@ -55,11 +54,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
             <Button
                 onClick={handlePrevious}
                 disabled={currentPage <= 1}
-                className={`${
-                    currentPage <= 1
+                className={`${currentPage <= 1
                         ? 'cursor-not-allowed bg-gray-600 text-gray-400'
                         : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                }`}
+                    }`}
                 aria-label="Previous page"
             >
                 Previous
@@ -70,11 +68,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
             <Button
                 onClick={handleNext}
                 disabled={currentPage >= totalPages}
-                className={`${
-                    currentPage >= totalPages
+                className={`${currentPage >= totalPages
                         ? 'cursor-not-allowed bg-gray-600 text-gray-400'
                         : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                }`}
+                    }`}
                 aria-label="Next page"
             >
                 Next

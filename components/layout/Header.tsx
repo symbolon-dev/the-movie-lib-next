@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import ThemeToggle from '../ui/ThemeToggle';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
     return (
