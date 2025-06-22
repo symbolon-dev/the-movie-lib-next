@@ -15,26 +15,38 @@ const formatReleaseDate = (date: string): string => {
     return dayjs(date).format('MMM D, YYYY');
 };
 
-const formatRuntime = (minutes: number): string => {
+const formatRuntime = (minutes: number | null | undefined): string => {
+    if (!minutes) return '0min';
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    return `${hours}h ${mins}min`;
+    return hours > 0 ? `${hours}h ${mins}min` : `${mins}min`;
 };
 
-const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
-    const unwrappedParams = use(params);
-    const { id } = unwrappedParams;
+type DetailProps = {
+    params: Promise<{ id: string }>;
+}
 
+const Detail = ({ params }: DetailProps) => {
+    const { id } = use(params);
+    
     const [movie, setMovie] = useState<MovieDetail | undefined>(undefined);
+    const [error, setError] = useState<string | undefined>(undefined);
     const { fetchMovieDetails, isLoading } = useMovieStore();
 
     useEffect(() => {
         const loadMovie = async () => {
+            if (!id) {
+                setError('Movie ID is missing in URL parameters');
+                return;
+            }
+            
             try {
                 const movieData = await fetchMovieDetails(id);
                 setMovie(movieData);
+                setError(undefined);
             } catch (error) {
                 console.error('Error loading movie:', error);
+                setError(error instanceof Error ? error.message : 'Unknown error loading movie');
             }
         };
 
@@ -52,13 +64,15 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
         );
     }
 
-    if (!movie) {
+    if (!movie || error) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-black to-gray-900">
                 <div className="max-w-md rounded-lg bg-gray-800 p-8 text-center shadow-xl">
                     <Info className="mx-auto mb-4 h-16 w-16 text-red-500" />
                     <h2 className="mb-2 text-2xl font-bold text-white">Could not load movie</h2>
-                    <p className="mb-6 text-gray-300">There was an error loading the movie data.</p>
+                    <p className="mb-6 text-gray-300">
+                        {error || "There was an error loading the movie data."}
+                    </p>
                     <Link
                         href="/"
                         className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"
@@ -158,7 +172,7 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
                                 <span>{formatReleaseDate(movie.release_date)}</span>
                             </div>
 
-                            {movie.runtime > 0 && (
+                            {movie.runtime && movie.runtime > 0 && (
                                 <div className="flex items-center gap-2">
                                     <Clock className="h-4 w-4 text-gray-400" />
                                     <span>{formatRuntime(movie.runtime)}</span>
