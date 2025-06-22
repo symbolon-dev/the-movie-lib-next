@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
         
         const params: MovieDiscoverParams = {
             page: searchParams.has('page') ? Number(searchParams.get('page')) : undefined,
-            sortBy: (searchParams.get('sort_by') || undefined) as any,
+            sortBy: (searchParams.get('sort_by') || undefined),
             withGenres: searchParams.get('with_genres') || undefined,
         };
         

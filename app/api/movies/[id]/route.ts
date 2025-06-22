@@ -1,11 +1,11 @@
 import TMDBApi from '@/lib/api';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET( { params }: { params: { id: string } }) {
     try {
         const api = await TMDBApi();
-        const movieId = params.id;
-
+        const movieId = params?.id;
+        
         if (!movieId) {
             return NextResponse.json({ error: 'Movie ID is required' }, { status: 400 });
         }

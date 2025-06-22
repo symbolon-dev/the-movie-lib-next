@@ -73,9 +73,9 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         
         if (searchQuery && searchQuery.trim().length > 0) {
             return get().searchMovies(searchQuery);
-        } else {
+        } 
             return get().discoverMovies();
-        }
+        
     },
 
     discoverMovies: async (params?: MovieDiscoverParams) => { 
@@ -168,24 +168,25 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 const isAsc = direction === 'asc';
                 
                 movies.results.sort((a, b) => {
-                    let valueA: any;
-                    let valueB: any;
+                    const getValue = (movie: Movie): string | number => {
+                        const fieldMap: Record<string, () => string | number> = {
+                            title: () => movie.title.toLowerCase(),
+                            original_title: () => movie.original_title.toLowerCase(),
+                            primary_release_date: () => dayjs(movie.release_date).valueOf(),
+                            popularity: () => Number(movie.popularity || 0),
+                            vote_average: () => Number(movie.vote_average || 0),
+                            vote_count: () => Number(movie.vote_count || 0)
+                        };
+                        
+                        return fieldMap[field]?.() || String(movie[field as keyof Movie] || '');
+                    };
                     
-                    const getValue = (movie: Movie) => 
-                        field === 'title' || field === 'original_title'
-                            ? movie[field as 'title' | 'original_title'].toLowerCase()
-                            : field === 'primary_release_date'
-                                ? dayjs(movie.release_date).valueOf()
-                                : movie[field as keyof Movie] ?? undefined;
+                    const valueA = getValue(a);
+                    const valueB = getValue(b);
                     
-                    valueA = getValue(a);
-                    valueB = getValue(b);
-                    
-                    if (isAsc) {
-                        return valueA > valueB ? 1 : -1;
-                    } else {
-                        return valueA < valueB ? 1 : -1;
-                    }
+                    return isAsc
+                        ? valueA > valueB ? 1 : -1
+                        : valueA < valueB ? 1 : -1
                 });
             }
             

@@ -17,6 +17,11 @@ const eslintConfig = [
         rules: {
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/no-invalid-void-type': 'off',
+            '@typescript-eslint/no-unused-vars': ['error', {
+                'argsIgnorePattern': '^_',
+                'varsIgnorePattern': '^_',
+                'ignoreRestSiblings': true
+            }],
             'react/prop-types': 'off',
             'react/no-danger': 'off',
             'prefer-const': 'error',
@@ -31,7 +36,7 @@ const eslintConfig = [
                     message: 'For loops are not allowed. Use iterable methods or for..of loops instead.',
                 },
             ],
-            'no-unused-vars': ['error'],
+            'no-unused-vars': 'off',
         },
     },
 ];

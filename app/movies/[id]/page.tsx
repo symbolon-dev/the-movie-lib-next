@@ -56,9 +56,9 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
                     <Info className="h-16 w-16 mx-auto mb-4 text-red-500" />
                     <h2 className="text-2xl font-bold text-white mb-2">Could not load movie</h2>
                     <p className="text-gray-300 mb-6">There was an error loading the movie data.</p>
-                    <a href="/" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg inline-block transition-colors">
+                    <Link href="/" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg inline-block transition-colors">
                         Back to Home
-                    </a>
+                    </Link>
                 </div>
             </div>
         );
@@ -94,7 +94,7 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
                     <div className="absolute bottom-0 left-0 p-6 md:p-10 w-full">
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{movie.title}</h1>
                         {movie.tagline && (
-                            <p className="text-xl text-gray-300 italic mb-4">"{movie.tagline}"</p>
+                            <p className="text-xl text-gray-300 italic mb-4"> {`"${movie.tagline}"`}</p>
                         )}
                     </div>
                 </div>
@@ -126,10 +126,10 @@ const Detail = ({ params }: { params: Promise<{ id: string }> }) => {
                             <div className="flex items-center">
                                 <div
                                     className={`w-16 h-16 rounded-full border-4 flex items-center justify-center ${movie.vote_average >= 7
-                                            ? 'border-green-500'
-                                            : movie.vote_average >= 5
-                                                ? 'border-yellow-500'
-                                                : 'border-red-500'
+                                        ? 'border-green-500'
+                                        : movie.vote_average >= 5
+                                            ? 'border-yellow-500'
+                                            : 'border-red-500'
                                         }`}
                                 >
                                     <span className="font-bold text-lg text-white">{movie.vote_average.toFixed(1)}</span>

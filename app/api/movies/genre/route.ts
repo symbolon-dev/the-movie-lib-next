@@ -1,7 +1,7 @@
 import TMDBApi from '@/lib/api';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
     try {
         const api = await TMDBApi();
         const movies = await api.fetchMovieGenres();
