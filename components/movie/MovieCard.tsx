@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Movie } from '@/types/movie';
+import dayjs from 'dayjs';
 
 type MovieCardProps = {
     movie: Movie;
@@ -8,7 +9,7 @@ type MovieCardProps = {
 };
 
 export default function MovieCard({ movie, className = '' }: MovieCardProps) {
-    const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : 'Unknown';
+    const releaseYear = movie.release_date ? dayjs(movie.release_date).year() : 'Unknown';
 
     const votePercentage = Math.round(movie.vote_average * 10);
 

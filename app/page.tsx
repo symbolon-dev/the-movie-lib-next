@@ -9,11 +9,7 @@ import { useMovieStore } from '@/lib/store';
 import { useEffect } from 'react';
 
 const Home = () => {
-    const {
-        movies,
-        fetchMovies,
-        resetFilters
-    } = useMovieStore();
+    const { movies, fetchMovies, resetFilters } = useMovieStore();
 
     useEffect(() => {
         fetchMovies();

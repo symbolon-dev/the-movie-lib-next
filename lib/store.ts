@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { Movie, MovieDetail, MovieDiscoverParams, MovieResponse, MovieSortOption, MovieSortOptions } from '@/types/movie';
+import { Movie, MovieDetail, MovieDiscoverParams, MovieResponse, MovieSortOption } from '@/types/movie';
+import dayjs from 'dayjs';
 
 type MovieState = {
     movies: Movie[] | undefined;
@@ -18,13 +19,14 @@ type MovieState = {
     searchMovies: (query: string) => Promise<void>;
     fetchMovieDetails: (id: string) => Promise<MovieDetail | undefined>;
     fetchGenres: () => Promise<void>;
+    getGenres: () => Promise<{ id: number; name: string }[] | undefined>;
 }
 
 export const useMovieStore = create<MovieState>((set, get) => ({
     movies: undefined,
     isLoading: false,
     error: undefined,
-    sortBy: MovieSortOptions.POPULARITY_DESC,
+    sortBy: 'popularity.desc',
     selectedGenres: [],
     searchQuery: '',
     genres: undefined,
@@ -48,7 +50,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         set({
             searchQuery: '',
             selectedGenres: [],
-            sortBy: MovieSortOptions.POPULARITY_DESC
+            sortBy: 'popularity.desc'
         });
         get().fetchMovies();
     },
@@ -152,20 +154,15 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                     let valueA: any;
                     let valueB: any;
                     
-                    switch (field) {
-                        case 'title':
-                        case 'original_title':
-                            valueA = a[field].toLowerCase();
-                            valueB = b[field].toLowerCase();
-                            break;
-                        case 'primary_release_date':
-                            valueA = new Date(a.release_date).getTime();
-                            valueB = new Date(b.release_date).getTime();
-                            break;
-                        default:
-                            valueA = a[field as keyof Movie] || 0;
-                            valueB = b[field as keyof Movie] || 0;
-                    }
+                    const getValue = (movie: Movie) => 
+                        field === 'title' || field === 'original_title'
+                            ? movie[field as 'title' | 'original_title'].toLowerCase()
+                            : field === 'primary_release_date'
+                                ? dayjs(movie.release_date).valueOf()
+                                : movie[field as keyof Movie] ?? undefined;
+                    
+                    valueA = getValue(a);
+                    valueB = getValue(b);
                     
                     if (isAsc) {
                         return valueA > valueB ? 1 : -1;
@@ -255,5 +252,13 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 isLoading: false, 
             });
         }
+    },
+
+    getGenres: async () => {
+        if (get().genres) {
+            return get().genres;
+        }
+        await get().fetchGenres();
+        return get().genres;
     },
 }));
