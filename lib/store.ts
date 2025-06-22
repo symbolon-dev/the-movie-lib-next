@@ -10,9 +10,13 @@ type MovieState = {
     selectedGenres: number[];
     searchQuery: string;
     genres: { id: number; name: string }[] | undefined;
+    currentPage: number;
+    totalPages: number;
+    totalResults: number;
     setSortBy: (sortOption: MovieSortOption) => void;
     setSelectedGenres: (genres: number[]) => void;
     setSearchQuery: (query: string) => void;
+    setPage: (page: number) => void;
     resetFilters: () => void;
     fetchMovies: () => Promise<void>;
     discoverMovies: (params?: MovieDiscoverParams) => Promise<void>;
@@ -30,19 +34,27 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     selectedGenres: [],
     searchQuery: '',
     genres: undefined,
+    currentPage: 1,
+    totalPages: 0,
+    totalResults: 0,
 
     setSortBy: (sortOption: MovieSortOption) => {
-        set({ sortBy: sortOption });
+        set({ sortBy: sortOption, currentPage: 1 });
         get().fetchMovies();
     },
 
     setSelectedGenres: (genres: number[]) => {
-        set({ selectedGenres: genres });
+        set({ selectedGenres: genres, currentPage: 1 });
         get().fetchMovies();
     },
     
     setSearchQuery: (query: string) => {
-        set({ searchQuery: query });
+        set({ searchQuery: query, currentPage: 1 });
+        get().fetchMovies();
+    },
+    
+    setPage: (page: number) => {
+        set({ currentPage: page });
         get().fetchMovies();
     },
     
@@ -50,7 +62,8 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         set({
             searchQuery: '',
             selectedGenres: [],
-            sortBy: 'popularity.desc'
+            sortBy: 'popularity.desc',
+            currentPage: 1
         });
         get().fetchMovies();
     },
@@ -72,7 +85,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 error: undefined, 
             });
 
-            const { sortBy, selectedGenres } = get();
+            const { sortBy, selectedGenres, currentPage } = get();
             
             const url = new URL('/api/movies/discover', window.location.origin);
             
@@ -84,9 +97,8 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 url.searchParams.append('with_genres', selectedGenres.join(','));
             }
             
-            if (params?.page) {
-                url.searchParams.append('page', params.page.toString());
-            }
+            const pageToUse = params?.page || currentPage;
+            url.searchParams.append('page', pageToUse.toString());
 
             const response = await fetch(url.toString());
             if (!response.ok) {
@@ -102,6 +114,8 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             set({ 
                 movies: movies.results, 
                 isLoading: false,
+                totalPages: movies.total_pages,
+                totalResults: movies.total_results,
             });
         } catch (error) {
             console.error('Failed to fetch movies:', error);
@@ -123,10 +137,13 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 error: undefined, 
             });
             
-            const { selectedGenres, sortBy } = get();
+            const { selectedGenres, sortBy, currentPage } = get();
             
             const url = new URL('/api/movies/search', window.location.origin);
             url.searchParams.append('query', query);
+            if (currentPage) {
+                url.searchParams.append('page', currentPage.toString());
+            }
             
             const response = await fetch(url.toString());
             if (!response.ok) {
@@ -174,7 +191,9 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             
             set({ 
                 movies: movies.results,
-                isLoading: false 
+                isLoading: false,
+                totalPages: movies.total_pages,
+                totalResults: movies.total_results,
             });
         } catch (error) {
             console.error('Failed to search movies:', error);

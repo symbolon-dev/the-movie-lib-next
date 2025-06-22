@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Movie Library
 
-## Getting Started
+A modern movie library application developed with Next.js 15 and using the TMDB API.
 
-First, run the development server:
+## Features
 
+- **Movie Search**: Browse thousands of movies from the TMDB database
+- **Filters**: Filter movies by genres and sort by various criteria
+- **Detail Views**: View detailed information about each movie
+- **Pagination**: Navigate through large numbers of movie results
+- **Dark/Light Mode**: Choose your preferred appearance
+- **Responsive Design**: Optimized for desktop and mobile devices
+
+## Technologies
+
+- [Next.js 15](https://nextjs.org)
+- [React 19](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Zustand](https://github.com/pmndrs/zustand) (State Management)
+- [Zod](https://zod.dev) (Type Validation)
+
+## Prerequisites
+
+- Node.js 20.x or higher
+- TMDB API key (available for free at [themoviedb.org](https://www.themoviedb.org/documentation/api))
+
+## Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/the-movie-lib-next.git
+cd the-movie-lib-next
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file in the root directory with the following environment variables:
+```
+TMDB_API_KEY=your_tmdb_api_key
+TMDB_BASE_URL=https://api.themoviedb.org/3
+TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start the development server:
+```bash
+pnpm dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- On the home page, you'll get an overview of popular movies
+- Use the search bar to look for specific movies
+- Filter by genres and/or sort the results
+- Click on a movie to see more details
+- Use pagination to browse through more results
+- Toggle between light and dark modes using the button in the header
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+The application can be deployed with [Vercel](https://vercel.com) or any other Next.js-compatible hosting service.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm build
+```
