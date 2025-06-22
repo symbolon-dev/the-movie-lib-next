@@ -1,13 +1,26 @@
 import TMDBApi from '@/lib/api';
-import { NextResponse } from 'next/server';
+import { MovieDiscoverParams } from '@/types/movie';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
+        const searchParams = request.nextUrl.searchParams;
+        
+        const params: MovieDiscoverParams = {
+            page: searchParams.has('page') ? Number(searchParams.get('page')) : undefined,
+            sortBy: (searchParams.get('sort_by') || undefined) as any,
+            withGenres: searchParams.get('with_genres') || undefined,
+        };
+        
         const api = await TMDBApi();
-        const movies = await api.discoverMovies();
+        const movies = await api.discoverMovies(params);
         return NextResponse.json(movies);
     } catch (error) {
         console.error('Error in discover route:', error);
-        return NextResponse.json({ error: 'Failed to fetch movies' }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ 
+            error: 'Failed to fetch movies',
+            details: errorMessage
+        }, { status: 500 });
     }
 }

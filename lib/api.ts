@@ -20,14 +20,19 @@ const TMDBApi = async () => {
             });
 
             if (!response.ok) {
-                throw new Error(`Error fetching from TMDB: ${response.status}`);
+                throw new Error(`Error fetching from TMDB: ${response.status} - ${response.statusText}`);
             }
 
             const data = await response.json();
-            return schema.parse(data);
+            
+            try {
+                return schema.parse(data);
+            } catch (validationError) {
+                console.error('Schema validation error:', validationError);
+                throw new Error(`Schema validation error: API response does not match the expected schema. ${validationError instanceof Error ? validationError.message : 'Unknown error'}`);
+            }
         } catch (error) {
-            console.error('Error fetching from TMDB:', error);
-            throw new Error('Failed to fetch data from TMDB');
+            throw new Error(`Failed to fetch data from TMDB: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
     };
 
@@ -45,13 +50,17 @@ const TMDBApi = async () => {
         if (!query) {
             throw new Error('Search query cannot be empty');
         }
-
-        const params = new URLSearchParams({
-            query,
-            page: page.toString(),
-        });
-
-        return fetchFromTMDB(`/search/movie?${params}`, MovieResponseSchema);
+        
+        try {
+            const params = new URLSearchParams({
+                query,
+                page: page.toString(),
+            });
+            
+            return fetchFromTMDB(`/search/movie?${params}`, MovieResponseSchema);
+        } catch (error) {
+            throw new Error(`Error searching movies: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
     };
 
     const fetchMovieDetails = async (id: string) => {

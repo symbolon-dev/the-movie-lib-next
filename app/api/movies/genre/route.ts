@@ -1,13 +1,17 @@
 import TMDBApi from '@/lib/api';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(_request: NextRequest) {
     try {
         const api = await TMDBApi();
         const movies = await api.fetchMovieGenres();
         return NextResponse.json(movies);
     } catch (error) {
         console.error('Error in genre route:', error);
-        return NextResponse.json({ error: 'Failed to fetch genres' }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ 
+            error: 'Failed to fetch genres',
+            details: errorMessage
+        }, { status: 500 });
     }
 }

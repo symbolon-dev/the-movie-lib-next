@@ -1,14 +1,10 @@
 import TMDBApi from '@/lib/api';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-    _request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }, 
-) {
+export async function GET(_request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const api = await TMDBApi();
-        const awaitedParams = await params;
-        const movieId = awaitedParams.id;
+        const movieId = params.id;
 
         if (!movieId) {
             return NextResponse.json({ error: 'Movie ID is required' }, { status: 400 });
@@ -18,6 +14,10 @@ export async function GET(
         return NextResponse.json(movie);
     } catch (error) {
         console.error('Error in movie details route:', error);
-        return NextResponse.json({ error: 'Failed to fetch movie' }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ 
+            error: 'Failed to fetch movie',
+            details: errorMessage
+        }, { status: 500 });
     }
 }
