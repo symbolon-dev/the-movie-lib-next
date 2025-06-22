@@ -1,6 +1,13 @@
-import { create } from 'zustand';
-import { Movie, MovieDetail, MovieDiscoverParams, MovieResponse, MovieSortOption } from '@/types/movie';
 import dayjs from 'dayjs';
+import { create } from 'zustand';
+
+import {
+    Movie,
+    MovieDetail,
+    MovieDiscoverParams,
+    MovieResponse,
+    MovieSortOption,
+} from '@/types/movie';
 
 type MovieState = {
     movies: Movie[] | undefined;
@@ -24,7 +31,7 @@ type MovieState = {
     fetchMovieDetails: (id: string) => Promise<MovieDetail | undefined>;
     fetchGenres: () => Promise<void>;
     getGenres: () => Promise<{ id: number; name: string }[] | undefined>;
-}
+};
 
 export const useMovieStore = create<MovieState>((set, get) => ({
     movies: undefined,
@@ -47,56 +54,55 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         set({ selectedGenres: genres, currentPage: 1 });
         get().fetchMovies();
     },
-    
+
     setSearchQuery: (query: string) => {
         set({ searchQuery: query, currentPage: 1 });
         get().fetchMovies();
     },
-    
+
     setPage: (page: number) => {
         set({ currentPage: page });
         get().fetchMovies();
     },
-    
+
     resetFilters: () => {
         set({
             searchQuery: '',
             selectedGenres: [],
             sortBy: 'popularity.desc',
-            currentPage: 1
+            currentPage: 1,
         });
         get().fetchMovies();
     },
-    
+
     fetchMovies: async () => {
         const { searchQuery } = get();
-        
+
         if (searchQuery && searchQuery.trim().length > 0) {
             return get().searchMovies(searchQuery);
-        } 
-            return get().discoverMovies();
-        
+        }
+        return get().discoverMovies();
     },
 
-    discoverMovies: async (params?: MovieDiscoverParams) => { 
+    discoverMovies: async (params?: MovieDiscoverParams) => {
         try {
-            set({ 
-                isLoading: true, 
-                error: undefined, 
+            set({
+                isLoading: true,
+                error: undefined,
             });
 
             const { sortBy, selectedGenres, currentPage } = get();
-            
+
             const url = new URL('/api/movies/discover', window.location.origin);
-            
+
             if (params?.sortBy || sortBy) {
                 url.searchParams.append('sort_by', params?.sortBy || sortBy);
             }
-            
+
             if (selectedGenres.length > 0) {
                 url.searchParams.append('with_genres', selectedGenres.join(','));
             }
-            
+
             const pageToUse = params?.page || currentPage;
             url.searchParams.append('page', pageToUse.toString());
 
@@ -111,62 +117,62 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             }
             const movies = json as MovieResponse;
 
-            set({ 
-                movies: movies.results, 
+            set({
+                movies: movies.results,
                 isLoading: false,
                 totalPages: movies.total_pages,
                 totalResults: movies.total_results,
             });
         } catch (error) {
             console.error('Failed to fetch movies:', error);
-            set({ 
-                error: error instanceof Error ? error.message : 'An unknown error occurred', 
-                isLoading: false, 
+            set({
+                error: error instanceof Error ? error.message : 'An unknown error occurred',
+                isLoading: false,
             });
         }
     },
-    
+
     searchMovies: async (query: string) => {
         if (!query || query.trim() === '') {
             return get().discoverMovies();
         }
-        
+
         try {
-            set({ 
-                isLoading: true, 
-                error: undefined, 
+            set({
+                isLoading: true,
+                error: undefined,
             });
-            
+
             const { selectedGenres, sortBy, currentPage } = get();
-            
+
             const url = new URL('/api/movies/search', window.location.origin);
             url.searchParams.append('query', query);
             if (currentPage) {
                 url.searchParams.append('page', currentPage.toString());
             }
-            
+
             const response = await fetch(url.toString());
             if (!response.ok) {
                 throw new Error(`Error searching movies: ${response.statusText}`);
             }
-            
+
             const json = await response.json();
             if (json.error) {
                 const errorDetails = json.details ? `: ${json.details}` : '';
                 throw new Error(`${json.error}${errorDetails}`);
             }
-            
+
             const movies = json as MovieResponse;
             if (selectedGenres.length > 0) {
-                movies.results = movies.results.filter(movie => 
-                    movie.genre_ids.some(genreId => selectedGenres.includes(genreId))
+                movies.results = movies.results.filter((movie) =>
+                    movie.genre_ids.some((genreId) => selectedGenres.includes(genreId)),
                 );
             }
-            
+
             if (sortBy) {
                 const [field, direction] = sortBy.split('.');
                 const isAsc = direction === 'asc';
-                
+
                 movies.results.sort((a, b) => {
                     const getValue = (movie: Movie): string | number => {
                         const fieldMap: Record<string, () => string | number> = {
@@ -175,22 +181,20 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                             primary_release_date: () => dayjs(movie.release_date).valueOf(),
                             popularity: () => Number(movie.popularity || 0),
                             vote_average: () => Number(movie.vote_average || 0),
-                            vote_count: () => Number(movie.vote_count || 0)
+                            vote_count: () => Number(movie.vote_count || 0),
                         };
-                        
+
                         return fieldMap[field]?.() || String(movie[field as keyof Movie] || '');
                     };
-                    
+
                     const valueA = getValue(a);
                     const valueB = getValue(b);
-                    
-                    return isAsc
-                        ? valueA > valueB ? 1 : -1
-                        : valueA < valueB ? 1 : -1
+
+                    return isAsc ? (valueA > valueB ? 1 : -1) : valueA < valueB ? 1 : -1;
                 });
             }
-            
-            set({ 
+
+            set({
                 movies: movies.results,
                 isLoading: false,
                 totalPages: movies.total_pages,
@@ -198,9 +202,9 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             });
         } catch (error) {
             console.error('Failed to search movies:', error);
-            set({ 
-                error: error instanceof Error ? error.message : 'An unknown error occurred', 
-                isLoading: false, 
+            set({
+                error: error instanceof Error ? error.message : 'An unknown error occurred',
+                isLoading: false,
             });
         }
     },
@@ -211,9 +215,9 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         }
 
         try {
-            set({ 
-                isLoading: true, 
-                error: undefined, 
+            set({
+                isLoading: true,
+                error: undefined,
             });
 
             const response = await fetch(`/api/movies/${id}`);
@@ -229,47 +233,47 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
             const movie = json as MovieDetail;
 
-            set({ 
-                isLoading: false, 
+            set({
+                isLoading: false,
             });
 
             return movie;
         } catch (error) {
             console.error('Failed to fetch movie details:', error);
-            set({ 
-                error: error instanceof Error ? error.message : 'An unknown error occurred', 
-                isLoading: false, 
+            set({
+                error: error instanceof Error ? error.message : 'An unknown error occurred',
+                isLoading: false,
             });
         }
     },
-    
+
     fetchGenres: async () => {
         try {
-            set({ 
-                isLoading: true, 
-                error: undefined, 
+            set({
+                isLoading: true,
+                error: undefined,
             });
-            
+
             const response = await fetch('/api/movies/genre');
-            
+
             if (!response.ok) {
                 throw new Error(`Error fetching genres: ${response.statusText}`);
             }
-            
+
             const json = await response.json();
             if (json.error) {
                 throw new Error(json.error);
             }
-            
-            set({ 
+
+            set({
                 genres: json.genres,
-                isLoading: false, 
+                isLoading: false,
             });
         } catch (error) {
             console.error('Failed to fetch genres:', error);
-            set({ 
-                error: error instanceof Error ? error.message : 'An unknown error occurred', 
-                isLoading: false, 
+            set({
+                error: error instanceof Error ? error.message : 'An unknown error occurred',
+                isLoading: false,
             });
         }
     },

@@ -2,12 +2,12 @@ import React from 'react';
 
 const MovieCardSkeleton = () => {
     return (
-        <div className="flex flex-col overflow-hidden rounded-lg bg-gray-800 shadow-lg animate-pulse">
+        <div className="flex animate-pulse flex-col overflow-hidden rounded-lg bg-gray-800 shadow-lg">
             <div className="relative flex aspect-[2/3] bg-gray-700"></div>
             <div className="flex flex-1 flex-col p-4">
-                <div className="h-6 bg-gray-700 rounded w-3/4 mb-2"></div>
-                <div className="h-4 bg-gray-700 rounded w-1/2 mb-3"></div>
-                <div className="h-4 bg-gray-700 rounded w-1/4"></div>
+                <div className="mb-2 h-6 w-3/4 rounded bg-gray-700"></div>
+                <div className="mb-3 h-4 w-1/2 rounded bg-gray-700"></div>
+                <div className="h-4 w-1/4 rounded bg-gray-700"></div>
             </div>
         </div>
     );
@@ -21,6 +21,6 @@ const MovieListSkeleton = ({ count = 8 }: { count?: number }) => {
             ))}
         </div>
     );
-}
+};
 
 export default MovieListSkeleton;

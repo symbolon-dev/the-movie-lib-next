@@ -1,7 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect, ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import { Search, XCircle } from 'lucide-react';
+
 import Input from '@/components/ui/Input';
 import { useMovieStore } from '@/lib/store';
 
@@ -9,7 +11,7 @@ type SearchBarProps = {
     className?: string;
 };
 
-const SearchBar = ({ className = "" }: SearchBarProps) => {
+const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieStore();
     const [query, setQuery] = useState(searchQuery || '');
 
@@ -38,7 +40,7 @@ const SearchBar = ({ className = "" }: SearchBarProps) => {
 
             <Input
                 type="text"
-                placeholder={"Search movies..."}
+                placeholder={'Search movies...'}
                 value={query}
                 onChange={handleChange}
                 className="w-full pl-10 pr-10"

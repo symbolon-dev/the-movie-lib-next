@@ -1,8 +1,10 @@
 'use client';
 
-import { useThemeStore } from '@/lib/theme';
 import { useEffect } from 'react';
-import { Sun, Moon } from 'lucide-react';
+
+import { Moon, Sun } from 'lucide-react';
+
+import { useThemeStore } from '@/lib/theme';
 
 const ThemeToggle = () => {
     const { mode, toggleMode } = useThemeStore();
@@ -18,12 +20,12 @@ const ThemeToggle = () => {
     return (
         <button
             onClick={toggleMode}
-            className="rounded-full p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            className="rounded-full bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
             aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
             {mode === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
         </button>
     );
-}
+};
 
 export default ThemeToggle;

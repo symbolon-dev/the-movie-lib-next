@@ -1,11 +1,12 @@
 import React from 'react';
+
 import Button from './Button';
 
 type PaginationProps = {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
-}
+};
 
 const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
     const handlePrevious = () => {
@@ -36,11 +37,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
                 <Button
                     key={pageNumber}
                     onClick={() => onPageChange(pageNumber)}
-                    className={`size-10 flex items-center justify-center p-0 ${pageNumber === currentPage
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                        }`}
-                    aria-current={pageNumber === currentPage ? "page" : undefined}
+                    className={`flex size-10 items-center justify-center p-0 ${
+                        pageNumber === currentPage
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                    }`}
+                    aria-current={pageNumber === currentPage ? 'page' : undefined}
                 >
                     {pageNumber}
                 </Button>
@@ -49,14 +51,15 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
     };
 
     return (
-        <div className="flex flex-wrap gap-2 items-center justify-center my-8">
+        <div className="my-8 flex flex-wrap items-center justify-center gap-2">
             <Button
                 onClick={handlePrevious}
                 disabled={currentPage <= 1}
-                className={`${currentPage <= 1
-                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                    : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    }`}
+                className={`${
+                    currentPage <= 1
+                        ? 'cursor-not-allowed bg-gray-600 text-gray-400'
+                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                }`}
                 aria-label="Previous page"
             >
                 Previous
@@ -67,17 +70,17 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
             <Button
                 onClick={handleNext}
                 disabled={currentPage >= totalPages}
-                className={`${currentPage >= totalPages
-                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                    : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                    }`}
+                className={`${
+                    currentPage >= totalPages
+                        ? 'cursor-not-allowed bg-gray-600 text-gray-400'
+                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                }`}
                 aria-label="Next page"
             >
                 Next
             </Button>
         </div>
     );
-}
+};
 
 export default Pagination;
-

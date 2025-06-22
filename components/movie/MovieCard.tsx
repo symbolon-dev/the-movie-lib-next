@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Movie } from '@/types/movie';
+
 import dayjs from 'dayjs';
+
+import { Movie } from '@/types/movie';
 
 type MovieCardProps = {
     movie: Movie;
@@ -20,8 +22,13 @@ export default function MovieCard({ movie, className = '' }: MovieCardProps) {
     };
 
     return (
-        <div className={`flex flex-col overflow-hidden rounded-lg bg-gray-800 shadow-lg transition-transform hover:scale-105 ${className}`}>
-            <Link href={`/movies/${movie.id}`} className="relative flex aspect-[2/3] overflow-hidden">
+        <div
+            className={`flex flex-col overflow-hidden rounded-lg bg-gray-800 shadow-lg transition-transform hover:scale-105 ${className}`}
+        >
+            <Link
+                href={`/movies/${movie.id}`}
+                className="relative flex aspect-[2/3] overflow-hidden"
+            >
                 {movie.poster_path ? (
                     <Image
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -38,20 +45,18 @@ export default function MovieCard({ movie, className = '' }: MovieCardProps) {
                 )}
 
                 <div className="absolute bottom-2 left-2 flex size-10 items-center justify-center rounded-full bg-black/70">
-                    <div className={`flex size-8 items-center justify-center rounded-full ${getRatingColor()}`}>
+                    <div
+                        className={`flex size-8 items-center justify-center rounded-full ${getRatingColor()}`}
+                    >
                         <span className="text-xs font-bold text-white">{votePercentage}%</span>
                     </div>
                 </div>
             </Link>
 
             <div className="flex flex-1 flex-col p-4">
-                <h3 className="mb-1 line-clamp-2 text-lg font-bold text-white">
-                    {movie.title}
-                </h3>
+                <h3 className="mb-1 line-clamp-2 text-lg font-bold text-white">{movie.title}</h3>
 
-                <p className="text-sm text-gray-400">
-                    {releaseYear}
-                </p>
+                <p className="text-sm text-gray-400">{releaseYear}</p>
 
                 <p className="mt-2 line-clamp-2 text-sm text-gray-300">
                     {movie.overview || 'No description available'}

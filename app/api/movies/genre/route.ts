@@ -1,5 +1,6 @@
-import TMDBApi from '@/lib/api';
 import { NextResponse } from 'next/server';
+
+import TMDBApi from '@/lib/api';
 
 export async function GET() {
     try {
@@ -9,9 +10,12 @@ export async function GET() {
     } catch (error) {
         console.error('Error in genre route:', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        return NextResponse.json({ 
-            error: 'Failed to fetch genres',
-            details: errorMessage
-        }, { status: 500 });
+        return NextResponse.json(
+            {
+                error: 'Failed to fetch genres',
+                details: errorMessage,
+            },
+            { status: 500 },
+        );
     }
 }

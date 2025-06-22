@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { MovieSchema, MovieDetailSchema, MovieResponseSchema, GenreSchema } from '@/lib/schema';
+
+import { GenreSchema, MovieDetailSchema, MovieResponseSchema, MovieSchema } from '@/lib/schema';
 
 export type Movie = z.infer<typeof MovieSchema>;
 export type MovieDetail = z.infer<typeof MovieDetailSchema>;
@@ -23,13 +24,13 @@ export const SORT_OPTIONS = [
     { value: 'vote_count.desc', label: 'Vote Count ↓' },
 ];
 
-export type MovieSortOption = typeof SORT_OPTIONS[number]['value'];
+export type MovieSortOption = (typeof SORT_OPTIONS)[number]['value'];
 
 export type MovieFilter = {
     query: string;
     genre: string;
     sortBy: MovieSortOption;
-}
+};
 
 export type MovieDiscoverParams = {
     page?: number;

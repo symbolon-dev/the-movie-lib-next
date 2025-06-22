@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+
 import Badge from '@/components/ui/Badge';
 import { useMovieStore } from '@/lib/store';
 
@@ -16,8 +17,8 @@ const GenreFilter = ({ className = '' }: GenreFilterProps) => {
     const handleGenreToggle = (genreId: number) => {
         setSelectedGenres(
             selectedGenres.includes(genreId)
-                ? selectedGenres.filter(id => id !== genreId)
-                : [...selectedGenres, genreId]
+                ? selectedGenres.filter((id) => id !== genreId)
+                : [...selectedGenres, genreId],
         );
     };
 
@@ -32,10 +33,11 @@ const GenreFilter = ({ className = '' }: GenreFilterProps) => {
             {genres?.map((genre) => (
                 <Badge
                     key={genre.id}
-                    className={`cursor-pointer transition-colors ${isSelected(genre.id)
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-300 text-gray-800 hover:bg-gray-200'
-                        }`}
+                    className={`cursor-pointer transition-colors ${
+                        isSelected(genre.id)
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-300 text-gray-800 hover:bg-gray-200'
+                    }`}
                     onClick={() => handleGenreToggle(genre.id)}
                     role="button"
                     aria-pressed={isSelected(genre.id)}
@@ -45,6 +47,6 @@ const GenreFilter = ({ className = '' }: GenreFilterProps) => {
             ))}
         </div>
     );
-}
+};
 
 export default GenreFilter;

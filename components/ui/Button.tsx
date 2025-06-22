@@ -6,9 +6,9 @@ type ButtonProps = {
     [key: string]: unknown;
 };
 
-const Button = ({ className = "", children, ...props }: ButtonProps) => (
+const Button = ({ className = '', children, ...props }: ButtonProps) => (
     <button
-        className={`px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 ${className}`}
+        className={`rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 ${className}`}
         {...props}
     >
         {children}

@@ -1,6 +1,7 @@
-import Select from '../ui/Select';
-import { SORT_OPTIONS, MovieSortOption } from '@/types/movie';
 import { useMovieStore } from '@/lib/store';
+import { MovieSortOption, SORT_OPTIONS } from '@/types/movie';
+
+import Select from '../ui/Select';
 
 type SortSelectProps = {
     className?: string;
@@ -9,7 +10,7 @@ type SortSelectProps = {
 const SortSelect = ({ className = '' }: SortSelectProps) => {
     const { sortBy, setSortBy } = useMovieStore();
 
-    const selectedOption = SORT_OPTIONS.find(option => option.value === sortBy);
+    const selectedOption = SORT_OPTIONS.find((option) => option.value === sortBy);
 
     const handleChange = (option: { value: string | number; label: string } | undefined) => {
         if (option && typeof option.value === 'string') {
