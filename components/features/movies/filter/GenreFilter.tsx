@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import Badge from '@/components/ui/Badge';
+import Badge from '@/components/shared/ui/Badge';
 import { useMovieStore } from '@/lib/store';
 
 type GenreFilterProps = {

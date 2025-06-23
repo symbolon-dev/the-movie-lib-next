@@ -1,5 +1,5 @@
-import MovieFilter from '@/components/filter/MovieFilter';
-import MovieResults from '@/components/movie/MovieResults';
+import MovieFilter from '@/components/features/movies/filter/MovieFilter';
+import MovieResults from '@/components/features/movies/list/MovieResults';
 
 export const dynamic = 'force-dynamic';
 

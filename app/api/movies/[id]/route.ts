@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 import TMDBApi from '@/lib/api';
 
-export async function GET(_request: Request, { params }: { params: { id: string } }) {
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const api = await TMDBApi();
-        const movieId = params?.id;
+        const { id: movieId } = await params;
 
         if (!movieId || movieId === 'undefined') {
             return NextResponse.json({ error: 'Movie ID is required' }, { status: 400 });

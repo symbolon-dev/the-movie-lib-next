@@ -1,7 +1,7 @@
 import { useMovieStore } from '@/lib/store';
 import { MovieSortOption, SORT_OPTIONS } from '@/types/movie';
 
-import Select from '../ui/Select';
+import Select from '../../../shared/ui/Select';
 
 type SortSelectProps = {
     className?: string;

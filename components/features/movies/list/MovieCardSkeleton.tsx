@@ -1,5 +1,3 @@
-import React from 'react';
-
 const MovieCardSkeleton = () => {
     return (
         <div className="flex animate-pulse flex-col overflow-hidden rounded-lg bg-gray-800 shadow-lg">
@@ -13,14 +11,4 @@ const MovieCardSkeleton = () => {
     );
 };
 
-const MovieListSkeleton = ({ count = 8 }: { count?: number }) => {
-    return (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {Array.from({ length: count }).map((_, index) => (
-                <MovieCardSkeleton key={index} />
-            ))}
-        </div>
-    );
-};
-
-export default MovieListSkeleton;
+export default MovieCardSkeleton;

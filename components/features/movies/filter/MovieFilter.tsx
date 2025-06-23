@@ -1,11 +1,9 @@
 'use client';
 
-import React from 'react';
-
-import GenreFilter from '@/components/filter/GenreFilter';
-import SearchBar from '@/components/filter/SearchBar';
-import SortSelect from '@/components/filter/SortSelect';
-import Button from '@/components/ui/Button';
+import GenreFilter from '@/components/features/movies/filter/GenreFilter';
+import SearchBar from '@/components/features/movies/filter/SearchBar';
+import SortSelect from '@/components/features/movies/filter/SortSelect';
+import Button from '@/components/shared/ui/Button';
 import { useMovieStore } from '@/lib/store';
 
 const MovieFilter = () => {

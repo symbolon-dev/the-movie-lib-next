@@ -1,11 +1,31 @@
 import { z } from 'zod';
 
-import { GenreSchema, MovieDetailSchema, MovieResponseSchema, MovieSchema } from '@/lib/schema';
+import { GenreSchema, GenreResponseSchema, MovieDetailSchema, MovieResponseSchema, MovieSchema } from '@/lib/schema';
 
 export type Movie = z.infer<typeof MovieSchema>;
 export type MovieDetail = z.infer<typeof MovieDetailSchema>;
 export type MovieResponse = z.infer<typeof MovieResponseSchema>;
 export type MovieGenre = z.infer<typeof GenreSchema>;
+export type GenreResponse = z.infer<typeof GenreResponseSchema>;
+
+// Spezifische Typen für MovieInfo Komponente
+export type ProductionCompany = {
+    id: number;
+    logo_path: string | null;
+    name: string;
+    origin_country: string;
+};
+
+export type ProductionCountry = {
+    iso_3166_1: string;
+    name: string;
+};
+
+export type SpokenLanguage = {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+};
 
 export const SORT_OPTIONS = [
     { value: 'popularity.desc', label: 'Popularity ↓' },

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { GenreSchema, MovieDetailSchema, MovieResponseSchema } from '@/lib/schema';
+import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/lib/schema';
 import { MovieDiscoverParams } from '@/types/movie';
 
 const TMDBApi = async () => {
@@ -79,7 +79,7 @@ const TMDBApi = async () => {
         return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
     };
 
-    const fetchMovieGenres = async () => fetchFromTMDB('/genre/movie/list', GenreSchema);
+    const fetchMovieGenres = async () => fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
 
     const fetchMoviePosterUrl = (
         path: string,

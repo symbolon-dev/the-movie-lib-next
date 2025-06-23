@@ -2,14 +2,14 @@ import { z } from 'zod';
 
 export const MovieSchema = z.object({
     adult: z.boolean(),
-    backdrop_path: z.string().nullable(),
-    genre_ids: z.array(z.number()).default([]),
+    backdrop_path: z.string().nullish(),
+    genre_ids: z.array(z.number()),
     id: z.number(),
     original_language: z.string(),
     original_title: z.string(),
     overview: z.string(),
     popularity: z.number(),
-    poster_path: z.string().nullable(),
+    poster_path: z.string().nullish(),
     release_date: z.string(),
     title: z.string(),
     video: z.boolean(),
@@ -18,12 +18,13 @@ export const MovieSchema = z.object({
 });
 
 export const MovieDetailSchema = MovieSchema.extend({
+    genre_ids: z.array(z.number()).optional(),
     belongs_to_collection: z
         .object({
             id: z.number(),
             name: z.string(),
         })
-        .nullable(),
+        .nullish(),
     budget: z.number(),
     genres: z.array(
         z.object({
@@ -31,12 +32,12 @@ export const MovieDetailSchema = MovieSchema.extend({
             name: z.string(),
         }),
     ),
-    homepage: z.string(),
-    imdb_id: z.string(),
+    homepage: z.string().nullish(),
+    imdb_id: z.string().nullish(),
     production_companies: z.array(
         z.object({
             id: z.number(),
-            logo_path: z.string().nullable(),
+            logo_path: z.string().nullish(),
             name: z.string(),
             origin_country: z.string(),
         }),
@@ -57,7 +58,7 @@ export const MovieDetailSchema = MovieSchema.extend({
         }),
     ),
     status: z.string(),
-    tagline: z.string(),
+    tagline: z.string().nullish(),
     video: z.boolean(),
 });
 
@@ -69,10 +70,10 @@ export const MovieResponseSchema = z.object({
 });
 
 export const GenreSchema = z.object({
-    genres: z.array(
-        z.object({
-            id: z.number(),
-            name: z.string(),
-        }),
-    ),
+    id: z.number(),
+    name: z.string(),
+});
+
+export const GenreResponseSchema = z.object({
+    genres: z.array(GenreSchema),
 });

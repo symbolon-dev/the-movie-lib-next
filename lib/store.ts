@@ -3,7 +3,6 @@ import { create } from 'zustand';
 
 import {
     Movie,
-    MovieDetail,
     MovieDiscoverParams,
     MovieResponse,
     MovieSortOption,
@@ -28,7 +27,6 @@ type MovieState = {
     fetchMovies: () => Promise<void>;
     discoverMovies: (params?: MovieDiscoverParams) => Promise<void>;
     searchMovies: (query: string) => Promise<void>;
-    fetchMovieDetails: (id: string) => Promise<MovieDetail | undefined>;
     fetchGenres: () => Promise<void>;
     getGenres: () => Promise<{ id: number; name: string }[] | undefined>;
 };
@@ -202,44 +200,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             });
         } catch (error) {
             console.error('Failed to search movies:', error);
-            set({
-                error: error instanceof Error ? error.message : 'An unknown error occurred',
-                isLoading: false,
-            });
-        }
-    },
-
-    fetchMovieDetails: async (id: string) => {
-        if (!id) {
-            throw new Error('Movie ID cannot be empty');
-        }
-
-        try {
-            set({
-                isLoading: true,
-                error: undefined,
-            });
-
-            const response = await fetch(`/api/movies/${id}`);
-
-            if (!response.ok) {
-                throw new Error(`Error fetching movie details: ${response.statusText}`);
-            }
-
-            const json = await response.json();
-            if (json.error) {
-                throw new Error(json.error);
-            }
-
-            const movie = json as MovieDetail;
-
-            set({
-                isLoading: false,
-            });
-
-            return movie;
-        } catch (error) {
-            console.error('Failed to fetch movie details:', error);
             set({
                 error: error instanceof Error ? error.message : 'An unknown error occurred',
                 isLoading: false,

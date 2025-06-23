@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-import MovieList from '@/components/movie/MovieList';
-import ErrorMessage from '@/components/common/ErrorMessage';
-import Pagination from '@/components/common/Pagination';
+import MovieList from '@/components/features/movies/list/MovieList';
+import ErrorMessage from '@/components/shared/common/ErrorMessage';
+import Pagination from '@/components/shared/common/Pagination';
 import { useMovieStore } from '@/lib/store';
 
 const MovieResults = () => {
