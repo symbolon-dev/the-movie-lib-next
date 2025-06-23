@@ -44,13 +44,11 @@ const TMDBApi = async () => {
     };
 
     const discoverMovies = async (options?: MovieDiscoverParams) => {
-        const params = new URLSearchParams({
-            page: options?.page?.toString() ?? '1',
-            sort_by: options?.sortBy ?? 'popularity.desc',
-            with_genres: options?.withGenres ?? '',
-        });
+        const page = options?.page?.toString() ?? '1';
+        const sortBy = options?.sortBy ?? 'popularity.desc';
+        const withGenres = options?.withGenres ?? '';
 
-        return fetchFromTMDB(`/discover/movie?${params}`, MovieResponseSchema);
+        return fetchFromTMDB(`/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}`, MovieResponseSchema);
     };
 
     const searchMovies = async (query: string, page: number = 1) => {
@@ -59,12 +57,7 @@ const TMDBApi = async () => {
         }
 
         try {
-            const params = new URLSearchParams({
-                query,
-                page: page.toString(),
-            });
-
-            return fetchFromTMDB(`/search/movie?${params}`, MovieResponseSchema);
+            return fetchFromTMDB(`/search/movie?query=${encodeURIComponent(query)}&page=${page}`, MovieResponseSchema);
         } catch (error) {
             throw new Error(
                 `Error searching movies: ${error instanceof Error ? error.message : 'Unknown error'}`,

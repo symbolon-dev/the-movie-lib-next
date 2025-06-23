@@ -91,20 +91,13 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
             const { sortBy, selectedGenres, currentPage } = get();
 
-            const url = new URL('/api/movies/discover', window.location.origin);
-
-            if (params?.sortBy || sortBy) {
-                url.searchParams.append('sort_by', params?.sortBy || sortBy);
-            }
-
-            if (selectedGenres.length > 0) {
-                url.searchParams.append('with_genres', selectedGenres.join(','));
-            }
-
+            const sortByParam = params?.sortBy || sortBy;
+            const genresParam = selectedGenres.length > 0 ? selectedGenres.join(',') : '';
             const pageToUse = params?.page || currentPage;
-            url.searchParams.append('page', pageToUse.toString());
 
-            const response = await fetch(url.toString());
+            const url = `/api/movies/discover?sort_by=${sortByParam}&with_genres=${genresParam}&page=${pageToUse}`;
+
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Error fetching movies: ${response.statusText}`);
             }
@@ -143,13 +136,10 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
             const { selectedGenres, sortBy, currentPage } = get();
 
-            const url = new URL('/api/movies/search', window.location.origin);
-            url.searchParams.append('query', query);
-            if (currentPage) {
-                url.searchParams.append('page', currentPage.toString());
-            }
+            const pageParam = currentPage ? `&page=${currentPage}` : '';
+            const url = `/api/movies/search?query=${encodeURIComponent(query)}${pageParam}`;
 
-            const response = await fetch(url.toString());
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Error searching movies: ${response.statusText}`);
             }

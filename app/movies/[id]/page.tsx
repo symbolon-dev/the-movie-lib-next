@@ -15,9 +15,9 @@ type DetailProps = {
 const getMovie = async (id: string) => {
     try {
         const origin = process.env.NEXT_APP_URL ?? 'http://localhost:3000';
-        const url = new URL(`/api/movies/${id}`, origin);
+        const url = `${origin}/api/movies/${id}`;
 
-        const response = await fetch(url.toString(), {
+        const response = await fetch(url, {
             cache: 'no-store'
         });
 
