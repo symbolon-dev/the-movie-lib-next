@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import TMDBApi from '@/lib/api';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(_request: Request, { params }: { params: { id: string } }) {
     try {
         const api = await TMDBApi();
         const movieId = params?.id;
@@ -19,12 +19,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
         if (!movie) {
             return NextResponse.json({ error: 'Movie not found' }, { status: 404 });
         }
-        
+
         return NextResponse.json(movie);
     } catch (error) {
         console.error('Error in movie details route:', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        
+
         if (errorMessage.includes('404')) {
             return NextResponse.json(
                 {
@@ -34,7 +34,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
                 { status: 404 },
             );
         }
-        
+
         return NextResponse.json(
             {
                 error: 'Failed to fetch movie',
