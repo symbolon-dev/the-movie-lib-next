@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Film } from 'lucide-react';
+import { getMoviePosterUrl } from '@/lib/image';
 
 type PosterImageProps = {
     path: string | undefined;
@@ -26,7 +27,7 @@ const PosterImage = ({
         <div className={`relative ${aspectRatio !== 'auto' ? `aspect-[${aspectRatio}]` : ''} ${className}`}>
             {path ? (
                 <Image
-                    src={`https://image.tmdb.org/t/p/w500${path}`}
+                    src={getMoviePosterUrl(path, 'w500')}
                     alt={title}
                     fill
                     sizes={sizes}

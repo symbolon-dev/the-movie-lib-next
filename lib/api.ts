@@ -74,28 +74,12 @@ const TMDBApi = async () => {
 
     const fetchMovieGenres = async () => fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
 
-    const fetchMoviePosterUrl = (
-        path: string,
-        size: 'w92' | 'w154' | 'w185' | 'w342' | 'w500' | 'w780' | 'original' = 'w500',
-    ) => {
-        if (!path) {
-            throw new Error('Poster path cannot be empty');
-        }
-
-        if (!process.env.TMDB_IMAGE_BASE_URL) {
-            throw new Error('TMDB image base URL is not defined');
-        }
-
-        return `${process.env.TMDB_IMAGE_BASE_URL}/${size}/${path}`;
-    };
-
     return {
         fetchFromTMDB,
         discoverMovies,
         searchMovies,
         fetchMovieDetails,
         fetchMovieGenres,
-        fetchMoviePosterUrl,
     };
 };
 

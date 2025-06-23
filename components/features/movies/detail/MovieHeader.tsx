@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import BackButton from '../../../shared/common/BackButton';
+import { getMovieBackdropUrl } from '@/lib/image';
 
 type MovieHeaderProps = {
     title: string;
@@ -20,7 +21,7 @@ const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
                 {backdropPath ? (
                     <div className="absolute inset-0">
                         <Image
-                            src={`https://image.tmdb.org/t/p/original${backdropPath}`}
+                            src={getMovieBackdropUrl(backdropPath, 'original')}
                             alt={title}
                             fill
                             className="object-cover"
