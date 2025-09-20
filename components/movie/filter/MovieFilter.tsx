@@ -3,8 +3,8 @@
 import { GenreFilter } from '@/components/movie/filter/GenreFilter';
 import { SearchBar } from '@/components/movie/filter/SearchBar';
 import { SortSelect } from '@/components/movie/filter/SortSelect';
-import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
+import { Button } from '@/components/ui/button';
 import { useMovieStore } from '@/stores/movie-store';
 
 export const MovieFilter = () => {
@@ -14,28 +14,28 @@ export const MovieFilter = () => {
         searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
 
     return (
-        <MagicCard gradientColor="#61DAFB55" className="p-6 h-fit">
+        <MagicCard gradientColor="#61DAFB55" className="h-fit p-6">
             <div className="space-y-6">
                 <div className="space-y-4">
                     <h2 className="text-lg font-semibold">Search & Filter</h2>
                     <SearchBar />
                 </div>
 
-                <div className="border-t border-border pt-4">
-                    <h3 className="text-sm font-medium text-muted-foreground mb-3">Genres</h3>
+                <div className="border-border border-t pt-4">
+                    <h3 className="text-muted-foreground mb-3 text-sm font-medium">Genres</h3>
                     <GenreFilter />
                 </div>
 
-                <div className="border-t border-border pt-4">
-                    <h3 className="text-sm font-medium text-muted-foreground mb-3">Sort By</h3>
+                <div className="border-border border-t pt-4">
+                    <h3 className="text-muted-foreground mb-3 text-sm font-medium">Sort By</h3>
                     <SortSelect />
                 </div>
 
-                <div className="border-t border-border pt-4">
+                <div className="border-border border-t pt-4">
                     <Button
                         onClick={() => resetFilters()}
                         variant="outline"
-                        className="w-full"
+                        className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
                         disabled={!hasActiveFilters}
                     >
                         Reset All Filters

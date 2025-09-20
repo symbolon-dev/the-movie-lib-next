@@ -16,9 +16,13 @@ export const revalidate = MOVIE_REVALIDATE_TIME;
 
 export async function generateStaticParams() {
     try {
-        const origin = process.env.NEXT_APP_URL ?? 'http://localhost:3000';
+        const baseUrl = process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : (process.env.NEXT_APP_URL ?? 'http://localhost:3003');
+
         const response = await fetch(
-            `${origin}/api/movies/discover?sort_by=popularity.desc&page=1`,
+            `${baseUrl}/api/movies/discover?sort_by=popularity.desc&page=1`,
+            { cache: 'force-cache' },
         );
 
         if (!response.ok) {
@@ -40,10 +44,18 @@ export async function generateStaticParams() {
 
 const getMovie = async (id: string) => {
     try {
-        const origin = process.env.NEXT_APP_URL ?? 'http://localhost:3000';
-        const url = `${origin}/api/movies/${id}`;
+        const API_KEY = process.env.TMDB_API_KEY;
+        const BASE_URL = process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3';
 
-        const response = await fetch(url, {
+        if (!API_KEY) {
+            throw new Error('TMDB API key is not defined');
+        }
+
+        const response = await fetch(`${BASE_URL}/movie/${id}`, {
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${API_KEY}`,
+            },
             next: { revalidate: MOVIE_REVALIDATE_TIME },
         });
 
@@ -70,7 +82,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-muted to-card px-4 py-10 md:px-8">
+        <div className="from-muted to-card min-h-screen bg-gradient-to-b px-4 py-10 md:px-8">
             <div className="container mx-auto">
                 <MovieHeader
                     title={movie.title}

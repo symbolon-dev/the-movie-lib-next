@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import React, { useCallback, useEffect } from 'react';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface MagicCardProps {
@@ -33,7 +33,7 @@ export function MagicCard({
             mouseX.set(e.clientX - rect.left);
             mouseY.set(e.clientY - rect.top);
         },
-        [mouseX, mouseY]
+        [mouseX, mouseY],
     );
 
     useEffect(() => {
@@ -75,8 +75,8 @@ export function MagicCard({
             onPointerMove={handlePointerMove}
             onPointerLeave={reset}
             className={cn(
-                'group relative overflow-hidden rounded-xl bg-card border-2 border-primary/30 text-foreground',
-                className
+                'group bg-card border-primary/30 text-foreground relative overflow-hidden rounded-xl border-2',
+                className,
             )}
         >
             <div className="relative z-10">{children}</div>

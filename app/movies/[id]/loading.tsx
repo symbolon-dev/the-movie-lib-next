@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-muted to-card px-4 py-10 md:px-8">
+        <div className="from-muted to-card min-h-screen bg-gradient-to-b px-4 py-10 md:px-8">
             <div className="container mx-auto">
                 <BackButton href="/" label="Back" className="mb-6" />
 

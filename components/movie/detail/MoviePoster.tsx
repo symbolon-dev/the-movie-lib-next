@@ -7,7 +7,7 @@ type MoviePosterProps = {
 
 export const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
     return (
-        <div className="overflow-hidden rounded-lg bg-muted shadow-xl shadow-primary/20 border-2 border-primary">
+        <div className="bg-muted shadow-primary/20 border-primary overflow-hidden rounded-lg border-2 shadow-xl">
             <PosterImage
                 path={posterPath}
                 title={title}

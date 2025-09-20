@@ -12,7 +12,7 @@ export const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
         <div className="mt-8">
             <div className="flex gap-3">
                 {homepage && (
-                    <Button asChild>
+                    <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105">
                         <a
                             href={homepage}
                             target="_blank"
@@ -24,7 +24,7 @@ export const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
                 )}
 
                 {imdbId && (
-                    <Button asChild variant="secondary">
+                    <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105">
                         <a
                             href={`https://www.imdb.com/title/${imdbId}`}
                             target="_blank"

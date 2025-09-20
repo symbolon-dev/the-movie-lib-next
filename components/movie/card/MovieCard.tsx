@@ -16,8 +16,14 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
 
     return (
-        <MagicCard gradientColor="#0EA5E955" className={cn('h-full cursor-pointer transition-transform duration-300 hover:scale-105', className)}>
-            <Card className="group flex flex-col h-full overflow-hidden border-none shadow-none bg-transparent">
+        <MagicCard
+            gradientColor="#0EA5E955"
+            className={cn(
+                'h-full cursor-pointer transition-transform duration-300 hover:scale-105',
+                className,
+            )}
+        >
+            <Card className="group flex h-full flex-col overflow-hidden border-none bg-transparent shadow-none">
                 <Link
                     href={`/movies/${movie.id}`}
                     className="relative flex overflow-hidden"
@@ -31,29 +37,31 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
                 </Link>
 
                 <CardContent className="flex flex-col p-4">
-                    <div className="h-16 mb-2">
+                    <div className="mb-2 h-16">
                         <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg font-bold transition-colors">
                             {movie.title}
                         </h3>
                     </div>
 
-                    <div className="h-6 mb-2">
+                    <div className="mb-2 h-6">
                         <p className="text-muted-foreground text-sm font-medium">{releaseYear}</p>
                     </div>
 
-                    <div className="h-12 mb-3">
+                    <div className="mb-3 h-12">
                         <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
                             {movie.overview ?? 'No description available'}
                         </p>
                     </div>
 
-                    <div className="border-t border-border pt-3">
+                    <div className="border-border border-t pt-3">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-primary"></div>
-                                <span className="text-sm font-medium text-foreground">Rating</span>
+                                <div className="bg-primary h-2 w-2 rounded-full"></div>
+                                <span className="text-foreground text-sm font-medium">Rating</span>
                             </div>
-                            <span className="text-lg font-bold text-primary">{movie.vote_average.toFixed(1)}</span>
+                            <span className="text-primary text-lg font-bold">
+                                {movie.vote_average.toFixed(1)}
+                            </span>
                         </div>
                     </div>
                 </CardContent>

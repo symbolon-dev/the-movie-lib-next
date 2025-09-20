@@ -12,7 +12,7 @@ export const InfoSection = ({ title, content, icon, visible = true }: InfoSectio
 
     return (
         <div className="info-section">
-            <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-foreground">
+            <h3 className="text-foreground mb-2 flex items-center gap-2 text-lg font-semibold">
                 {icon}
                 {title}
             </h3>

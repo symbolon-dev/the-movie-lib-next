@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { Info } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { MagicCard } from '@/components/ui/magic-card';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 
 type ErrorMessageProps = {
     error: string;
@@ -32,17 +32,31 @@ export const ErrorMessage = ({
     }
 
     return (
-        <div className="bg-background flex min-h-screen items-center justify-center">
-            <Card className="max-w-md p-8 text-center">
-                <Info className="text-destructive mx-auto mb-4 h-16 w-16" />
-                <h2 className="text-foreground mb-2 text-2xl font-bold">{title}</h2>
-                <p className="text-muted-foreground mb-6">
-                    {error || 'There was an error loading the data.'}
-                </p>
-                <Button asChild>
-                    <Link href={actionLink}>{actionText}</Link>
-                </Button>
-            </Card>
+        <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-gradient-to-br p-4">
+            <MagicCard gradientColor="#EF444455" className="w-full max-w-lg p-12 text-center">
+                <div className="space-y-6">
+                    <div className="relative">
+                        <div className="bg-destructive/10 mx-auto flex h-24 w-24 items-center justify-center rounded-full p-6">
+                            <AlertTriangle className="text-destructive h-12 w-12" />
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        <h2 className="text-foreground font-serif text-3xl font-bold">{title}</h2>
+                        <p className="text-muted-foreground text-lg leading-relaxed">
+                            {error || 'There was an error loading the data.'}
+                        </p>
+                    </div>
+
+                    <div className="pt-4">
+                        <Button asChild className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105">
+                            <Link href={actionLink}>
+                                {actionText}
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            </MagicCard>
         </div>
     );
 };

@@ -42,7 +42,7 @@ export const RatingDisplay = ({
                 <span className="font-bold text-white">{displayValue}</span>
             </div>
             {showCount && count > 0 && (
-                <span className="ml-2 text-sm text-muted-foreground">({count} votes)</span>
+                <span className="text-muted-foreground ml-2 text-sm">({count} votes)</span>
             )}
         </div>
     );

@@ -119,7 +119,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     },
 
     discoverMovies: async (params?: MovieDiscoverParams) => {
-
         try {
             // Cancel any ongoing request
             const { abortController: existingController } = get();
@@ -189,7 +188,6 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         if (!query || query.trim() === '') {
             return get().discoverMovies();
         }
-
 
         try {
             // Cancel any ongoing request
