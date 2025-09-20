@@ -11,7 +11,7 @@ type MovieHeaderProps = {
 export const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
     return (
         <>
-            <BackButton href="/" label="Back to Movies" className="mb-6" />
+            <BackButton href="/" label="Back" className="mb-6" />
 
             <div className="relative mb-10 h-[40vh] overflow-hidden rounded-xl md:h-[50vh]">
                 {backdropPath ? (

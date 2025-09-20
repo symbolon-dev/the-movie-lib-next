@@ -1,8 +1,8 @@
 'use client';
 
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
-import { Pagination } from '@/components/common/navigation/Pagination';
+import { Button } from '@/components/ui/button';
 import { useMovieStore } from '@/stores/movie-store';
 import { MovieList } from './MovieList';
 
@@ -11,32 +11,40 @@ export const MovieResults = () => {
         movies,
         currentPage,
         totalPages,
-        setPage,
         isLoading,
         error,
-        searchQuery,
-        selectedGenres,
-        sortBy,
+        loadMoreMovies,
+        hasMoviesForCurrentParams,
+        fetchMovies,
     } = useMovieStore();
 
-    const fetchMovies = useMovieStore(useCallback((state) => state.fetchMovies, []));
-
     useEffect(() => {
-        fetchMovies();
-    }, [fetchMovies, searchQuery, selectedGenres, sortBy, currentPage]);
+        if (movies?.length === 0 || !movies) {
+            if (!hasMoviesForCurrentParams()) {
+                fetchMovies();
+            }
+        }
+    }, [movies, hasMoviesForCurrentParams, fetchMovies]);
+
+    const hasMorePages = currentPage < totalPages;
 
     return (
         <div className="flex flex-col">
             {error && <ErrorMessage error={error} />}
 
-            <MovieList movies={movies ?? []} isLoading={isLoading} />
+            <MovieList movies={movies ?? []} isLoading={isLoading && currentPage === 1} />
 
-            {totalPages > 1 && (
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setPage}
-                />
+            {hasMorePages && (
+                <div className="my-8 flex justify-center">
+                    <Button
+                        onClick={loadMoreMovies}
+                        disabled={isLoading}
+                        variant="outline"
+                        size="lg"
+                    >
+                        {isLoading ? 'Loading...' : 'Load More Movies'}
+                    </Button>
+                </div>
             )}
         </div>
     );

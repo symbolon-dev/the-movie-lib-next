@@ -5,7 +5,7 @@ export default function Loading() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 px-4 py-10 md:px-8">
             <div className="container mx-auto">
-                <BackButton href="/" label="Back to Movies" className="mb-6" />
+                <BackButton href="/" label="Back" className="mb-6" />
 
                 <Skeleton className="relative mb-10 h-[40vh] overflow-hidden rounded-xl md:h-[50vh]">
                     <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">

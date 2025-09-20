@@ -34,8 +34,12 @@ export const GenreFilter = ({ className = '' }: GenreFilterProps) => {
                 <Badge
                     key={genre.id}
                     variant={isSelected(genre.id) ? 'default' : 'secondary'}
-                    className="cursor-pointer transition-colors"
+                    className={cn(
+                        'cursor-pointer transition-colors focus:outline-none',
+                        !isSelected(genre.id) && 'hover:border-primary hover:bg-primary/10',
+                    )}
                     onClick={() => handleGenreToggle(genre.id)}
+                    onMouseDown={(e) => e.preventDefault()}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();

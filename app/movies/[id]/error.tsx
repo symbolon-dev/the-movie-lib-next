@@ -19,7 +19,7 @@ export default function MovieError({ error, reset }: ErrorProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 px-4 py-10 md:px-8">
             <div className="container mx-auto">
-                <BackButton href="/" label="Back to Movies" className="mb-6" />
+                <BackButton href="/" label="Back" className="mb-6" />
 
                 <div className="flex items-center justify-center">
                     <Alert variant="destructive" className="max-w-lg">

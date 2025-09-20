@@ -18,7 +18,7 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     return (
         <Card
             className={cn(
-                'flex flex-col overflow-hidden transition-transform hover:scale-105',
+                'group hover:border-primary hover:shadow-primary/20 flex flex-col overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg',
                 className,
             )}
         >
@@ -39,7 +39,9 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
             </Link>
 
             <CardContent className="flex flex-1 flex-col space-y-2 p-4">
-                <h3 className="text-foreground line-clamp-2 text-lg font-bold">{movie.title}</h3>
+                <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg font-bold transition-colors">
+                    {movie.title}
+                </h3>
 
                 <p className="text-muted-foreground text-sm">{releaseYear}</p>
 

@@ -14,16 +14,22 @@ type MovieState = {
     currentPage: number;
     totalPages: number;
     totalResults: number;
+    lastFetchParams: string | undefined;
+    abortController: AbortController | undefined;
     setSortBy: (sortOption: MovieSortOption) => void;
     setSelectedGenres: (genres: number[]) => void;
     setSearchQuery: (query: string) => void;
     setPage: (page: number) => void;
+    loadMoreMovies: () => Promise<void>;
     resetFilters: () => void;
     fetchMovies: () => Promise<void>;
     discoverMovies: (params?: MovieDiscoverParams) => Promise<void>;
     searchMovies: (query: string) => Promise<void>;
     fetchGenres: () => Promise<void>;
     getGenres: () => Promise<{ id: number; name: string }[] | undefined>;
+    getMovies: () => Promise<Movie[]>;
+    hasMoviesForCurrentParams: () => boolean;
+    ensureMoviesLoaded: () => void;
 };
 
 export const useMovieStore = create<MovieState>((set, get) => ({
@@ -37,25 +43,54 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     currentPage: 1,
     totalPages: 0,
     totalResults: 0,
+    lastFetchParams: undefined,
+    abortController: undefined,
 
     setSortBy: (sortOption: MovieSortOption) => {
-        set({ sortBy: sortOption, currentPage: 1 });
+        set({
+            sortBy: sortOption,
+            currentPage: 1,
+            movies: [],
+            lastFetchParams: undefined,
+        });
         get().fetchMovies();
     },
 
     setSelectedGenres: (genres: number[]) => {
-        set({ selectedGenres: genres, currentPage: 1 });
+        set({
+            selectedGenres: genres,
+            currentPage: 1,
+            movies: [],
+            lastFetchParams: undefined,
+        });
         get().fetchMovies();
     },
 
     setSearchQuery: (query: string) => {
-        set({ searchQuery: query, currentPage: 1 });
+        set({
+            searchQuery: query,
+            currentPage: 1,
+            movies: [], // Clear movies when search changes
+            lastFetchParams: undefined, // Clear cache
+        });
         get().fetchMovies();
     },
 
     setPage: (page: number) => {
-        set({ currentPage: page });
+        set({
+            currentPage: page,
+            // Don't clear movies for pagination to avoid layout jump
+            lastFetchParams: undefined, // But clear cache to force new fetch
+        });
         get().fetchMovies();
+    },
+
+    loadMoreMovies: async () => {
+        const { currentPage, totalPages } = get();
+        if (currentPage < totalPages) {
+            set({ currentPage: currentPage + 1 });
+            await get().fetchMovies();
+        }
     },
 
     resetFilters: () => {
@@ -64,11 +99,17 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             selectedGenres: [],
             sortBy: 'popularity.desc',
             currentPage: 1,
+            movies: [],
+            lastFetchParams: undefined, // Clear cache to force reload
         });
         get().fetchMovies();
     },
 
     fetchMovies: async () => {
+        if (get().hasMoviesForCurrentParams()) {
+            return;
+        }
+
         const { searchQuery } = get();
 
         if (searchQuery && searchQuery.trim().length > 0) {
@@ -78,10 +119,21 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     },
 
     discoverMovies: async (params?: MovieDiscoverParams) => {
+
         try {
+            // Cancel any ongoing request
+            const { abortController: existingController } = get();
+            if (existingController) {
+                existingController.abort();
+            }
+
+            // Create new abort controller
+            const abortController = new AbortController();
+
             set({
                 isLoading: true,
                 error: undefined,
+                abortController,
             });
 
             const { sortBy, selectedGenres, currentPage } = get();
@@ -92,7 +144,11 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
             const url = `/api/movies/discover?sort_by=${sortByParam}&with_genres=${genresParam}&page=${pageToUse}`;
 
-            const response = await fetch(url);
+            // Artificial delay to show skeleton loading
+            const [response] = await Promise.all([
+                fetch(url, { signal: abortController.signal }),
+                new Promise((resolve) => setTimeout(resolve, 800)),
+            ]);
             if (!response.ok) {
                 throw new Error(`Error fetching movies: ${response.statusText}`);
             }
@@ -103,13 +159,28 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             }
             const movies = json as MovieResponse;
 
+            const currentParams = JSON.stringify({
+                searchQuery: get().searchQuery,
+                sortBy: sortByParam,
+                selectedGenres,
+                currentPage: pageToUse,
+            });
+
+            const existingMovies = get().movies || [];
+            const newMovies =
+                pageToUse === 1 ? movies.results : [...existingMovies, ...movies.results];
+
             set({
-                movies: movies.results,
+                movies: newMovies,
                 isLoading: false,
                 totalPages: movies.total_pages,
                 totalResults: movies.total_results,
+                lastFetchParams: currentParams,
             });
         } catch (error) {
+            if ((error as Error).name === 'AbortError') {
+                return; // Request was cancelled, ignore
+            }
             handleStoreError(error, 'fetch movies', set);
         }
     },
@@ -119,10 +190,21 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             return get().discoverMovies();
         }
 
+
         try {
+            // Cancel any ongoing request
+            const { abortController: existingController } = get();
+            if (existingController) {
+                existingController.abort();
+            }
+
+            // Create new abort controller
+            const abortController = new AbortController();
+
             set({
                 isLoading: true,
                 error: undefined,
+                abortController,
             });
 
             const { selectedGenres, sortBy, currentPage } = get();
@@ -130,7 +212,11 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             const pageParam = currentPage ? `&page=${currentPage}` : '';
             const url = `/api/movies/search?query=${encodeURIComponent(query)}${pageParam}`;
 
-            const response = await fetch(url);
+            // Artificial delay to show skeleton loading
+            const [response] = await Promise.all([
+                fetch(url, { signal: abortController.signal }),
+                new Promise((resolve) => setTimeout(resolve, 800)),
+            ]);
             if (!response.ok) {
                 throw new Error(`Error searching movies: ${response.statusText}`);
             }
@@ -173,13 +259,28 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 });
             }
 
+            const currentParams = JSON.stringify({
+                searchQuery: query,
+                sortBy,
+                selectedGenres,
+                currentPage,
+            });
+
+            const existingMovies = get().movies || [];
+            const newMovies =
+                currentPage === 1 ? movies.results : [...existingMovies, ...movies.results];
+
             set({
-                movies: movies.results,
+                movies: newMovies,
                 isLoading: false,
                 totalPages: movies.total_pages,
                 totalResults: movies.total_results,
+                lastFetchParams: currentParams,
             });
         } catch (error) {
+            if ((error as Error).name === 'AbortError') {
+                return; // Request was cancelled, ignore
+            }
             handleStoreError(error, 'search movies', set);
         }
     },
@@ -217,5 +318,37 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         }
         await get().fetchGenres();
         return get().genres;
+    },
+
+    getMovies: async (): Promise<Movie[]> => {
+        const { movies, searchQuery, sortBy, selectedGenres, currentPage, lastFetchParams } = get();
+
+        const currentParams = JSON.stringify({ searchQuery, sortBy, selectedGenres, currentPage });
+
+        if (movies && lastFetchParams === currentParams) {
+            return movies;
+        }
+
+        if (!movies) {
+            await get().fetchMovies();
+            return get().movies || [];
+        }
+
+        return movies;
+    },
+
+    hasMoviesForCurrentParams: (): boolean => {
+        const { movies, searchQuery, sortBy, selectedGenres, currentPage, lastFetchParams } = get();
+
+        if (!movies) return false;
+
+        const currentParams = JSON.stringify({ searchQuery, sortBy, selectedGenres, currentPage });
+        return lastFetchParams === currentParams;
+    },
+
+    ensureMoviesLoaded: (): void => {
+        if (!get().hasMoviesForCurrentParams()) {
+            get().fetchMovies();
+        }
     },
 }));

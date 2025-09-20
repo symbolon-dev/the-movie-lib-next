@@ -11,7 +11,7 @@ type SearchBarProps = {
 };
 
 export const SearchBar = ({ className = '' }: SearchBarProps) => {
-    const { searchQuery, setSearchQuery } = useMovieStore();
+    const { setSearchQuery } = useMovieStore();
     const [query, setQuery] = useState('');
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
 
     return (
         <div className={cn('relative flex items-center', className)}>
-            <div className="text-muted-foreground absolute left-3">
+            <div className="text-muted-foreground pointer-events-none absolute left-3">
                 <Search size={20} />
             </div>
 

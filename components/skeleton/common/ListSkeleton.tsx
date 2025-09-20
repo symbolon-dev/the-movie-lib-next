@@ -5,7 +5,7 @@ type ListSkeletonProps = {
     className?: string;
 };
 
-export const ListSkeleton = ({ count = 8, className }: ListSkeletonProps) => {
+export const ListSkeleton = ({ count = 20, className }: ListSkeletonProps) => {
     return (
         <div
             className={`grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${className || ''}`}

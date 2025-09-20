@@ -9,10 +9,16 @@ export const CardSkeleton = ({ className }: CardSkeletonProps) => {
     return (
         <Card className={`flex flex-col overflow-hidden ${className || ''}`}>
             <Skeleton className="relative flex aspect-[2/3]" />
-            <CardContent className="flex flex-1 flex-col space-y-3 p-4">
-                <Skeleton className="h-6 w-3/4" />
+            <CardContent className="flex flex-1 flex-col space-y-2 p-4">
+                <div className="space-y-1">
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-3/4" />
+                </div>
                 <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-4 w-1/4" />
+                <div className="space-y-1">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-5/6" />
+                </div>
             </CardContent>
         </Card>
     );

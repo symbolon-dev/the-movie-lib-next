@@ -3,10 +3,10 @@ import { ThemeToggle } from '@/components/layout/ThemeToggle';
 
 export const Header = () => {
     return (
-        <header className="w-full bg-white py-4 shadow-sm dark:bg-gray-800">
+        <header className="bg-card border-border w-full border-b py-4 shadow-sm">
             <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
                 <Link href="/">
-                    <span className="bg-gradient-to-r from-blue-500 to-blue-300 bg-clip-text text-3xl font-bold text-transparent">
+                    <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent">
                         The Movie Lib
                     </span>
                 </Link>

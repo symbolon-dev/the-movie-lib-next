@@ -10,7 +10,7 @@ type BackButtonProps = {
 
 export const BackButton = ({ href, label = 'Back', className = '' }: BackButtonProps) => {
     return (
-        <Button asChild variant="ghost" className={className}>
+        <Button asChild variant="outline" className={className}>
             <Link href={href}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 {label}

@@ -117,7 +117,7 @@ This is a Next.js 15 application using the App Router with a movie library inter
 
 **Image Handling**: Next.js Image component configured for TMDB domains in `next.config.ts`. Image utility functions in `utils/image.ts` handle poster/backdrop URL construction.
 
-**Styling**: Tailwind CSS with dark mode support (`darkMode: 'selector'`). Theme toggle managed by `stores/theme-store.ts`.
+**Styling**: Tailwind CSS v4 with native dark mode support via CSS `@media (prefers-color-scheme: dark)` and `.dark` class override. Theme toggle managed by `stores/theme-store.ts`.
 
 ### Key Files
 
