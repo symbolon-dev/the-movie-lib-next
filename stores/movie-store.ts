@@ -211,7 +211,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         }
     },
 
-    getGenres: async () => {
+    getGenres: async (): Promise<{ id: number; name: string }[] | undefined> => {
         if (get().genres) {
             return get().genres;
         }

@@ -1,7 +1,7 @@
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const Loading = () => {
+export default function Loading() {
     return (
         <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 px-4 py-10 md:px-8">
             <div className="container mx-auto">
@@ -65,4 +65,4 @@ export const Loading = () => {
             </div>
         </div>
     );
-};
+}

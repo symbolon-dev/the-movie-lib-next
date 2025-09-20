@@ -11,13 +11,36 @@ type DetailProps = {
     params: Promise<{ id: string }>;
 };
 
+const MOVIE_REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
+export const revalidate = MOVIE_REVALIDATE_TIME;
+
+export async function generateStaticParams() {
+    try {
+        const origin = process.env.NEXT_APP_URL ?? 'http://localhost:3000';
+        const response = await fetch(`${origin}/api/movies/discover?sort_by=popularity.desc&page=1`);
+
+        if (!response.ok) {
+            return [];
+        }
+
+        const data = await response.json();
+
+        return data.results?.slice(0, 20).map((movie: { id: number }) => ({
+            id: movie.id.toString(),
+        })) || [];
+    } catch (error) {
+        console.error('Error generating static params:', error);
+        return [];
+    }
+}
+
 const getMovie = async (id: string) => {
     try {
         const origin = process.env.NEXT_APP_URL ?? 'http://localhost:3000';
         const url = `${origin}/api/movies/${id}`;
 
         const response = await fetch(url, {
-            cache: 'no-store',
+            next: { revalidate: MOVIE_REVALIDATE_TIME },
         });
 
         if (!response.ok) {
