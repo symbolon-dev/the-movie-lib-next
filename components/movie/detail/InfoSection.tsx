@@ -12,11 +12,11 @@ export const InfoSection = ({ title, content, icon, visible = true }: InfoSectio
 
     return (
         <div className="info-section">
-            <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-gray-200">
+            <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-foreground">
                 {icon}
                 {title}
             </h3>
-            <div className="text-gray-400">{content}</div>
+            <div className="text-muted-foreground">{content}</div>
         </div>
     );
 };

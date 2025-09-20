@@ -70,7 +70,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 px-4 py-10 md:px-8">
+        <div className="min-h-screen bg-gradient-to-b from-muted to-card px-4 py-10 md:px-8">
             <div className="container mx-auto">
                 <MovieHeader
                     title={movie.title}
@@ -83,7 +83,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
                         <MoviePoster posterPath={movie.poster_path} title={movie.title} />
                     </div>
 
-                    <div className="text-white md:col-span-2">
+                    <div className="text-foreground md:col-span-2">
                         <div className="mb-6 flex flex-wrap items-center gap-6">
                             <MovieRating
                                 voteAverage={movie.vote_average}

@@ -27,8 +27,8 @@ export const MovieInfo = ({
     return (
         <>
             <div className="mb-8">
-                <h2 className="mb-4 text-xl font-bold text-gray-200">Overview</h2>
-                <p className="leading-relaxed text-gray-300">
+                <h2 className="mb-4 text-xl font-bold text-foreground">Overview</h2>
+                <p className="leading-relaxed text-muted-foreground">
                     {overview || 'No description available'}
                 </p>
             </div>

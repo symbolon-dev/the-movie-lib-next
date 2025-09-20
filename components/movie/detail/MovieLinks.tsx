@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+
 type MovieLinksProps = {
     homepage: string | undefined;
     imdbId: string | undefined;
@@ -10,25 +12,27 @@ export const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
         <div className="mt-8">
             <div className="flex gap-3">
                 {homepage && (
-                    <a
-                        href={homepage}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-md bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
-                    >
-                        Official Website
-                    </a>
+                    <Button asChild>
+                        <a
+                            href={homepage}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Official Website
+                        </a>
+                    </Button>
                 )}
 
                 {imdbId && (
-                    <a
-                        href={`https://www.imdb.com/title/${imdbId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-md bg-yellow-600 px-6 py-2 font-semibold text-black transition-colors hover:bg-yellow-700"
-                    >
-                        IMDb
-                    </a>
+                    <Button asChild variant="secondary">
+                        <a
+                            href={`https://www.imdb.com/title/${imdbId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            IMDb
+                        </a>
+                    </Button>
                 )}
             </div>
         </div>
