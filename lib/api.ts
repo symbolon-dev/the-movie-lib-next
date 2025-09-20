@@ -1,5 +1,4 @@
 import { z } from 'zod';
-
 import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/lib/schema';
 import { MovieDiscoverParams } from '@/types/movie';
 
@@ -48,7 +47,10 @@ const TMDBApi = async () => {
         const sortBy = options?.sortBy ?? 'popularity.desc';
         const withGenres = options?.withGenres ?? '';
 
-        return fetchFromTMDB(`/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}`, MovieResponseSchema);
+        return fetchFromTMDB(
+            `/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}`,
+            MovieResponseSchema,
+        );
     };
 
     const searchMovies = async (query: string, page: number = 1) => {
@@ -57,7 +59,10 @@ const TMDBApi = async () => {
         }
 
         try {
-            return fetchFromTMDB(`/search/movie?query=${encodeURIComponent(query)}&page=${page}`, MovieResponseSchema);
+            return fetchFromTMDB(
+                `/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
+                MovieResponseSchema,
+            );
         } catch (error) {
             throw new Error(
                 `Error searching movies: ${error instanceof Error ? error.message : 'Unknown error'}`,

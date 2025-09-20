@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-
 import TMDBApi from '@/lib/api';
 
 export async function GET() {

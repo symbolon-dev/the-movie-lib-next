@@ -1,4 +1,4 @@
-import MovieDetailSkeleton from '@/components/features/movies/detail/MovieDetailSkeleton';
+import { MovieDetailSkeleton } from '@/components/skeleton';
 
 const Loading = () => <MovieDetailSkeleton />;
 

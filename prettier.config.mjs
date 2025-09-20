@@ -7,7 +7,7 @@ export default {
     singleQuote: true,
     trailingComma: 'all',
     semi: true,
-    plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
+    plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
     importOrder: [
         '^react$',
         '^next(/.*)?$',

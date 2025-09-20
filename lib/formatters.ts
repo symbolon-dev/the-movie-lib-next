@@ -1,13 +1,13 @@
-import dayjs from 'dayjs';
+import { format, getYear } from 'date-fns';
 
-export const formatDate = (date: string | undefined, format: string = 'MMM D, YYYY'): string => {
+export const formatDate = (date: string | undefined, formatStr: string = 'MMM d, yyyy'): string => {
     if (!date) return 'Unknown';
-    return dayjs(date).format(format);
+    return format(new Date(date), formatStr);
 };
 
 export const formatYear = (date: string | undefined): string | number => {
     if (!date) return 'Unknown';
-    return dayjs(date).year();
+    return getYear(new Date(date));
 };
 
 export const formatRuntime = (minutes: number | undefined): string => {

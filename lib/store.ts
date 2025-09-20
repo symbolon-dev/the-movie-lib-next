@@ -1,12 +1,6 @@
-import dayjs from 'dayjs';
+import { getTime } from 'date-fns';
 import { create } from 'zustand';
-
-import {
-    Movie,
-    MovieDiscoverParams,
-    MovieResponse,
-    MovieSortOption,
-} from '@/types/movie';
+import { Movie, MovieDiscoverParams, MovieResponse, MovieSortOption } from '@/types/movie';
 
 type MovieState = {
     movies: Movie[] | undefined;
@@ -166,7 +160,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                         const fieldMap: Record<string, () => string | number> = {
                             title: () => movie.title.toLowerCase(),
                             original_title: () => movie.original_title.toLowerCase(),
-                            primary_release_date: () => dayjs(movie.release_date).valueOf(),
+                            primary_release_date: () => getTime(new Date(movie.release_date)),
                             popularity: () => Number(movie.popularity ?? 0),
                             vote_average: () => Number(movie.vote_average ?? 0),
                             vote_count: () => Number(movie.vote_count ?? 0),

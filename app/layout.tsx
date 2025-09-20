@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
-
 import type { Metadata } from 'next';
-
-import Header from '@/components/shared/layout/Header';
-
+import { Header } from '@/components/layout';
 import './globals.css';
 
 export const metadata: Metadata = {

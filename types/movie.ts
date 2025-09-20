@@ -1,6 +1,11 @@
 import { z } from 'zod';
-
-import { GenreSchema, GenreResponseSchema, MovieDetailSchema, MovieResponseSchema, MovieSchema } from '@/lib/schema';
+import {
+    GenreResponseSchema,
+    GenreSchema,
+    MovieDetailSchema,
+    MovieResponseSchema,
+    MovieSchema,
+} from '@/lib/schema';
 
 export type Movie = z.infer<typeof MovieSchema>;
 export type MovieDetail = z.infer<typeof MovieDetailSchema>;

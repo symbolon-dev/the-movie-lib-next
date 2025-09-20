@@ -1,16 +1,17 @@
 import { notFound } from 'next/navigation';
-
-import MovieHeader from '@/components/features/movies/detail/MovieHeader';
-import MoviePoster from '@/components/features/movies/detail/MoviePoster';
-import MovieRating from '@/components/features/movies/detail/MovieRating';
-import MovieMetadata from '@/components/features/movies/detail/MovieMetadata';
-import MovieGenres from '@/components/features/movies/detail/MovieGenres';
-import MovieInfo from '@/components/features/movies/detail/MovieInfo';
-import MovieLinks from '@/components/features/movies/detail/MovieLinks';
+import {
+    MovieGenres,
+    MovieHeader,
+    MovieInfo,
+    MovieLinks,
+    MovieMetadata,
+    MoviePoster,
+    MovieRating
+} from '@/components/movie';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
-}
+};
 
 const getMovie = async (id: string) => {
     try {
@@ -18,7 +19,7 @@ const getMovie = async (id: string) => {
         const url = `${origin}/api/movies/${id}`;
 
         const response = await fetch(url, {
-            cache: 'no-store'
+            cache: 'no-store',
         });
 
         if (!response.ok) {
@@ -54,10 +55,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                     <div>
-                        <MoviePoster
-                            posterPath={movie.poster_path}
-                            title={movie.title}
-                        />
+                        <MoviePoster posterPath={movie.poster_path} title={movie.title} />
                     </div>
 
                     <div className="text-white md:col-span-2">
@@ -84,10 +82,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
                             revenue={movie.revenue}
                         />
 
-                        <MovieLinks
-                            homepage={movie.homepage}
-                            imdbId={movie.imdb_id}
-                        />
+                        <MovieLinks homepage={movie.homepage} imdbId={movie.imdb_id} />
                     </div>
                 </div>
             </div>
