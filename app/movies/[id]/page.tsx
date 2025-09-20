@@ -1,13 +1,11 @@
 import { notFound } from 'next/navigation';
-import {
-    MovieGenres,
-    MovieHeader,
-    MovieInfo,
-    MovieLinks,
-    MovieMetadata,
-    MoviePoster,
-    MovieRating
-} from '@/components/movie';
+import { MovieGenres } from '@/components/movie/detail/MovieGenres';
+import { MovieHeader } from '@/components/movie/detail/MovieHeader';
+import { MovieInfo } from '@/components/movie/detail/MovieInfo';
+import { MovieLinks } from '@/components/movie/detail/MovieLinks';
+import { MovieMetadata } from '@/components/movie/detail/MovieMetadata';
+import { MoviePoster } from '@/components/movie/detail/MoviePoster';
+import { MovieRating } from '@/components/movie/detail/MovieRating';
 
 type DetailProps = {
     params: Promise<{ id: string }>;

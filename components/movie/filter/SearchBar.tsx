@@ -3,14 +3,14 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Search, XCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useMovieStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
+import { useMovieStore } from '@/stores/movieStore';
 
 type SearchBarProps = {
     className?: string;
 };
 
-const SearchBar = ({ className = '' }: SearchBarProps) => {
+export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieStore();
     const [query, setQuery] = useState(searchQuery ?? '');
 
@@ -58,5 +58,3 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
         </div>
     );
 };
-
-export default SearchBar;

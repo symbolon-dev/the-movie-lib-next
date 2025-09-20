@@ -1,11 +1,11 @@
-import { PosterImage } from '@/components/movie';
+import { PosterImage } from '@/components/movie/shared/PosterImage';
 
 type MoviePosterProps = {
     posterPath: string | undefined;
     title: string;
 };
 
-const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
+export const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
     return (
         <div className="overflow-hidden rounded-lg bg-gray-800 shadow-xl">
             <PosterImage
@@ -17,5 +17,3 @@ const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
         </div>
     );
 };
-
-export default MoviePoster;

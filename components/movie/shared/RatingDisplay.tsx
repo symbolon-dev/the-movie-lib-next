@@ -10,7 +10,7 @@ type RatingDisplayProps = {
     className?: string;
 };
 
-const RatingDisplay = ({
+export const RatingDisplay = ({
     score,
     maxScore = 10,
     showPercentage = false,
@@ -47,5 +47,3 @@ const RatingDisplay = ({
         </div>
     );
 };
-
-export default RatingDisplay;

@@ -1,7 +1,7 @@
 import { DollarSign } from 'lucide-react';
-import { formatCurrency } from '@/lib/formatters';
 import { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
-import InfoSection from './InfoSection';
+import { formatCurrency } from '@/utils/formatters';
+import { InfoSection } from './InfoSection';
 
 type MovieInfoProps = {
     overview: string;
@@ -12,7 +12,7 @@ type MovieInfoProps = {
     revenue: number;
 };
 
-const MovieInfo = ({
+export const MovieInfo = ({
     overview,
     productionCompanies,
     productionCountries,
@@ -67,5 +67,3 @@ const MovieInfo = ({
         </>
     );
 };
-
-export default MovieInfo;

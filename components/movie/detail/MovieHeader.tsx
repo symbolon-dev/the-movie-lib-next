@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { getMovieBackdropUrl } from '@/lib/image';
-import BackButton from '@/components/common/navigation/BackButton';
+import { BackButton } from '@/components/common/navigation/BackButton';
+import { getMovieBackdropUrl } from '@/utils/image';
 
 type MovieHeaderProps = {
     title: string;
@@ -8,7 +8,7 @@ type MovieHeaderProps = {
     backdropPath: string | undefined;
 };
 
-const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
+export const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
     return (
         <>
             <BackButton href="/" label="Back to Movies" className="mb-6" />
@@ -39,5 +39,3 @@ const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
         </>
     );
 };
-
-export default MovieHeader;

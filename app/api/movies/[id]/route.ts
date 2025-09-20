@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import TMDBApi from '@/lib/api';
+import TMDBApi from '@/utils/api';
+import { handleApiError } from '@/utils/errorHandler/apiErrorHandler';
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
@@ -21,25 +22,6 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
 
         return NextResponse.json(movie);
     } catch (error) {
-        console.error('Error in movie details route:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-
-        if (errorMessage.includes('404')) {
-            return NextResponse.json(
-                {
-                    error: 'Movie not found',
-                    details: 'The requested movie could not be found on TMDB',
-                },
-                { status: 404 },
-            );
-        }
-
-        return NextResponse.json(
-            {
-                error: 'Failed to fetch movie',
-                details: errorMessage,
-            },
-            { status: 500 },
-        );
+        return handleApiError(error, 'movie details', 'movies');
     }
 }

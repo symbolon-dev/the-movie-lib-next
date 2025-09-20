@@ -14,7 +14,7 @@ type ErrorMessageProps = {
     actionText?: string;
 };
 
-const ErrorMessage = ({
+export const ErrorMessage = ({
     error,
     fullPage = false,
     title = 'Error',
@@ -46,5 +46,3 @@ const ErrorMessage = ({
         </div>
     );
 };
-
-export default ErrorMessage;

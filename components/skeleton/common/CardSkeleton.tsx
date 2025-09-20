@@ -1,12 +1,13 @@
-import { Card, CardContent, Skeleton } from '@/components/ui';
+import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type CardSkeletonProps = {
     className?: string;
 };
 
-const CardSkeleton = ({ className }: CardSkeletonProps) => {
+export const CardSkeleton = ({ className }: CardSkeletonProps) => {
     return (
-        <Card className={className}>
+        <Card className={`flex flex-col overflow-hidden ${className || ''}`}>
             <Skeleton className="relative flex aspect-[2/3]" />
             <CardContent className="flex flex-1 flex-col space-y-3 p-4">
                 <Skeleton className="h-6 w-3/4" />
@@ -16,5 +17,3 @@ const CardSkeleton = ({ className }: CardSkeletonProps) => {
         </Card>
     );
 };
-
-export default CardSkeleton;

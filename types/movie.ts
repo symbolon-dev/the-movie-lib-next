@@ -5,7 +5,7 @@ import {
     MovieDetailSchema,
     MovieResponseSchema,
     MovieSchema,
-} from '@/lib/schema';
+} from '@/schemas/movie';
 
 export type Movie = z.infer<typeof MovieSchema>;
 export type MovieDetail = z.infer<typeof MovieDetailSchema>;

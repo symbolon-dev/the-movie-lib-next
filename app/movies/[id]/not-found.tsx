@@ -1,6 +1,6 @@
-import ErrorMessage from '@/components/common/feedback/ErrorMessage';
+import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 
-const NotFound = () => (
+export const NotFound = () => (
     <ErrorMessage
         error="The requested movie could not be found"
         fullPage={true}
@@ -9,5 +9,3 @@ const NotFound = () => (
         actionLink="/"
     />
 );
-
-export default NotFound;

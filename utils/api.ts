@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/lib/schema';
+import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/schemas/movie';
 import { MovieDiscoverParams } from '@/types/movie';
 
 const TMDBApi = async () => {

@@ -1,22 +1,26 @@
 import { memo } from 'react';
 import Link from 'next/link';
-import { PosterImage, RatingDisplay } from '@/components/movie';
+import { PosterImage } from '@/components/movie/shared/PosterImage';
+import { RatingDisplay } from '@/components/movie/shared/RatingDisplay';
 import { Card, CardContent } from '@/components/ui/card';
-import { formatYear } from '@/lib/formatters';
-import { Movie } from '@/types/movie';
 import { cn } from '@/lib/utils';
+import { Movie } from '@/types/movie';
+import { formatYear } from '@/utils/formatters';
 
 type MovieCardProps = {
     movie: Movie;
     className?: string;
 };
 
-const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
+export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
 
     return (
         <Card
-            className={cn('flex flex-col overflow-hidden transition-transform hover:scale-105', className)}
+            className={cn(
+                'flex flex-col overflow-hidden transition-transform hover:scale-105',
+                className,
+            )}
         >
             <Link
                 href={`/movies/${movie.id}`}
@@ -45,6 +49,6 @@ const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
             </CardContent>
         </Card>
     );
-};
+});
 
-export default memo(MovieCard);
+MovieCard.displayName = 'MovieCard';

@@ -1,6 +1,7 @@
 import { getTime } from 'date-fns';
 import { create } from 'zustand';
 import { Movie, MovieDiscoverParams, MovieResponse, MovieSortOption } from '@/types/movie';
+import { handleStoreError } from '@/utils/errorHandler/storeErrorHandler';
 
 type MovieState = {
     movies: Movie[] | undefined;
@@ -109,11 +110,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 totalResults: movies.total_results,
             });
         } catch (error) {
-            console.error('Failed to fetch movies:', error);
-            set({
-                error: error instanceof Error ? error.message : 'An unknown error occurred',
-                isLoading: false,
-            });
+            handleStoreError(error, 'fetch movies', set);
         }
     },
 
@@ -183,11 +180,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 totalResults: movies.total_results,
             });
         } catch (error) {
-            console.error('Failed to search movies:', error);
-            set({
-                error: error instanceof Error ? error.message : 'An unknown error occurred',
-                isLoading: false,
-            });
+            handleStoreError(error, 'search movies', set);
         }
     },
 
@@ -214,11 +207,7 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 isLoading: false,
             });
         } catch (error) {
-            console.error('Failed to fetch genres:', error);
-            set({
-                error: error instanceof Error ? error.message : 'An unknown error occurred',
-                isLoading: false,
-            });
+            handleStoreError(error, 'fetch genres', set);
         }
     },
 

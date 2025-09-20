@@ -1,6 +1,6 @@
-import { EmptyState } from '@/components/common';
-import { MovieCard } from '@/components/movie';
-import { MovieListSkeleton } from '@/components/skeleton';
+import { EmptyState } from '@/components/common/feedback/EmptyState';
+import { MovieCard } from '@/components/movie/card/MovieCard';
+import { ListSkeleton } from '@/components/skeleton/common/ListSkeleton';
 import { Movie } from '@/types/movie';
 
 type MovieListProps = {
@@ -9,9 +9,9 @@ type MovieListProps = {
     isLoading?: boolean;
 };
 
-const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
+export const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
     if (isLoading) {
-        return <MovieListSkeleton />;
+        return <ListSkeleton />;
     }
 
     if (movies.length === 0) {
@@ -35,5 +35,3 @@ const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps
         </div>
     );
 };
-
-export default MovieList;

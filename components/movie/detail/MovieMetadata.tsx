@@ -1,12 +1,12 @@
 import { Clock } from 'lucide-react';
-import { formatDate, formatRuntime } from '@/lib/formatters';
+import { formatDate, formatRuntime } from '@/utils/formatters';
 
 type MovieMetadataProps = {
     releaseDate: string;
     runtime: number | undefined;
 };
 
-const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
+export const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
     return (
         <>
             <div className="flex items-center gap-2">
@@ -23,5 +23,3 @@ const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
         </>
     );
 };
-
-export default MovieMetadata;

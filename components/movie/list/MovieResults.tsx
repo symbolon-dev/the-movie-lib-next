@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import MovieList from './MovieList';
-import { ErrorMessage, Pagination } from '@/components/common';
-import { useMovieStore } from '@/lib/store';
+import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
+import { Pagination } from '@/components/common/navigation/Pagination';
+import { useMovieStore } from '@/stores/movieStore';
+import { MovieList } from './MovieList';
 
-const MovieResults = () => {
+export const MovieResults = () => {
     const { movies, fetchMovies, currentPage, totalPages, setPage, isLoading, error } =
         useMovieStore();
 
@@ -29,5 +30,3 @@ const MovieResults = () => {
         </div>
     );
 };
-
-export default MovieResults;

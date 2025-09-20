@@ -5,7 +5,7 @@ type MovieGenresProps = {
     genres: MovieGenre[];
 };
 
-const MovieGenres = ({ genres }: MovieGenresProps) => {
+export const MovieGenres = ({ genres }: MovieGenresProps) => {
     return (
         <div className="mb-6">
             <div className="flex flex-wrap gap-2">
@@ -16,5 +16,3 @@ const MovieGenres = ({ genres }: MovieGenresProps) => {
         </div>
     );
 };
-
-export default MovieGenres;

@@ -23,8 +23,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 │   ├── layout.tsx               # Root layout with Header
 │   └── page.tsx                 # Home page (MovieFilter + MovieResults)
 ├── components/
-│   ├── ui/                      # shadcn/ui primitives with barrel export
-│   │   ├── index.ts             # Central export for all UI components
+│   ├── ui/                      # shadcn/ui primitives
+│   │   ├── button.tsx, card.tsx, input.tsx, etc.
 │   │   ├── button.tsx, card.tsx, input.tsx, etc.
 │   ├── skeleton/                # Centralized loading skeleton components
 │   │   ├── common/              # Generic skeleton components
@@ -85,7 +85,7 @@ This is a Next.js 15 application using the App Router with a movie library inter
 
 **Component Structure**:
 
-- `components/ui/` - shadcn/ui primitives with centralized barrel export (`index.ts`)
+- `components/ui/` - shadcn/ui primitives with direct imports
 - `components/skeleton/` - Centralized loading skeleton components with domain-specific subfolders
 - `components/common/` - Generic reusable components (feedback, navigation)
 - `components/movie/` - Movie domain with logical folder structure (card/, list/, filter/, detail/, shared/)
@@ -127,17 +127,21 @@ This is a Next.js 15 application using the App Router with a movie library inter
 **Skeleton Organization**: All skeleton components are centralized in `components/skeleton/` with subfolders mirroring the main component structure. This makes finding and maintaining loading states easier.
 
 **Loading Strategy**:
+
 - Route-level loading via `loading.tsx` files (e.g., `app/movies/[id]/loading.tsx`)
 - Component-level loading via `isLoading` props from Zustand store
 - Skeleton components have specific, predictable structures rather than generic configurable ones
 
 **Import Pattern**:
+
 ```ts
 // UI components
-import { Button, Card, Input } from '@/components/ui';
 
 // Skeleton components
-import { MovieCardSkeleton, ListSkeleton } from '@/components/skeleton';
+import { ListSkeleton, MovieCardSkeleton } from '@/components/skeleton';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 ```
 
 ### Development Notes
@@ -149,8 +153,9 @@ Type validation is handled by Zod schemas rather than raw TypeScript interfaces,
 The store automatically manages loading states and error handling for all API operations.
 
 **Coding Conventions**:
+
 - Use TypeScript `type` declarations instead of `interface`
 - Prefer explicit named exports in barrel files: `export { Component } from './Component'`
 - Skeleton components have fixed, semantic structures rather than configurable props
-- Internal component imports use absolute paths via barrel exports: `import { Component } from '@/components/movie'`
+- Internal component imports use absolute paths with direct imports from specific files
 - Folder structure follows logical functionality: `card/`, `list/`, `filter/`, `detail/`, `shared/`

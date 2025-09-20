@@ -5,14 +5,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { useMovieStore } from '@/lib/store';
+import { useMovieStore } from '@/stores/movieStore';
 import { MovieSortOption, SORT_OPTIONS } from '@/types/movie';
 
 type SortSelectProps = {
     className?: string;
 };
 
-const SortSelect = ({ className = '' }: SortSelectProps) => {
+export const SortSelect = ({ className = '' }: SortSelectProps) => {
     const { sortBy, setSortBy } = useMovieStore();
 
     const handleValueChange = (value: string) => {
@@ -37,5 +37,3 @@ const SortSelect = ({ className = '' }: SortSelectProps) => {
         </div>
     );
 };
-
-export default SortSelect;

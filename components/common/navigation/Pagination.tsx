@@ -6,7 +6,7 @@ type PaginationProps = {
     onPageChange: (page: number) => void;
 };
 
-const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
+export const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
     const handlePrevious = () => {
         if (currentPage > 1) {
             onPageChange(currentPage - 1);
@@ -19,14 +19,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         }
     };
 
-    const renderPageNumbers = () => {
-        const maxVisiblePages = 5;
+    const pageNumberButtons = () => {
+        const MAX_VISIBLE_PAGES = 5;
 
         let startPage = Math.max(1, currentPage - 2);
-        const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+        const endPage = Math.min(totalPages, startPage + MAX_VISIBLE_PAGES - 1);
 
-        if (endPage - startPage + 1 < maxVisiblePages) {
-            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        if (endPage - startPage + 1 < MAX_VISIBLE_PAGES) {
+            startPage = Math.max(1, endPage - MAX_VISIBLE_PAGES + 1);
         }
 
         return Array.from({ length: endPage - startPage + 1 }, (_, index) => {
@@ -56,7 +56,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
                 Previous
             </Button>
 
-            {renderPageNumbers()}
+            {pageNumberButtons()}
 
             <Button
                 onClick={handleNext}
@@ -69,5 +69,3 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         </div>
     );
 };
-
-export default Pagination;

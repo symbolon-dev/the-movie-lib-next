@@ -1,10 +1,12 @@
 'use client';
 
-import { GenreFilter, SearchBar, SortSelect } from '@/components/movie';
+import { GenreFilter } from '@/components/movie/filter/GenreFilter';
+import { SearchBar } from '@/components/movie/filter/SearchBar';
+import { SortSelect } from '@/components/movie/filter/SortSelect';
 import { Button } from '@/components/ui/button';
-import { useMovieStore } from '@/lib/store';
+import { useMovieStore } from '@/stores/movieStore';
 
-const MovieFilter = () => {
+export const MovieFilter = () => {
     const { resetFilters } = useMovieStore();
 
     return (
@@ -19,5 +21,3 @@ const MovieFilter = () => {
         </div>
     );
 };
-
-export default MovieFilter;

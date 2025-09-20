@@ -1,4 +1,5 @@
-import { MovieFilter, MovieResults } from '@/components/movie';
+import { MovieFilter } from '@/components/movie/filter/MovieFilter';
+import { MovieResults } from '@/components/movie/list/MovieResults';
 
 export const dynamic = 'force-dynamic';
 

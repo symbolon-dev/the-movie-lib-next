@@ -7,7 +7,7 @@ type EmptyStateProps = {
     className?: string;
 };
 
-const EmptyState = ({ title, message, className = '' }: EmptyStateProps) => {
+export const EmptyState = ({ title, message, className = '' }: EmptyStateProps) => {
     return (
         <Card className={`flex size-full flex-col items-center justify-center p-8 ${className}`}>
             <CardContent className="flex flex-col items-center justify-center space-y-2 p-0">
@@ -17,5 +17,3 @@ const EmptyState = ({ title, message, className = '' }: EmptyStateProps) => {
         </Card>
     );
 };
-
-export default EmptyState;

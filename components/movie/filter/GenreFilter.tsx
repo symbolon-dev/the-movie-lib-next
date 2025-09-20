@@ -2,14 +2,14 @@
 
 import { useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { useMovieStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
+import { useMovieStore } from '@/stores/movieStore';
 
 type GenreFilterProps = {
     className?: string;
 };
 
-const GenreFilter = ({ className = '' }: GenreFilterProps) => {
+export const GenreFilter = ({ className = '' }: GenreFilterProps) => {
     const { selectedGenres, setSelectedGenres, genres, getGenres } = useMovieStore();
 
     const isSelected = (genreId: number) => selectedGenres.includes(genreId);
@@ -53,5 +53,3 @@ const GenreFilter = ({ className = '' }: GenreFilterProps) => {
         </div>
     );
 };
-
-export default GenreFilter;

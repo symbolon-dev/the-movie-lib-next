@@ -3,9 +3,9 @@
 import { useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Toggle } from '@/components/ui/toggle';
-import { useThemeStore } from '@/lib/theme';
+import { useThemeStore } from '@/stores/themeStore';
 
-const ThemeToggle = () => {
+export const ThemeToggle = () => {
     const { mode, toggleMode } = useThemeStore();
 
     useEffect(() => {
@@ -28,5 +28,3 @@ const ThemeToggle = () => {
         </Toggle>
     );
 };
-
-export default ThemeToggle;

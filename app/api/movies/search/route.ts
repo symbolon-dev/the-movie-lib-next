@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import TMDBApi from '@/lib/api';
+import TMDBApi from '@/utils/api';
+import { handleApiError } from '@/utils/errorHandler/apiErrorHandler';
 
 export async function GET(request: NextRequest) {
     try {
@@ -16,14 +17,6 @@ export async function GET(request: NextRequest) {
         const movies = await api.searchMovies(query, page);
         return NextResponse.json(movies);
     } catch (error) {
-        console.error('Error in search route:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        return NextResponse.json(
-            {
-                error: 'Failed to fetch movies',
-                details: errorMessage,
-            },
-            { status: 500 },
-        );
+        return handleApiError(error, 'search', 'movies');
     }
 }

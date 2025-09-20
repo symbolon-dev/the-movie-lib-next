@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/layout';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 
-const Header = () => {
+export const Header = () => {
     return (
         <header className="w-full bg-white py-4 shadow-sm dark:bg-gray-800">
             <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
@@ -15,5 +15,3 @@ const Header = () => {
         </header>
     );
 };
-
-export default Header;
