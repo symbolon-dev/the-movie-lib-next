@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { useMovieStore } from '@/stores/movieStore';
+import { useMovieStore } from '@/stores/movie-store';
 
 type GenreFilterProps = {
     className?: string;

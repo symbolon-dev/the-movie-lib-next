@@ -5,7 +5,7 @@ import { RatingDisplay } from '@/components/movie/shared/RatingDisplay';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Movie } from '@/types/movie';
-import { formatYear } from '@/utils/formatters';
+import { formatYear } from '@/utils/formatter';
 
 type MovieCardProps = {
     movie: Movie;

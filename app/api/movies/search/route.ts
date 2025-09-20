@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import TMDBApi from '@/utils/api';
-import { handleApiError } from '@/utils/errorHandler/apiErrorHandler';
+import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
 export async function GET(request: NextRequest) {
     try {

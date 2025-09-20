@@ -1,7 +1,7 @@
 import { getTime } from 'date-fns';
 import { create } from 'zustand';
 import { Movie, MovieDiscoverParams, MovieResponse, MovieSortOption } from '@/types/movie';
-import { handleStoreError } from '@/utils/errorHandler/storeErrorHandler';
+import { handleStoreError } from '@/utils/error-handler/store-error-handler';
 
 type MovieState = {
     movies: Movie[] | undefined;

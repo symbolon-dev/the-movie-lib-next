@@ -4,7 +4,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { Search, XCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { useMovieStore } from '@/stores/movieStore';
+import { useMovieStore } from '@/stores/movie-store';
 
 type SearchBarProps = {
     className?: string;

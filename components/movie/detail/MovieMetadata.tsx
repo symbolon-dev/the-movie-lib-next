@@ -1,5 +1,5 @@
 import { Clock } from 'lucide-react';
-import { formatDate, formatRuntime } from '@/utils/formatters';
+import { formatDate, formatRuntime } from '@/utils/formatter';
 
 type MovieMetadataProps = {
     releaseDate: string;

@@ -33,10 +33,7 @@ export const Loading = () => {
                         <div className="mb-6">
                             <div className="flex flex-wrap gap-2">
                                 {[1, 2, 3].map((i) => (
-                                    <Skeleton
-                                        key={i}
-                                        className="h-8 w-20 rounded-full"
-                                    />
+                                    <Skeleton key={i} className="h-8 w-20 rounded-full" />
                                 ))}
                             </div>
                         </div>

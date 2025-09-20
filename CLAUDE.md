@@ -20,21 +20,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 │   │   ├── genre/route.ts       # Genre list endpoint
 │   │   └── [id]/route.ts        # Movie details endpoint
 │   ├── movies/[id]/             # Movie detail pages
+│   │   ├── loading.tsx          # Loading skeleton for detail page
+│   │   ├── not-found.tsx        # Not found page
+│   │   └── page.tsx             # Movie detail page
 │   ├── layout.tsx               # Root layout with Header
+│   ├── not-found.tsx            # Global not found page
 │   └── page.tsx                 # Home page (MovieFilter + MovieResults)
 ├── components/
 │   ├── ui/                      # shadcn/ui primitives
-│   │   ├── button.tsx, card.tsx, input.tsx, etc.
-│   │   ├── button.tsx, card.tsx, input.tsx, etc.
+│   │   ├── button.tsx, card.tsx, input.tsx, skeleton.tsx, etc.
 │   ├── skeleton/                # Centralized loading skeleton components
-│   │   ├── common/              # Generic skeleton components
-│   │   │   ├── CardSkeleton.tsx
-│   │   │   └── ListSkeleton.tsx
-│   │   ├── movie/               # Domain-specific skeleton components
-│   │   │   ├── card/MovieCardSkeleton.tsx
-│   │   │   ├── detail/MovieDetailSkeleton.tsx
-│   │   │   └── list/MovieListSkeleton.tsx
-│   │   └── index.ts             # Barrel export for all skeletons
+│   │   └── common/              # Generic skeleton components
+│   │       ├── CardSkeleton.tsx
+│   │       └── ListSkeleton.tsx
 │   ├── common/                  # Generic reusable components
 │   │   ├── feedback/            # ErrorMessage, EmptyState
 │   │   └── navigation/          # BackButton, Pagination
@@ -53,20 +51,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 │   │   │   ├── MovieHeader.tsx, MovieInfo.tsx, etc.
 │   │   └── shared/              # Shared movie components
 │   │       ├── PosterImage.tsx
-│   │       ├── RatingDisplay.tsx
-│   │       └── index.ts         # Barrel export
+│   │       └── RatingDisplay.tsx
 │   └── layout/                  # App-level layout components
 │       ├── Header.tsx           # Header component
-│       ├── ThemeToggle.tsx      # Theme toggle component
-│       └── index.ts             # Barrel export
+│       └── ThemeToggle.tsx      # Theme toggle component
 ├── lib/                         # Core utilities and logic
-│   ├── store.ts                 # Zustand state management
-│   ├── api.ts                   # TMDB API wrapper
-│   ├── schema.ts                # Zod validation schemas
-│   ├── image.ts                 # Image URL utilities
-│   ├── theme.ts                 # Dark mode utilities
-│   └── formatters.ts            # Data formatting utilities
-└── types/movie.ts               # TypeScript type definitions
+│   └── utils.ts                 # shadcn/ui utility functions (cn)
+├── schemas/                     # Zod validation schemas
+│   └── movie.ts                 # Movie-related schemas
+├── stores/                      # Zustand state management
+│   ├── movie-store.ts           # Movie state and actions
+│   └── theme-store.ts           # Theme state and actions
+├── types/                       # TypeScript type definitions
+│   └── movie.ts                 # Movie-related types
+└── utils/                       # Utility functions
+    ├── api.ts                   # TMDB API wrapper
+    ├── formatter.ts             # Data formatting utilities
+    ├── image.ts                 # Image URL utilities
+    └── errorHandler/            # Error handling utilities
+        ├── api-error-handler.ts # API error handling
+        └── store-error-handler.ts # Store error handling
 ```
 
 ## Project Architecture
@@ -75,13 +79,14 @@ This is a Next.js 15 application using the App Router with a movie library inter
 
 ### Key Architectural Patterns
 
-**State Management**: Uses Zustand for global state in `lib/store.ts`. The main `useMovieStore` handles movie data, filters, pagination, and API calls with automatic refetching when filters change.
+**State Management**: Uses Zustand for global state in `stores/movie-store.ts`. The main `useMovieStore` handles movie data, filters, pagination, and API calls with automatic refetching when filters change. Theme state is managed separately in `stores/theme-store.ts`.
 
 **API Layer**:
 
-- TMDB API wrapper in `lib/api.ts` with Zod validation
+- TMDB API wrapper in `utils/api.ts` with Zod validation
 - Next.js API routes in `app/api/movies/` handle server-side TMDB requests
 - Client-side store makes requests to internal API routes, not directly to TMDB
+- Error handling is centralized in `utils/errorHandler/` with separate handlers for API and store errors
 
 **Component Structure**:
 
@@ -110,16 +115,18 @@ This is a Next.js 15 application using the App Router with a movie library inter
 - `TMDB_BASE_URL` - https://api.themoviedb.org/3
 - `TMDB_IMAGE_BASE_URL` - https://image.tmdb.org/t/p
 
-**Image Handling**: Next.js Image component configured for TMDB domains in `next.config.ts`. Image utility functions in `lib/image.ts` handle poster/backdrop URL construction.
+**Image Handling**: Next.js Image component configured for TMDB domains in `next.config.ts`. Image utility functions in `utils/image.ts` handle poster/backdrop URL construction.
 
-**Styling**: Tailwind CSS with dark mode support (`darkMode: 'selector'`). Theme toggle managed by `lib/theme.ts`.
+**Styling**: Tailwind CSS with dark mode support (`darkMode: 'selector'`). Theme toggle managed by `stores/theme-store.ts`.
 
 ### Key Files
 
-- `lib/store.ts` - Zustand store with all movie state and API logic
-- `lib/api.ts` - TMDB API wrapper with error handling and validation
-- `lib/schema.ts` - Zod schemas for API response validation
+- `stores/movie-store.ts` - Zustand store with all movie state and API logic
+- `stores/theme-store.ts` - Zustand store for theme management
+- `utils/api.ts` - TMDB API wrapper with error handling and validation
+- `schemas/movie.ts` - Zod schemas for API response validation
 - `types/movie.ts` - TypeScript types derived from Zod schemas
+- `lib/utils.ts` - shadcn/ui utility functions (cn)
 - `app/page.tsx` - Main page with MovieFilter and MovieResults layout
 
 ### Loading States & Skeletons
@@ -128,8 +135,9 @@ This is a Next.js 15 application using the App Router with a movie library inter
 
 **Loading Strategy**:
 
-- Route-level loading via `loading.tsx` files (e.g., `app/movies/[id]/loading.tsx`)
+- Route-level loading via `loading.tsx` files (e.g., `app/movies/[id]/loading.tsx`) using shadcn/ui Skeleton components
 - Component-level loading via `isLoading` props from Zustand store
+- Home page uses component-level loading (no `app/loading.tsx`) for better UX
 - Skeleton components have specific, predictable structures rather than generic configurable ones
 
 **Import Pattern**:
@@ -138,10 +146,16 @@ This is a Next.js 15 application using the App Router with a movie library inter
 // UI components
 
 // Skeleton components
-import { ListSkeleton, MovieCardSkeleton } from '@/components/skeleton';
+import { CardSkeleton, ListSkeleton } from '@/components/skeleton/common';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+// Utilities
+import { cn } from '@/lib/utils';
+// Stores
+import { useMovieStore } from '@/stores/movie-store';
+import { useThemeStore } from '@/stores/theme-store';
 ```
 
 ### Development Notes
@@ -159,3 +173,16 @@ The store automatically manages loading states and error handling for all API op
 - Skeleton components have fixed, semantic structures rather than configurable props
 - Internal component imports use absolute paths with direct imports from specific files
 - Folder structure follows logical functionality: `card/`, `list/`, `filter/`, `detail/`, `shared/`
+
+**File Naming Conventions**:
+
+- **kebab-case**: Normal files, routes, utilities (`movie-store.ts`, `api-error-handler.ts`, `loading.tsx`)
+- **PascalCase**: React Components (`MovieCard.tsx`, `BackButton.tsx`)
+- **camelCase**: Functions, variables, and hooks (`useMovieStore`, `formatDate`)
+
+**Error Handling**:
+
+- Centralized error handling in `utils/errorHandler/`
+- API errors handled by `api-error-handler.ts`
+- Store errors handled by `store-error-handler.ts`
+- Consistent error response format across all API routes

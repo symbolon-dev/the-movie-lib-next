@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 import { Pagination } from '@/components/common/navigation/Pagination';
-import { useMovieStore } from '@/stores/movieStore';
+import { useMovieStore } from '@/stores/movie-store';
 import { MovieList } from './MovieList';
 
 export const MovieResults = () => {

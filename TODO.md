@@ -31,7 +31,7 @@
 - [ ] **Decouple components** from direct Zustand store access
 - [ ] **Add proper memoization** (`useMemo`, `useCallback`) where needed
 - [ ] **Implement request deduplication** for concurrent identical API calls
-- [ ] **Migrate to SWR** for server state management - replace Zustand API calls with SWR hooks
+- [x] **~~Migrate to SWR~~** - ✅ CANCELLED (Using Zustand effectively, SWR removed from dependencies)
 
 ### Component Architecture
 
@@ -65,7 +65,7 @@
 
 ### Loading States
 
-- [x] **Improve skeleton components** with better designs - ✅ COMPLETED (comprehensive skeleton system)
+- [x] **Improve skeleton components** with better designs - ✅ COMPLETED (shadcn/ui Skeleton + route-level loading.tsx)
 - [ ] **Add progressive loading** patterns
 - [ ] **Implement proper loading/error/success states**
 - [ ] **Add transition animations**
@@ -122,17 +122,19 @@
 
 ### File Structure
 
-- [x] **Consistent import/export** patterns - ✅ COMPLETED (barrel exports implemented)
-- [ ] **Extract utility functions** from components
-- [ ] **Create shared hooks** for common logic
+- [x] **Consistent import/export** patterns - ✅ COMPLETED (barrel exports removed for clarity)
+- [x] **Extract utility functions** from components - ✅ COMPLETED (utils/ folder structure)
+- [x] **Create shared hooks** for common logic - ✅ COMPLETED (Zustand stores)
 - [x] **Organize by feature** rather than file type - ✅ COMPLETED (domain-driven structure)
+- [x] **Centralized error handling** - ✅ COMPLETED (utils/errorHandler/)
+- [x] **Proper file naming conventions** - ✅ COMPLETED (kebab-case enforcement)
 
 ### Code Quality
 
 - [ ] **Remove console statements** from production code
 - [ ] **Add proper JSDoc** comments
-- [ ] **Standardize naming conventions**
-- [ ] **Extract constants** to dedicated files
+- [x] **Standardize naming conventions** - ✅ COMPLETED (kebab-case for files, PascalCase for components, camelCase for functions)
+- [x] **Extract constants** to component-local scope - ✅ COMPLETED (SORT_OPTIONS moved to SortSelect.tsx)
 
 ## 📊 Monitoring & Analytics
 
@@ -163,8 +165,10 @@
 
 1. Add React.memo and memoization - ✅ PARTIALLY COMPLETED
 2. Implement debouncing
-3. Extract business logic
+3. ✅ Extract business logic - COMPLETED (utils/, stores/, schemas/ structure)
 4. ✅ Add shadcn/ui - COMPLETED
+5. ✅ Standardize file naming - COMPLETED
+6. ✅ Centralize error handling - COMPLETED
 
 ### Phase 3 (Testing & Security)
 
@@ -175,7 +179,8 @@
 
 ### Phase 4 (Polish & Monitoring)
 
-1. ✅ Add proper loading states - COMPLETED (skeleton system)
-2. Implement monitoring
-3. Optimize bundle size
-4. Add advanced UX features
+1. ✅ Add proper loading states - COMPLETED (route + component level)
+2. ✅ Clean up dependencies - COMPLETED (removed unused SWR)
+3. Implement monitoring
+4. Optimize bundle size
+5. Add advanced UX features

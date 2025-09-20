@@ -1,6 +1,6 @@
 import { DollarSign } from 'lucide-react';
 import { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
-import { formatCurrency } from '@/utils/formatters';
+import { formatCurrency } from '@/utils/formatter';
 import { InfoSection } from './InfoSection';
 
 type MovieInfoProps = {
