@@ -4,6 +4,7 @@ import { PosterImage } from '@/components/movie/shared/PosterImage';
 import { Card, CardContent } from '@/components/ui/card';
 import { MagicCard } from '@/components/ui/magic-card';
 import { cn } from '@/lib/utils';
+import { useMovieStore } from '@/stores/movie-store';
 import { Movie } from '@/types/movie';
 import { formatYear } from '@/utils/formatter';
 
@@ -13,7 +14,13 @@ type MovieCardProps = {
 };
 
 export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
+    const invalidateCache = useMovieStore((state) => state.invalidateCache);
     const releaseYear = formatYear(movie.release_date);
+
+    const handleClick = () => {
+        // Invalidate cache so loading state triggers when returning
+        invalidateCache();
+    };
 
     return (
         <MagicCard
@@ -27,6 +34,7 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
                 href={`/movies/${movie.id}`}
                 className="block h-full"
                 aria-label={`View details for ${movie.title}`}
+                onClick={handleClick}
             >
                 <Card className="group flex h-full flex-col overflow-hidden border-none bg-transparent shadow-none">
                     <div className="relative flex overflow-hidden">

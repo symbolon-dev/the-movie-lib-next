@@ -30,6 +30,7 @@ type MovieState = {
     getMovies: () => Promise<Movie[]>;
     hasMoviesForCurrentParams: () => boolean;
     ensureMoviesLoaded: () => void;
+    invalidateCache: () => void;
 };
 
 export const useMovieStore = create<MovieState>((set, get) => ({
@@ -348,5 +349,9 @@ export const useMovieStore = create<MovieState>((set, get) => ({
         if (!get().hasMoviesForCurrentParams()) {
             get().fetchMovies();
         }
+    },
+
+    invalidateCache: (): void => {
+        set({ lastFetchParams: undefined });
     },
 }));

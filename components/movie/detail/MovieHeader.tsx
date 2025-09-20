@@ -18,7 +18,7 @@ export const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) 
                 className="mb-10 h-[40vh] md:h-[50vh]"
                 neonColors={{
                     firstColor: "#61DAFB",
-                    secondColor: "#21232A"
+                    secondColor: "#E2E8F0"
                 }}
             >
                 {backdropPath ? (

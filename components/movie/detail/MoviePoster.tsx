@@ -12,7 +12,7 @@ export const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
             className="max-w-sm"
             neonColors={{
                 firstColor: "#61DAFB",
-                secondColor: "#21232A"
+                secondColor: "#E2E8F0"
             }}
         >
             <PosterImage

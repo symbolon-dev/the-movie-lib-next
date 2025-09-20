@@ -19,12 +19,10 @@ export const MovieResults = () => {
     } = useMovieStore();
 
     useEffect(() => {
-        if (movies?.length === 0 || !movies) {
-            if (!hasMoviesForCurrentParams()) {
-                fetchMovies();
-            }
+        if (!hasMoviesForCurrentParams()) {
+            fetchMovies();
         }
-    }, [movies, hasMoviesForCurrentParams, fetchMovies]);
+    }, [hasMoviesForCurrentParams, fetchMovies]);
 
     const hasMorePages = currentPage < totalPages;
 
@@ -32,7 +30,10 @@ export const MovieResults = () => {
         <div className="flex flex-col">
             {error && <ErrorMessage error={error} />}
 
-            <MovieList movies={movies ?? []} isLoading={isLoading && currentPage === 1} />
+            <MovieList
+                movies={movies ?? []}
+                isLoading={(isLoading && currentPage === 1) || (!movies && !hasMoviesForCurrentParams())}
+            />
 
             {hasMorePages && (
                 <div className="my-8 flex justify-center">

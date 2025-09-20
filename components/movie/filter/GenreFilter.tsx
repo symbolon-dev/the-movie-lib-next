@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
 import { cn } from '@/lib/utils';
 import { useMovieStore } from '@/stores/movie-store';
 
@@ -28,9 +29,13 @@ export const GenreFilter = ({ className = '' }: GenreFilterProps) => {
         }
     }, [genres, getGenres]);
 
+    if (!genres) {
+        return <GenreFilterSkeleton className={className} />;
+    }
+
     return (
         <div className={cn('flex flex-wrap gap-2', className)}>
-            {genres?.map((genre) => (
+            {genres.map((genre) => (
                 <Badge
                     key={genre.id}
                     variant={isSelected(genre.id) ? 'default' : 'secondary'}
