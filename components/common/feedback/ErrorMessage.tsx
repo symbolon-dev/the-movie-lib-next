@@ -32,11 +32,11 @@ export const ErrorMessage = ({
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="bg-background flex min-h-screen items-center justify-center">
             <Card className="max-w-md p-8 text-center">
-                <Info className="mx-auto mb-4 h-16 w-16 text-destructive" />
-                <h2 className="mb-2 text-2xl font-bold text-foreground">{title}</h2>
-                <p className="mb-6 text-muted-foreground">
+                <Info className="text-destructive mx-auto mb-4 h-16 w-16" />
+                <h2 className="text-foreground mb-2 text-2xl font-bold">{title}</h2>
+                <p className="text-muted-foreground mb-6">
                     {error || 'There was an error loading the data.'}
                 </p>
                 <Button asChild>

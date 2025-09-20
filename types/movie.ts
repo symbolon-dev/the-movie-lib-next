@@ -13,7 +13,6 @@ export type MovieResponse = z.infer<typeof MovieResponseSchema>;
 export type MovieGenre = z.infer<typeof GenreSchema>;
 export type GenreResponse = z.infer<typeof GenreResponseSchema>;
 
-// Spezifische Typen für MovieInfo Komponente
 export type ProductionCompany = {
     id: number;
     logo_path: string | null;

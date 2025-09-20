@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MovieDiscoverParams } from '@/types/movie';
+import { MovieDiscoverParams, MovieSortOption } from '@/types/movie';
 import TMDBApi from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
         const params: MovieDiscoverParams = {
             page: searchParams.has('page') ? Number(searchParams.get('page')) : undefined,
-            sortBy: searchParams.get('sort_by') ?? undefined,
+            sortBy: searchParams.get('sort_by') as MovieSortOption | undefined,
             withGenres: searchParams.get('with_genres') ?? undefined,
         };
 

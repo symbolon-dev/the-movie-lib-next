@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react';
 import { AlertTriangle, ArrowLeft, Home, RotateCcw } from 'lucide-react';
+import { BackButton } from '@/components/common/navigation/BackButton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { BackButton } from '@/components/common/navigation/BackButton';
 
 type ErrorProps = {
     error: Error & { digest?: string };
@@ -27,7 +27,8 @@ export default function MovieError({ error, reset }: ErrorProps) {
                         <AlertTitle>Failed to load movie</AlertTitle>
                         <AlertDescription>
                             <p className="mb-4">
-                                We couldn't load the movie details. This might be due to an invalid movie ID or a temporary server issue.
+                                We couldn't load the movie details. This might be due to an invalid
+                                movie ID or a temporary server issue.
                             </p>
                             <div className="flex gap-2">
                                 <Button
@@ -51,7 +52,7 @@ export default function MovieError({ error, reset }: ErrorProps) {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() => window.location.href = '/'}
+                                    onClick={() => (window.location.href = '/')}
                                     className="flex items-center gap-2"
                                 >
                                     <Home className="h-3 w-3" />

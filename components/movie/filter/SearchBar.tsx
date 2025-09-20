@@ -34,7 +34,7 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
 
     return (
         <div className={cn('relative flex items-center', className)}>
-            <div className="absolute left-3 text-muted-foreground">
+            <div className="text-muted-foreground absolute left-3">
                 <Search size={20} />
             </div>
 
@@ -43,14 +43,14 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
                 placeholder={'Search movies...'}
                 value={query}
                 onChange={handleChange}
-                className="w-full pl-10 pr-10"
+                className="w-full pr-10 pl-10"
             />
 
             {query && (
                 <button
                     type="button"
                     onClick={handleClear}
-                    className="absolute right-3 text-muted-foreground hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground absolute right-3"
                     aria-label="Clear search"
                 >
                     <XCircle size={20} />

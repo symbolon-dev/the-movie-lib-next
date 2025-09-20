@@ -38,7 +38,7 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
 
     return (
         <div className={`w-full ${className}`}>
-            <label className="mb-2 block text-sm font-medium text-foreground">Sort by</label>
+            <label className="text-foreground mb-2 block text-sm font-medium">Sort by</label>
             <Select value={sortBy} onValueChange={handleValueChange}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder="Please select" />

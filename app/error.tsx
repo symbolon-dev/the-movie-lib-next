@@ -21,9 +21,7 @@ export default function Error({ error, reset }: ErrorProps) {
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>Something went wrong</AlertTitle>
                 <AlertDescription>
-                    <p className="mb-4">
-                        An unexpected error occurred while loading the page.
-                    </p>
+                    <p className="mb-4">An unexpected error occurred while loading the page.</p>
                     <div className="flex gap-2">
                         <Button
                             variant="outline"
@@ -37,7 +35,7 @@ export default function Error({ error, reset }: ErrorProps) {
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => window.location.href = '/'}
+                            onClick={() => (window.location.href = '/')}
                             className="flex items-center gap-2"
                         >
                             <Home className="h-3 w-3" />

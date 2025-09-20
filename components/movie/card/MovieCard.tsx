@@ -39,11 +39,11 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
             </Link>
 
             <CardContent className="flex flex-1 flex-col space-y-2 p-4">
-                <h3 className="line-clamp-2 text-lg font-bold text-foreground">{movie.title}</h3>
+                <h3 className="text-foreground line-clamp-2 text-lg font-bold">{movie.title}</h3>
 
-                <p className="text-sm text-muted-foreground">{releaseYear}</p>
+                <p className="text-muted-foreground text-sm">{releaseYear}</p>
 
-                <p className="line-clamp-2 text-sm text-muted-foreground">
+                <p className="text-muted-foreground line-clamp-2 text-sm">
                     {movie.overview ?? 'No description available'}
                 </p>
             </CardContent>

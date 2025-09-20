@@ -32,7 +32,7 @@ export const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) 
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
                     <h1 className="mb-2 text-4xl font-bold text-white md:text-5xl">{title}</h1>
                     {tagline && (
-                        <p className="mb-4 text-xl italic text-gray-300"> {`"${tagline}"`}</p>
+                        <p className="mb-4 text-xl text-gray-300 italic"> {`"${tagline}"`}</p>
                     )}
                 </div>
             </div>

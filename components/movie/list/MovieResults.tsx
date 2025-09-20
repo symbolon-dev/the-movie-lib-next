@@ -7,8 +7,17 @@ import { useMovieStore } from '@/stores/movie-store';
 import { MovieList } from './MovieList';
 
 export const MovieResults = () => {
-    const { movies, currentPage, totalPages, setPage, isLoading, error, searchQuery, selectedGenres, sortBy } =
-        useMovieStore();
+    const {
+        movies,
+        currentPage,
+        totalPages,
+        setPage,
+        isLoading,
+        error,
+        searchQuery,
+        selectedGenres,
+        sortBy,
+    } = useMovieStore();
 
     const fetchMovies = useMovieStore(useCallback((state) => state.fetchMovies, []));
 
