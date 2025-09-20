@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { AnimatedThemeToggle } from '@/components/layout/AnimatedThemeToggle';
 
 export const Header = () => {
     return (
@@ -10,7 +10,7 @@ export const Header = () => {
                         The Movie Lib
                     </span>
                 </Link>
-                <ThemeToggle />
+                <AnimatedThemeToggle />
             </div>
         </header>
     );
