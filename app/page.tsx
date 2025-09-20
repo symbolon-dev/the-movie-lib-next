@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 const Home = async () => {
     return (
-        <div className="my-8 grid grid-cols-1 gap-6 md:grid-cols-[300px_1fr]">
+        <div className="my-8 grid grid-cols-1 gap-6 md:grid-cols-[350px_1fr] md:items-start">
             <MovieFilter />
             <MovieResults />
         </div>
