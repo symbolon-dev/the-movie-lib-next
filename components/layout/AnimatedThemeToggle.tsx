@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Moon, SunDim } from 'lucide-react';
 import { flushSync } from 'react-dom';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,7 @@ type AnimatedThemeToggleProps = {
 export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
     const { mode, toggleMode } = useThemeStore();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     useEffect(() => {
         if (mode === 'dark') {
@@ -25,13 +26,15 @@ export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => 
     }, [mode]);
 
     const changeTheme = async () => {
-        if (!buttonRef.current) return;
+        if (!buttonRef.current || isTransitioning) return;
 
         // Check if View Transition API is supported
         if (!document.startViewTransition) {
             toggleMode();
             return;
         }
+
+        setIsTransitioning(true);
 
         await document.startViewTransition(() => {
             flushSync(() => {
@@ -47,7 +50,7 @@ export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => 
         const bottom = window.innerHeight - top;
         const maxRad = Math.hypot(Math.max(left, right), Math.max(top, bottom));
 
-        document.documentElement.animate(
+        const animation = document.documentElement.animate(
             {
                 clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRad}px at ${x}px ${y}px)`],
             },
@@ -57,6 +60,10 @@ export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => 
                 pseudoElement: '::view-transition-new(root)',
             },
         );
+
+        animation.addEventListener('finish', () => {
+            setIsTransitioning(false);
+        });
     };
 
     const isDark = mode === 'dark';

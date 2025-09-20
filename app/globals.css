@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -20,8 +22,8 @@
 @theme {
   --radius: 0.5rem;
 
-  --font-family-serif: 'Playfair Display', Georgia, serif;
-  --font-family-sans: 'Inter', system-ui, sans-serif;
+  --font-family-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-family-mono: var(--font-geist-mono, ui-monospace, 'Courier New', monospace);
 
   --color-background: oklch(98% 0 0);
   --color-foreground: oklch(15% 0 0);
@@ -105,3 +107,23 @@
   --color-chart-5: oklch(70% 0.15 12);
 }
 
+@theme inline {
+  --animate-background-position-spin: background-position-spin 3000ms infinite alternate;
+  @keyframes background-position-spin {
+  0% {
+    background-position: top center;
+    }
+  100% {
+    background-position: bottom center;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

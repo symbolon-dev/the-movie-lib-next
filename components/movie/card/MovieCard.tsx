@@ -23,49 +23,51 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
                 className,
             )}
         >
-            <Card className="group flex h-full flex-col overflow-hidden border-none bg-transparent shadow-none">
-                <Link
-                    href={`/movies/${movie.id}`}
-                    className="relative flex overflow-hidden"
-                    aria-label={`View details for ${movie.title}`}
-                >
-                    <PosterImage
-                        path={movie.poster_path ?? undefined}
-                        title={movie.title}
-                        className="size-full"
-                    />
-                </Link>
-
-                <CardContent className="flex flex-col p-4">
-                    <div className="mb-2 h-16">
-                        <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg font-bold transition-colors">
-                            {movie.title}
-                        </h3>
+            <Link
+                href={`/movies/${movie.id}`}
+                className="block h-full"
+                aria-label={`View details for ${movie.title}`}
+            >
+                <Card className="group flex h-full flex-col overflow-hidden border-none bg-transparent shadow-none">
+                    <div className="relative flex overflow-hidden">
+                        <PosterImage
+                            path={movie.poster_path ?? undefined}
+                            title={movie.title}
+                            className="size-full"
+                        />
                     </div>
 
-                    <div className="mb-2 h-6">
-                        <p className="text-muted-foreground text-sm font-medium">{releaseYear}</p>
-                    </div>
-
-                    <div className="mb-3 h-12">
-                        <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-                            {movie.overview ?? 'No description available'}
-                        </p>
-                    </div>
-
-                    <div className="border-border border-t pt-3">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <div className="bg-primary h-2 w-2 rounded-full"></div>
-                                <span className="text-foreground text-sm font-medium">Rating</span>
-                            </div>
-                            <span className="text-primary text-lg font-bold">
-                                {movie.vote_average.toFixed(1)}
-                            </span>
+                    <CardContent className="flex flex-col p-4">
+                        <div className="mb-2 h-16">
+                            <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg font-bold transition-colors">
+                                {movie.title}
+                            </h3>
                         </div>
-                    </div>
-                </CardContent>
-            </Card>
+
+                        <div className="mb-2 h-6">
+                            <p className="text-muted-foreground text-sm font-medium">{releaseYear}</p>
+                        </div>
+
+                        <div className="mb-3 h-12">
+                            <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
+                                {movie.overview ?? 'No description available'}
+                            </p>
+                        </div>
+
+                        <div className="border-border border-t pt-3">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <div className="bg-primary h-2 w-2 rounded-full"></div>
+                                    <span className="text-foreground text-sm font-medium">Rating</span>
+                                </div>
+                                <span className="text-primary text-lg font-bold">
+                                    {movie.vote_average.toFixed(1)}
+                                </span>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </Link>
         </MagicCard>
     );
 });

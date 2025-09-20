@@ -82,7 +82,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     }
 
     return (
-        <div className="from-muted to-card min-h-screen bg-gradient-to-b px-4 py-10 md:px-8">
+        <div className="min-h-screen px-4 py-10 md:px-8">
             <div className="container mx-auto">
                 <MovieHeader
                     title={movie.title}

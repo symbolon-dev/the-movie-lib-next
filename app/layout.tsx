@@ -1,17 +1,17 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import './globals.css';
 
-const inter = Inter({
+const geist = Geist({
     subsets: ['latin'],
-    variable: '--font-inter',
+    variable: '--font-geist-sans',
 });
 
-const playfair = Playfair_Display({
+const geistMono = Geist_Mono({
     subsets: ['latin'],
-    variable: '--font-playfair',
+    variable: '--font-geist-mono',
 });
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => (
     <html lang="en">
         <body
-            className={`${inter.variable} ${playfair.variable} bg-background text-foreground min-h-screen font-sans antialiased`}
+            className={`${geist.variable} ${geistMono.variable} bg-background text-foreground min-h-screen font-sans antialiased`}
         >
             <Header />
             <main className="container mx-auto px-4 md:px-8">{children}</main>
