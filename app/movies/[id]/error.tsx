@@ -11,7 +11,7 @@ type ErrorProps = {
     reset: () => void;
 };
 
-export const MovieError = ({ error, reset }: ErrorProps) => {
+const MovieError = ({ error, reset }: ErrorProps) => {
     useEffect(() => {
         console.error('Movie detail error:', error);
     }, [error]);
@@ -77,3 +77,5 @@ export const MovieError = ({ error, reset }: ErrorProps) => {
         </div>
     );
 };
+
+export default MovieError;

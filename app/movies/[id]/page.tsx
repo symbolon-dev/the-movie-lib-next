@@ -43,7 +43,7 @@ const getMovie = async (id: string) => {
     }
 };
 
-export const MovieDetailPage = async ({ params }: DetailProps) => {
+const MovieDetailPage = async ({ params }: DetailProps) => {
     const { id } = await params;
     if (!id) {
         notFound();
@@ -98,3 +98,5 @@ export const MovieDetailPage = async ({ params }: DetailProps) => {
         </div>
     );
 };
+
+export default MovieDetailPage;
