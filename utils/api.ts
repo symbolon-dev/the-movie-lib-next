@@ -48,7 +48,7 @@ const TMDBApi = async () => {
         const withGenres = options?.withGenres ?? '';
 
         return fetchFromTMDB(
-            `/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}`,
+            `/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}&include_adult=false`,
             MovieResponseSchema,
         );
     };
@@ -60,7 +60,7 @@ const TMDBApi = async () => {
 
         try {
             return fetchFromTMDB(
-                `/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
+                `/search/movie?query=${encodeURIComponent(query)}&page=${page}&include_adult=false`,
                 MovieResponseSchema,
             );
         } catch (error) {

@@ -2,13 +2,34 @@
 
 A modern movie library application developed with Next.js 15 and using the TMDB API.
 
+## Frontend Developer Coding Challenge
+
+This project is a coding challenge for frontend developers to demonstrate skills in modern web technologies, UX/UI design, and development capabilities.
+
+**Challenge Overview:**
+Develop a web application that displays a movie list with search, filter, and sort functionality. Users should be able to click on movies to view detailed information.
+
+**Required Technologies:**
+- Framework: Next.js
+- Styling: Tailwind CSS
+- API: TMDB (The Movie Database)
+- Code Management: Git
+
+**Key Features to Implement:**
+- Movie list display
+- Search functionality by title
+- Filter by genres
+- Sort by various criteria (popularity, date, rating)
+- Detailed movie view
+- Responsive design
+
 ## Features
 
 - **Movie Discovery**: Browse popular movies from the TMDB database
 - **Movie Search**: Search for specific movies by title
 - **Advanced Filters**: Filter movies by genres and sort by popularity, release date, rating, etc.
 - **Detailed Movie Views**: View comprehensive information including cast, crew, ratings, and metadata
-- **Pagination**: Navigate through large sets of movie results
+- **Infinite Scrolling**: Automatically load more movies as you scroll
 - **Dark/Light Mode**: Toggle between themes with persistent preference
 - **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
 - **Loading States**: Smooth skeleton loading animations
@@ -76,7 +97,7 @@ pnpm dev
 - **Search**: Use the search bar to find movies by title
 - **Filters**: Select genres and sort by various criteria (popularity, release date, rating, etc.)
 - **Movie Details**: Click on any movie card to view detailed information
-- **Navigation**: Use pagination to browse through results
+- **Navigation**: Infinite scrolling automatically loads more results
 - **Theme Toggle**: Switch between light and dark modes using the toggle in the header
 - **Responsive**: Works seamlessly on all device sizes
 

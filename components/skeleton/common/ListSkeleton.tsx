@@ -6,7 +6,7 @@ type ListSkeletonProps = {
     className?: string;
 };
 
-export const ListSkeleton = ({ count = 25, className }: ListSkeletonProps) => {
+export const ListSkeleton = ({ count = 32, className }: ListSkeletonProps) => {
     return (
         <div
             className={cn(
