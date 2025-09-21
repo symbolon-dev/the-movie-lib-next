@@ -1,3 +1,5 @@
+//TODO: Replace colors with Tailwind CSS variables
+
 import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Skeleton } from '@/components/ui/skeleton';

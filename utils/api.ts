@@ -47,10 +47,16 @@ const TMDBApi = async () => {
         const sortBy = options?.sortBy ?? 'popularity.desc';
         const withGenres = options?.withGenres ?? '';
 
-        return fetchFromTMDB(
-            `/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}&include_adult=false`,
-            MovieResponseSchema,
-        );
+        try {
+            return fetchFromTMDB(
+                `/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}&include_adult=false`,
+                MovieResponseSchema,
+            );
+        } catch (error) {
+            throw new Error(
+                `Error discovering movies: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            );
+        }
     };
 
     const searchMovies = async (query: string, page: number = 1) => {
@@ -74,10 +80,25 @@ const TMDBApi = async () => {
         if (!id) {
             throw new Error('Movie ID cannot be empty');
         }
-        return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
+
+        try {
+            return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
+        } catch (error) {
+            throw new Error(
+                `Error fetching movie details: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            );
+        }
     };
 
-    const fetchMovieGenres = async () => fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
+    const fetchMovieGenres = async () => {
+        try {
+            return fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
+        } catch (error) {
+            throw new Error(
+                `Error fetching movie genres: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            );
+        }
+    };
 
     return {
         fetchFromTMDB,

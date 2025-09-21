@@ -59,7 +59,6 @@ const MovieResults = () => {
             setHasHydrated(true);
         });
 
-        // Immediate check if already hydrated
         if (movieStorePersist.hasHydrated()) {
             dedupeMovies();
             setHasHydrated(true);
@@ -123,7 +122,6 @@ const MovieResults = () => {
             window.scrollTo({ top: scrollY });
             sessionStorage.removeItem(SCROLL_STORAGE_KEY);
             hasRestoredScrollRef.current = true;
-            // Auto-load bleibt deaktiviert bis Nutzer interagiert
         });
     }, [hasHydrated, movieCount]);
 

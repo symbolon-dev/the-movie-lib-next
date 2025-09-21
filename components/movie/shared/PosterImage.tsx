@@ -14,7 +14,7 @@ type PosterImageProps = {
     fallbackText?: string;
 };
 
-export const PosterImage = memo(
+const PosterImage = memo(
     ({
         path,
         title,
@@ -54,3 +54,5 @@ export const PosterImage = memo(
 );
 
 PosterImage.displayName = 'PosterImage';
+
+export { PosterImage };

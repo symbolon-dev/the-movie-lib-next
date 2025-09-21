@@ -1,3 +1,5 @@
+//TODO: Replace colors with Tailwind CSS variables
+
 'use client';
 
 import Link from 'next/link';
@@ -34,7 +36,7 @@ const ErrorMessage = ({
     return (
         <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-gradient-to-br p-4">
             <MagicCard
-                gradientColor="oklch(from var(--color-destructive) l c h / 0.33)"
+                gradientColor="oklch(62% 0.2 29)"
                 className="w-full max-w-lg p-12 text-center"
             >
                 <div className="space-y-6">

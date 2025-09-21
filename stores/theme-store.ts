@@ -7,7 +7,7 @@ type ThemeState = {
     setMode: (mode: 'light' | 'dark') => void;
 };
 
-export const useThemeStore = create<ThemeState>()(
+const useThemeStore = create<ThemeState>()(
     persist(
         (set) => ({
             mode: 'dark',
@@ -25,3 +25,5 @@ export const useThemeStore = create<ThemeState>()(
         },
     ),
 );
+
+export { useThemeStore };

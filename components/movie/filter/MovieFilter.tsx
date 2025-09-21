@@ -1,3 +1,5 @@
+//TODO: Replace colors with Tailwind CSS variables
+
 'use client';
 
 import { GenreFilter } from '@/components/movie/filter/GenreFilter';

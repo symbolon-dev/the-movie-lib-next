@@ -1,3 +1,5 @@
+//TODO: Refactor component
+
 'use client';
 
 import * as React from 'react';
@@ -139,7 +141,7 @@ const ANIMATION_CONFIGS = {
     none: {},
 };
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, size, asChild = false, animationType, ...props }, ref) => {
         const finalAnimationType = props.disabled ? 'none' : animationType || 'default';
         const animationProps = ANIMATION_CONFIGS[finalAnimationType];
@@ -189,5 +191,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         );
     },
 );
-
 Button.displayName = 'Button';
+
+export { Button };

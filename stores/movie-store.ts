@@ -1,3 +1,5 @@
+//TODO: Store Refactor: Break down large functions into smaller, reusable functions to improve readability and maintainability.
+
 import { getTime } from 'date-fns';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';

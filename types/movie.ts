@@ -7,31 +7,31 @@ import {
     MovieSchema,
 } from '@/schemas/movie';
 
-export type Movie = z.infer<typeof MovieSchema>;
-export type MovieDetail = z.infer<typeof MovieDetailSchema>;
-export type MovieResponse = z.infer<typeof MovieResponseSchema>;
-export type MovieGenre = z.infer<typeof GenreSchema>;
-export type GenreResponse = z.infer<typeof GenreResponseSchema>;
+type Movie = z.infer<typeof MovieSchema>;
+type MovieDetail = z.infer<typeof MovieDetailSchema>;
+type MovieResponse = z.infer<typeof MovieResponseSchema>;
+type MovieGenre = z.infer<typeof GenreSchema>;
+type GenreResponse = z.infer<typeof GenreResponseSchema>;
 
-export type ProductionCompany = {
+type ProductionCompany = {
     id: number;
     logo_path: string | null;
     name: string;
     origin_country: string;
 };
 
-export type ProductionCountry = {
+type ProductionCountry = {
     iso_3166_1: string;
     name: string;
 };
 
-export type SpokenLanguage = {
+type SpokenLanguage = {
     english_name: string;
     iso_639_1: string;
     name: string;
 };
 
-export type MovieSortOption =
+type MovieSortOption =
     | 'popularity.desc'
     | 'popularity.asc'
     | 'primary_release_date.desc'
@@ -47,14 +47,28 @@ export type MovieSortOption =
     | 'vote_count.asc'
     | 'vote_count.desc';
 
-export type MovieFilter = {
+type MovieFilter = {
     query: string;
     genre: string;
     sortBy: MovieSortOption;
 };
 
-export type MovieDiscoverParams = {
+type MovieDiscoverParams = {
     page?: number;
     sortBy?: MovieSortOption;
     withGenres?: string;
+};
+
+export type {
+    Movie,
+    MovieDetail,
+    MovieResponse,
+    MovieGenre,
+    GenreResponse,
+    ProductionCompany,
+    ProductionCountry,
+    SpokenLanguage,
+    MovieSortOption,
+    MovieFilter,
+    MovieDiscoverParams,
 };

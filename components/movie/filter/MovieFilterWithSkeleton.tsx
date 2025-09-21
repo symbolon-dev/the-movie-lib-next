@@ -14,7 +14,6 @@ const MovieFilterWithSkeleton = () => {
         }
     }, [genres, getGenres]);
 
-    // Show skeleton until genres are loaded
     if (!genres) {
         return <MovieFilterSkeleton />;
     }

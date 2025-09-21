@@ -14,7 +14,6 @@ const AnimatedThemeToggler = ({ className }: props) => {
     const { mode, toggleMode } = useThemeStore();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-    // Sync DOM class with store on mount and mode changes
     useEffect(() => {
         if (mode === 'dark') {
             document.documentElement.classList.add('dark');
