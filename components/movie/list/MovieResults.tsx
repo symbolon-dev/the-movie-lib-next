@@ -39,7 +39,8 @@ export const MovieResults = () => {
     const [hasHydrated, setHasHydrated] = useState(false);
 
     const displayMovies = useMemo(
-        () => (movies ? Array.from(new Map(movies.map((movie) => [movie.id, movie])).values()) : []),
+        () =>
+            movies ? Array.from(new Map(movies.map((movie) => [movie.id, movie])).values()) : [],
         [movies],
     );
     const movieCount = displayMovies.length;

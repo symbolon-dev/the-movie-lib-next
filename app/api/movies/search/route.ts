@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import TMDBApi from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
     try {
         const searchParams = request.nextUrl.searchParams;
         const query = searchParams.get('query');
@@ -19,4 +19,4 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         return handleApiError(error, 'search', 'movies');
     }
-}
+};

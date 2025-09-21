@@ -10,12 +10,14 @@ This project is a coding challenge for frontend developers to demonstrate skills
 Develop a web application that displays a movie list with search, filter, and sort functionality. Users should be able to click on movies to view detailed information.
 
 **Required Technologies:**
+
 - Framework: Next.js
 - Styling: Tailwind CSS
 - API: TMDB (The Movie Database)
 - Code Management: Git
 
 **Key Features to Implement:**
+
 - Movie list display
 - Search functionality by title
 - Filter by genres

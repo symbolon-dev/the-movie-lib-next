@@ -95,7 +95,10 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 
                 <div className="text-foreground lg:col-start-2">
                     <div className="mb-8 flex flex-wrap items-center justify-center gap-6 text-center sm:justify-start sm:text-left">
-                        <MovieRating voteAverage={movie.vote_average} voteCount={movie.vote_count} />
+                        <MovieRating
+                            voteAverage={movie.vote_average}
+                            voteCount={movie.vote_count}
+                        />
 
                         <MovieMetadata releaseDate={movie.release_date} runtime={movie.runtime} />
                     </div>

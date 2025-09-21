@@ -3,7 +3,7 @@ import { MovieDiscoverParams, MovieSortOption } from '@/types/movie';
 import TMDBApi from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
     try {
         const searchParams = request.nextUrl.searchParams;
 
@@ -19,4 +19,4 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         return handleApiError(error, 'discover', 'movies');
     }
-}
+};

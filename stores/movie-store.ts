@@ -109,7 +109,10 @@ export const useMovieStore = create<MovieState>()(
                     lastFetchParams: undefined,
                 });
 
-                if ((currentQuery === '' && query !== '') || (currentQuery !== '' && query === '')) {
+                if (
+                    (currentQuery === '' && query !== '') ||
+                    (currentQuery !== '' && query === '')
+                ) {
                     set({ movies: [] });
                 }
 
@@ -209,7 +212,9 @@ export const useMovieStore = create<MovieState>()(
                     ) {
                         const nextPage = finalPageUsed + 1;
                         const nextUrl = `/api/movies/discover?sort_by=${sortByParam}&with_genres=${genresParam}&page=${nextPage}`;
-                        const nextResponse = await fetch(nextUrl, { signal: abortController.signal });
+                        const nextResponse = await fetch(nextUrl, {
+                            signal: abortController.signal,
+                        });
 
                         if (!nextResponse.ok) {
                             throw new Error(`Error fetching movies: ${nextResponse.statusText}`);
@@ -309,20 +314,30 @@ export const useMovieStore = create<MovieState>()(
                                     const fieldMap: Record<string, () => string | number> = {
                                         title: () => movie.title.toLowerCase(),
                                         original_title: () => movie.original_title.toLowerCase(),
-                                        primary_release_date: () => getTime(new Date(movie.release_date)),
+                                        primary_release_date: () =>
+                                            getTime(new Date(movie.release_date)),
                                         popularity: () => Number(movie.popularity ?? 0),
                                         vote_average: () => Number(movie.vote_average ?? 0),
                                         vote_count: () => Number(movie.vote_count ?? 0),
                                     };
 
-                                    return fieldMap[field]?.() || String(movie[field as keyof Movie] ?? '');
+                                    return (
+                                        fieldMap[field]?.() ||
+                                        String(movie[field as keyof Movie] ?? '')
+                                    );
                                 };
 
                                 const valueA = getValue(a);
                                 const valueB = getValue(b);
 
                                 if (valueA === valueB) return 0;
-                                return isAsc ? (valueA > valueB ? 1 : -1) : valueA < valueB ? 1 : -1;
+                                return isAsc
+                                    ? valueA > valueB
+                                        ? 1
+                                        : -1
+                                    : valueA < valueB
+                                      ? 1
+                                      : -1;
                             });
                         }
 
@@ -345,7 +360,9 @@ export const useMovieStore = create<MovieState>()(
                     ) {
                         const nextPage = finalPageUsed + 1;
                         const nextUrl = `/api/movies/search?query=${encodeURIComponent(query)}&page=${nextPage}`;
-                        const nextResponse = await fetch(nextUrl, { signal: abortController.signal });
+                        const nextResponse = await fetch(nextUrl, {
+                            signal: abortController.signal,
+                        });
 
                         if (!nextResponse.ok) {
                             throw new Error(`Error searching movies: ${nextResponse.statusText}`);
@@ -432,9 +449,21 @@ export const useMovieStore = create<MovieState>()(
             },
 
             getMovies: async (): Promise<Movie[]> => {
-                const { movies, searchQuery, sortBy, selectedGenres, currentPage, lastFetchParams } = get();
+                const {
+                    movies,
+                    searchQuery,
+                    sortBy,
+                    selectedGenres,
+                    currentPage,
+                    lastFetchParams,
+                } = get();
 
-                const currentParams = JSON.stringify({ searchQuery, sortBy, selectedGenres, currentPage });
+                const currentParams = JSON.stringify({
+                    searchQuery,
+                    sortBy,
+                    selectedGenres,
+                    currentPage,
+                });
 
                 if (movies && lastFetchParams === currentParams) {
                     return movies;
@@ -449,11 +478,23 @@ export const useMovieStore = create<MovieState>()(
             },
 
             hasMoviesForCurrentParams: (): boolean => {
-                const { movies, searchQuery, sortBy, selectedGenres, currentPage, lastFetchParams } = get();
+                const {
+                    movies,
+                    searchQuery,
+                    sortBy,
+                    selectedGenres,
+                    currentPage,
+                    lastFetchParams,
+                } = get();
 
                 if (!movies) return false;
 
-                const currentParams = JSON.stringify({ searchQuery, sortBy, selectedGenres, currentPage });
+                const currentParams = JSON.stringify({
+                    searchQuery,
+                    sortBy,
+                    selectedGenres,
+                    currentPage,
+                });
                 return lastFetchParams === currentParams;
             },
 
