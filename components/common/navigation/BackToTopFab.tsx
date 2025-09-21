@@ -33,7 +33,7 @@ export const BackToTopFab = () => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.8, y: 16 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="fixed bottom-6 right-6 z-50"
+                    className="fixed right-6 bottom-6 z-50"
                 >
                     <Button
                         type="button"

@@ -59,7 +59,7 @@ export const MovieResults = () => {
     }, [hasMorePages, isLoading, loadMoreMovies]);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-6">
             {error && <ErrorMessage error={error} />}
 
             <MovieList
@@ -75,7 +75,7 @@ export const MovieResults = () => {
                 aria-live="polite"
             >
                 {hasMorePages && isLoading && currentPage > 1 && (
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground flex items-center gap-3 text-sm">
                         <LoadingSpinner size={28} />
                         <span>Loading more movies…</span>
                     </div>

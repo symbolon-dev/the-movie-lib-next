@@ -15,24 +15,22 @@ export const CardSkeleton = ({ className }: CardSkeletonProps) => {
             )}
         >
             <div className="relative h-full overflow-hidden rounded-xl">
-                {/* Poster image skeleton with aspect ratio matching movie posters */}
                 <Skeleton className="aspect-[2/3] w-full" />
 
-                {/* Overlay content skeleton at bottom */}
-                <div className="absolute inset-x-0 bottom-0 px-5 pb-6">
+                <div className="from-background/90 via-background/60 absolute inset-0 bg-gradient-to-t to-transparent" />
+
+                <div className="absolute inset-x-0 bottom-0 px-4 pb-5 sm:px-5 sm:pb-6">
                     <div className="space-y-3">
-                        {/* Movie title skeleton - 2 lines max */}
                         <div className="space-y-2">
                             <Skeleton className="h-5 w-full" />
                             <Skeleton className="h-5 w-3/4" />
                         </div>
 
-                        {/* Year and rating skeleton */}
                         <div className="flex items-center justify-between">
-                            <Skeleton className="h-4 w-12" />
-                            <div className="flex items-center gap-1">
-                                <Skeleton className="h-3.5 w-3.5" />
-                                <Skeleton className="h-4 w-6" />
+                            <Skeleton className="h-4 w-14" />
+                            <div className="flex items-center gap-1.5">
+                                <Skeleton className="h-3.5 w-3.5 rounded-full" />
+                                <Skeleton className="h-4 w-8" />
                             </div>
                         </div>
                     </div>

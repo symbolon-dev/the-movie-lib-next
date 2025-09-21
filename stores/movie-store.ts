@@ -33,6 +33,8 @@ type MovieState = {
     invalidateCache: () => void;
 };
 
+const MIN_RESULTS = 25;
+
 export const useMovieStore = create<MovieState>((set, get) => ({
     movies: undefined,
     isLoading: false,
@@ -166,23 +168,48 @@ export const useMovieStore = create<MovieState>((set, get) => ({
             }
             const movies = json as MovieResponse;
 
+            const existingMovies = get().movies || [];
+            let aggregatedMovies =
+                pageToUse === 1 ? movies.results : [...existingMovies, ...movies.results];
+            let finalPageUsed = pageToUse;
+
+            while (
+                aggregatedMovies.length < MIN_RESULTS &&
+                finalPageUsed < movies.total_pages &&
+                !abortController.signal.aborted
+            ) {
+                const nextPage = finalPageUsed + 1;
+                const nextUrl = `/api/movies/discover?sort_by=${sortByParam}&with_genres=${genresParam}&page=${nextPage}`;
+                const nextResponse = await fetch(nextUrl, { signal: abortController.signal });
+
+                if (!nextResponse.ok) {
+                    throw new Error(`Error fetching movies: ${nextResponse.statusText}`);
+                }
+
+                const nextJson = await nextResponse.json();
+                if (nextJson.error) {
+                    throw new Error(nextJson.error);
+                }
+
+                const nextMovies = nextJson as MovieResponse;
+                aggregatedMovies = [...aggregatedMovies, ...nextMovies.results];
+                finalPageUsed = nextPage;
+            }
+
             const currentParams = JSON.stringify({
                 searchQuery: get().searchQuery,
                 sortBy: sortByParam,
                 selectedGenres,
-                currentPage: pageToUse,
+                currentPage: finalPageUsed,
             });
 
-            const existingMovies = get().movies || [];
-            const newMovies =
-                pageToUse === 1 ? movies.results : [...existingMovies, ...movies.results];
-
             set({
-                movies: newMovies,
+                movies: aggregatedMovies,
                 isLoading: false,
                 totalPages: movies.total_pages,
                 totalResults: movies.total_results,
                 lastFetchParams: currentParams,
+                currentPage: finalPageUsed,
             });
         } catch (error) {
             if ((error as Error).name === 'AbortError') {
@@ -233,55 +260,94 @@ export const useMovieStore = create<MovieState>((set, get) => ({
                 throw new Error(`${json.error}${errorDetails}`);
             }
 
+            const processResults = (items: Movie[]): Movie[] => {
+                let processed = items;
+                if (selectedGenres.length > 0) {
+                    processed = processed.filter((movie) =>
+                        movie.genre_ids.some((genreId) => selectedGenres.includes(genreId)),
+                    );
+                }
+
+                if (sortBy) {
+                    const [field, direction] = sortBy.split('.');
+                    const isAsc = direction === 'asc';
+
+                    processed = [...processed].sort((a, b) => {
+                        const getValue = (movie: Movie): string | number => {
+                            const fieldMap: Record<string, () => string | number> = {
+                                title: () => movie.title.toLowerCase(),
+                                original_title: () => movie.original_title.toLowerCase(),
+                                primary_release_date: () => getTime(new Date(movie.release_date)),
+                                popularity: () => Number(movie.popularity ?? 0),
+                                vote_average: () => Number(movie.vote_average ?? 0),
+                                vote_count: () => Number(movie.vote_count ?? 0),
+                            };
+
+                            return fieldMap[field]?.() || String(movie[field as keyof Movie] ?? '');
+                        };
+
+                        const valueA = getValue(a);
+                        const valueB = getValue(b);
+
+                        if (valueA === valueB) return 0;
+                        return isAsc ? (valueA > valueB ? 1 : -1) : valueA < valueB ? 1 : -1;
+                    });
+                }
+
+                return processed;
+            };
+
             const movies = json as MovieResponse;
-            if (selectedGenres.length > 0) {
-                movies.results = movies.results.filter((movie) =>
-                    movie.genre_ids.some((genreId) => selectedGenres.includes(genreId)),
-                );
+            const baseResults = processResults(movies.results);
+
+            const existingMovies = get().movies || [];
+            let aggregatedMovies =
+                currentPage === 1 ? baseResults : [...existingMovies, ...baseResults];
+            let finalPageUsed = currentPage || 1;
+
+            while (
+                aggregatedMovies.length < MIN_RESULTS &&
+                finalPageUsed < movies.total_pages &&
+                !abortController.signal.aborted
+            ) {
+                const nextPage = finalPageUsed + 1;
+                const nextUrl = `/api/movies/search?query=${encodeURIComponent(query)}&page=${nextPage}`;
+                const nextResponse = await fetch(nextUrl, { signal: abortController.signal });
+
+                if (!nextResponse.ok) {
+                    throw new Error(`Error searching movies: ${nextResponse.statusText}`);
+                }
+
+                const nextJson = await nextResponse.json();
+                if (nextJson.error) {
+                    const errorDetails = nextJson.details ? `: ${nextJson.details}` : '';
+                    throw new Error(`${nextJson.error}${errorDetails}`);
+                }
+
+                const nextMovies = nextJson as MovieResponse;
+                const processedNext = processResults(nextMovies.results);
+                aggregatedMovies = [...aggregatedMovies, ...processedNext];
+                finalPageUsed = nextPage;
             }
 
             if (sortBy) {
-                const [field, direction] = sortBy.split('.');
-                const isAsc = direction === 'asc';
-
-                movies.results.sort((a, b) => {
-                    const getValue = (movie: Movie): string | number => {
-                        const fieldMap: Record<string, () => string | number> = {
-                            title: () => movie.title.toLowerCase(),
-                            original_title: () => movie.original_title.toLowerCase(),
-                            primary_release_date: () => getTime(new Date(movie.release_date)),
-                            popularity: () => Number(movie.popularity ?? 0),
-                            vote_average: () => Number(movie.vote_average ?? 0),
-                            vote_count: () => Number(movie.vote_count ?? 0),
-                        };
-
-                        return fieldMap[field]?.() || String(movie[field as keyof Movie] ?? '');
-                    };
-
-                    const valueA = getValue(a);
-                    const valueB = getValue(b);
-
-                    return isAsc ? (valueA > valueB ? 1 : -1) : valueA < valueB ? 1 : -1;
-                });
+                aggregatedMovies = processResults(aggregatedMovies);
             }
 
             const currentParams = JSON.stringify({
                 searchQuery: query,
                 sortBy,
                 selectedGenres,
-                currentPage,
+                currentPage: finalPageUsed,
             });
 
-            const existingMovies = get().movies || [];
-            const newMovies =
-                currentPage === 1 ? movies.results : [...existingMovies, ...movies.results];
-
             set({
-                movies: newMovies,
+                movies: aggregatedMovies,
                 isLoading: false,
                 totalPages: movies.total_pages,
                 totalResults: movies.total_results,
                 lastFetchParams: currentParams,
+                currentPage: finalPageUsed,
             });
         } catch (error) {
             if ((error as Error).name === 'AbortError') {

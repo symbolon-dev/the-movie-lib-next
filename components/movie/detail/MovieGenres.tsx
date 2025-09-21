@@ -8,7 +8,7 @@ type MovieGenresProps = {
 export const MovieGenres = ({ genres }: MovieGenresProps) => {
     return (
         <div className="mb-6">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center gap-2 md:justify-start">
                 {genres.map((genre) => (
                     <Badge key={genre.id}>{genre.name}</Badge>
                 ))}

@@ -8,7 +8,7 @@ type MovieMetadataProps = {
 
 export const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:text-base">
             <div className="flex items-center gap-1">
                 <Calendar className="text-muted-foreground h-4 w-4" />
                 <span className="font-medium">{formatDate(releaseDate)}</span>

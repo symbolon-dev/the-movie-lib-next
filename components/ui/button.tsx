@@ -50,103 +50,106 @@ const ANIMATION_CONFIGS = {
                 '0 2px 4px rgba(0, 0, 0, 0.1)',
                 '0 8px 25px rgba(59, 130, 246, 0.4)',
                 '0 12px 35px rgba(59, 130, 246, 0.6)',
-                '0 15px 40px rgba(59, 130, 246, 0.3)'
+                '0 15px 40px rgba(59, 130, 246, 0.3)',
             ],
             filter: 'brightness(1.1) saturate(1.2)',
             transition: {
                 duration: 0.6,
-                ease: "easeInOut",
-                times: [0, 0.3, 0.6, 1]
-            }
+                ease: 'easeInOut',
+                times: [0, 0.3, 0.6, 1],
+            },
         },
         whileTap: {
             scale: 0.92,
             rotate: -2,
             filter: 'brightness(0.9)',
-            transition: { duration: 0.1 }
+            transition: { duration: 0.1 },
         },
         initial: {
             scale: 1,
             rotate: 0,
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-            filter: 'brightness(1)'
-        }
+            filter: 'brightness(1)',
+        },
     },
     subtle: {
         whileHover: {
             scale: 1.02,
-            transition: { type: 'spring' as const, stiffness: 400, damping: 25 }
+            transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
         },
         whileTap: {
             scale: 0.98,
-            transition: { type: 'spring' as const, stiffness: 400, damping: 25 }
+            transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
         },
-        initial: { scale: 1 }
+        initial: { scale: 1 },
     },
     back: {
         whileHover: {
             transform: 'translateX(-2px)',
-            transition: { ease: [0, 0, 1, 1], duration: 0.1 }
+            transition: { ease: [0, 0, 1, 1], duration: 0.1 },
         },
         whileTap: {
             transform: 'translateX(-4px)',
-            transition: { ease: [0, 0, 1, 1], duration: 0.05 }
+            transition: { ease: [0, 0, 1, 1], duration: 0.05 },
         },
-        initial: { transform: 'translateX(0px)' }
+        initial: { transform: 'translateX(0px)' },
     },
     theme: {
         whileHover: {
             scale: 1.1,
             rotate: [0, -10, 10, 0],
             boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
-            transition: { duration: 0.4, ease: 'easeInOut' }
+            transition: { duration: 0.4, ease: 'easeInOut' },
         },
         whileTap: {
             scale: 0.95,
             rotate: 180,
-            transition: { duration: 0.2 }
+            transition: { duration: 0.2 },
         },
         initial: {
             scale: 1,
             rotate: 0,
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-        }
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        },
     },
     float: {
         initial: {
             scale: 1,
             y: 0,
-            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.25)'
+            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.25)',
         },
         animate: {
             y: [-4, 0, -4],
             transition: {
                 duration: 2.2,
                 repeat: Infinity,
-                ease: 'easeInOut'
-            }
+                ease: 'easeInOut',
+            },
         },
         whileHover: {
             scale: 1.08,
             y: -6,
-            transition: { type: 'spring', stiffness: 300, damping: 20 }
+            transition: { type: 'spring', stiffness: 300, damping: 20 },
         },
         whileTap: {
             scale: 0.95,
-            transition: { duration: 0.1 }
-        }
+            transition: { duration: 0.1 },
+        },
     },
-    none: {}
+    none: {},
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, size, asChild = false, animationType, ...props }, ref) => {
-        const finalAnimationType = props.disabled ? 'none' : (animationType || 'default');
+        const finalAnimationType = props.disabled ? 'none' : animationType || 'default';
         const animationProps = ANIMATION_CONFIGS[finalAnimationType];
 
         if (asChild && finalAnimationType !== 'none') {
             return (
-                <motion.div className="inline-block" {...(ANIMATION_CONFIGS[finalAnimationType] || {})}>
+                <motion.div
+                    className="inline-block"
+                    {...(ANIMATION_CONFIGS[finalAnimationType] || {})}
+                >
                     <Slot
                         className={cn(buttonVariants({ variant, size, className }))}
                         ref={ref}

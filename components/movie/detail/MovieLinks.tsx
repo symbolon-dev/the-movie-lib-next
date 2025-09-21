@@ -10,7 +10,7 @@ export const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
 
     return (
         <div className="mt-8">
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 {homepage && (
                     <Button asChild variant="outline-primary">
                         <a href={homepage} target="_blank" rel="noopener noreferrer">

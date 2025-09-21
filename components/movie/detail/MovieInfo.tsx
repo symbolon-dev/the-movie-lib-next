@@ -33,7 +33,7 @@ export const MovieInfo = ({
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
                 <InfoSection
                     title="Production"
                     content={companies}

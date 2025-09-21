@@ -11,12 +11,14 @@ export const InfoSection = ({ title, content, icon, visible = true }: InfoSectio
     if (!visible || !content) return undefined;
 
     return (
-        <div className="info-section">
-            <h3 className="text-foreground mb-2 flex items-center gap-2 text-lg font-semibold">
+        <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
+            <h3 className="text-foreground mb-2 flex items-center gap-2 text-base font-semibold sm:text-lg">
                 {icon}
                 {title}
             </h3>
-            <div className="text-muted-foreground">{content}</div>
+            <div className="text-muted-foreground text-sm leading-relaxed sm:text-base">
+                {content}
+            </div>
         </div>
     );
 };

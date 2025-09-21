@@ -15,7 +15,7 @@ export const LoadingSpinner = ({ size = 32, className }: LoadingSpinnerProps) =>
             aria-live="polite"
             aria-label="Loading"
             className={cn(
-                'inline-block rounded-full border-2 border-muted border-t-primary',
+                'border-muted border-t-primary inline-block rounded-full border-2',
                 className,
             )}
             style={{ width: size, height: size }}

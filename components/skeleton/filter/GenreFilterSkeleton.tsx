@@ -14,13 +14,16 @@ const GENRE_WIDTHS = [
 export const GenreFilterSkeleton = ({ className = '', count = 19 }: GenreFilterSkeletonProps) => {
     return (
         <div className={cn('flex flex-wrap gap-2', className)}>
-            {Array.from({ length: count }).map((_, index) => (
-                <Skeleton
-                    key={index}
-                    className="h-[22px] rounded-full px-3 py-1"
-                    style={{ width: `${GENRE_WIDTHS[index % GENRE_WIDTHS.length]}px` }}
-                />
-            ))}
+            {Array.from({ length: count }).map((_, index) => {
+                const width = GENRE_WIDTHS[index % GENRE_WIDTHS.length];
+                return (
+                    <Skeleton
+                        key={index}
+                        className="h-[26px] min-w-[72px] basis-[calc(50%-0.5rem)] rounded-full px-4 py-2 sm:basis-auto"
+                        style={{ maxWidth: `${width}px`, flexGrow: 1 }}
+                    />
+                );
+            })}
         </div>
     );
 };
