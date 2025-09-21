@@ -17,8 +17,8 @@ export default function MovieError({ error, reset }: ErrorProps) {
     }, [error]);
 
     return (
-        <div className="from-muted to-card min-h-screen bg-gradient-to-b px-4 py-10 md:px-8">
-            <div className="container mx-auto">
+        <div className="from-muted to-card bg-gradient-to-b px-4 md:px-8">
+            <div className="container mx-auto min-h-[calc(100dvh-5rem)] py-10">
                 <BackButton href="/" label="Back" className="mb-6" />
 
                 <div className="flex items-center justify-center">

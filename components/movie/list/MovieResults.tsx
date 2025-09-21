@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
-import { Button } from '@/components/ui/button';
+import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
+import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
 import { useMovieStore } from '@/stores/movie-store';
 import { MovieList } from './MovieList';
 
@@ -18,6 +19,8 @@ export const MovieResults = () => {
         fetchMovies,
     } = useMovieStore();
 
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
         if (!hasMoviesForCurrentParams()) {
             fetchMovies();
@@ -25,6 +28,35 @@ export const MovieResults = () => {
     }, [hasMoviesForCurrentParams, fetchMovies]);
 
     const hasMorePages = currentPage < totalPages;
+
+    useEffect(() => {
+        if (!hasMorePages) return;
+
+        const sentinel = sentinelRef.current;
+        if (!sentinel) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const [entry] = entries;
+                if (!entry?.isIntersecting) return;
+
+                if (!isLoading) {
+                    void loadMoreMovies();
+                }
+            },
+            {
+                // Trigger loading slightly before the sentinel is fully visible
+                rootMargin: '200px 0px',
+                threshold: 0.1,
+            },
+        );
+
+        observer.observe(sentinel);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [hasMorePages, isLoading, loadMoreMovies]);
 
     return (
         <div className="flex flex-col">
@@ -37,19 +69,20 @@ export const MovieResults = () => {
                 }
             />
 
-            {hasMorePages && (
-                <div className="my-8 flex justify-center">
-                    <Button
-                        onClick={loadMoreMovies}
-                        disabled={isLoading}
-                        variant="outline"
-                        size="lg"
-                        animationType="subtle"
-                    >
-                        {isLoading ? 'Loading...' : 'Load More Movies'}
-                    </Button>
-                </div>
-            )}
+            <div
+                ref={sentinelRef}
+                className="my-8 flex min-h-[3rem] items-center justify-center"
+                aria-live="polite"
+            >
+                {hasMorePages && isLoading && currentPage > 1 && (
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <LoadingSpinner size={28} />
+                        <span>Loading more movies…</span>
+                    </div>
+                )}
+            </div>
+
+            <BackToTopFab />
         </div>
     );
 };

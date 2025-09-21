@@ -3,8 +3,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
     return (
-        <div className="min-h-screen px-4 py-10 md:px-8">
-            <div className="container mx-auto">
+        <div className="px-4 md:px-8">
+            <div className="container mx-auto min-h-[calc(100dvh-5rem)] py-10">
                 <BackButton href="/" label="Back" className="mb-6" />
 
                 <div className="mb-8">

@@ -18,12 +18,14 @@ export const buttonVariants = cva(
                 secondary: 'bg-secondary text-secondary-foreground shadow-sm',
                 ghost: 'bg-transparent',
                 link: 'text-primary underline-offset-4 hover:underline',
+                fab: 'rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30',
             },
             size: {
                 default: 'h-9 px-4 py-2',
                 sm: 'h-8 rounded-md px-3 text-xs',
                 lg: 'h-10 rounded-md px-8',
                 icon: 'h-9 w-9',
+                fab: 'h-14 w-14 rounded-full text-lg',
             },
         },
         defaultVariants: {
@@ -36,7 +38,7 @@ export const buttonVariants = cva(
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
-        animationType?: 'default' | 'subtle' | 'back' | 'theme' | 'none';
+        animationType?: 'default' | 'subtle' | 'back' | 'theme' | 'float' | 'none';
     };
 
 const ANIMATION_CONFIGS = {
@@ -108,6 +110,30 @@ const ANIMATION_CONFIGS = {
             scale: 1,
             rotate: 0,
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+        }
+    },
+    float: {
+        initial: {
+            scale: 1,
+            y: 0,
+            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.25)'
+        },
+        animate: {
+            y: [-4, 0, -4],
+            transition: {
+                duration: 2.2,
+                repeat: Infinity,
+                ease: 'easeInOut'
+            }
+        },
+        whileHover: {
+            scale: 1.08,
+            y: -6,
+            transition: { type: 'spring', stiffness: 300, damping: 20 }
+        },
+        whileTap: {
+            scale: 0.95,
+            transition: { duration: 0.1 }
         }
     },
     none: {}
