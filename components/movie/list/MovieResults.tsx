@@ -32,7 +32,9 @@ export const MovieResults = () => {
 
             <MovieList
                 movies={movies ?? []}
-                isLoading={(isLoading && currentPage === 1) || (!movies && !hasMoviesForCurrentParams())}
+                isLoading={
+                    (isLoading && currentPage === 1) || (!movies && !hasMoviesForCurrentParams())
+                }
             />
 
             {hasMorePages && (
@@ -42,6 +44,7 @@ export const MovieResults = () => {
                         disabled={isLoading}
                         variant="outline"
                         size="lg"
+                        animationType="subtle"
                     >
                         {isLoading ? 'Loading...' : 'Load More Movies'}
                     </Button>

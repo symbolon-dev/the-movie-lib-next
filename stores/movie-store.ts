@@ -68,12 +68,19 @@ export const useMovieStore = create<MovieState>((set, get) => ({
     },
 
     setSearchQuery: (query: string) => {
+        const currentQuery = get().searchQuery;
+
         set({
             searchQuery: query,
             currentPage: 1,
-            movies: [], // Clear movies when search changes
             lastFetchParams: undefined, // Clear cache
         });
+
+        // Only clear movies if the query actually changed and we're switching between search/discover
+        if ((currentQuery === '' && query !== '') || (currentQuery !== '' && query === '')) {
+            set({ movies: [] });
+        }
+
         get().fetchMovies();
     },
 

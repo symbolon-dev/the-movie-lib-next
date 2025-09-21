@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import Link from 'next/link';
+import { Star } from 'lucide-react';
 import { PosterImage } from '@/components/movie/shared/PosterImage';
-import { Card, CardContent } from '@/components/ui/card';
-import { MagicCard } from '@/components/ui/magic-card';
+import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useMovieStore } from '@/stores/movie-store';
 import { Movie } from '@/types/movie';
@@ -16,6 +16,7 @@ type MovieCardProps = {
 export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const invalidateCache = useMovieStore((state) => state.invalidateCache);
     const releaseYear = formatYear(movie.release_date);
+    const rating = (movie.vote_average ?? 0).toFixed(1);
 
     const handleClick = () => {
         // Invalidate cache so loading state triggers when returning
@@ -23,60 +24,49 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     };
 
     return (
-        <MagicCard
-            gradientColor="#0EA5E955"
+        <Card
             className={cn(
-                'h-full cursor-pointer transition-transform duration-300 hover:scale-105',
+                'border-primary/30 shadow-primary/10 focus-within:ring-primary/60 focus-within:ring-offset-background relative h-full cursor-pointer rounded-xl border shadow-lg transition-transform duration-300 focus-within:scale-[1.02] focus-within:ring-2 focus-within:ring-offset-2 hover:scale-[1.02]',
                 className,
             )}
         >
             <Link
                 href={`/movies/${movie.id}`}
-                className="block h-full"
+                className="group relative block h-full rounded-xl focus:outline-none"
                 aria-label={`View details for ${movie.title}`}
                 onClick={handleClick}
             >
-                <Card className="group flex h-full flex-col overflow-hidden border-none bg-transparent shadow-none">
-                    <div className="relative flex overflow-hidden">
-                        <PosterImage
-                            path={movie.poster_path ?? undefined}
-                            title={movie.title}
-                            className="size-full"
-                        />
-                    </div>
+                <div className="round relative h-full overflow-hidden rounded-xl">
+                    <PosterImage
+                        path={movie.poster_path ?? undefined}
+                        title={movie.title}
+                        className="transition-transform duration-500 ease-out group-focus-within:-translate-y-2 group-focus-within:scale-105 group-hover:-translate-y-2 group-hover:scale-105"
+                    />
 
-                    <CardContent className="flex flex-col p-4">
-                        <div className="mb-2 h-16">
-                            <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg font-bold transition-colors">
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 transition-opacity duration-500 ease-out group-focus-within:opacity-100 group-hover:opacity-100" />
+
+                    <div className="absolute inset-x-0 bottom-0 translate-y-full px-5 pb-6 transition-transform duration-500 ease-out group-focus-within:translate-y-0 group-hover:translate-y-0">
+                        <div className="space-y-3">
+                            <h3 className="line-clamp-2 text-lg font-semibold text-white drop-shadow-sm">
                                 {movie.title}
                             </h3>
-                        </div>
 
-                        <div className="mb-2 h-6">
-                            <p className="text-muted-foreground text-sm font-medium">{releaseYear}</p>
-                        </div>
-
-                        <div className="mb-3 h-12">
-                            <p className="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-                                {movie.overview ?? 'No description available'}
-                            </p>
-                        </div>
-
-                        <div className="border-border border-t pt-3">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <div className="bg-primary h-2 w-2 rounded-full"></div>
-                                    <span className="text-foreground text-sm font-medium">Rating</span>
-                                </div>
-                                <span className="text-primary text-lg font-bold">
-                                    {movie.vote_average.toFixed(1)}
+                            <div className="flex items-center justify-between text-sm text-white/80">
+                                <span>{releaseYear ?? '—'}</span>
+                                <span className="flex items-center gap-1 text-white/80">
+                                    <Star className="size-3.5" aria-hidden="true" />
+                                    <span className="text-sm font-medium">{rating}</span>
                                 </span>
                             </div>
                         </div>
-                    </CardContent>
-                </Card>
+                    </div>
+                </div>
+
+                <span className="sr-only">
+                    {`${movie.title} - Release ${releaseYear ?? 'unknown'}, Rating ${rating}`}
+                </span>
             </Link>
-        </MagicCard>
+        </Card>
     );
 });
 

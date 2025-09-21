@@ -1,4 +1,4 @@
-import { Clock } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 import { formatDate, formatRuntime } from '@/utils/formatter';
 
 type MovieMetadataProps = {
@@ -8,18 +8,18 @@ type MovieMetadataProps = {
 
 export const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
     return (
-        <>
-            <div className="flex items-center gap-2">
-                <span className="text-muted-foreground font-semibold">Release: </span>
-                <span>{formatDate(releaseDate)}</span>
+        <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+                <Calendar className="text-muted-foreground h-4 w-4" />
+                <span className="font-medium">{formatDate(releaseDate)}</span>
             </div>
 
             {runtime && runtime > 0 && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                     <Clock className="text-muted-foreground h-4 w-4" />
-                    <span>{formatRuntime(runtime)}</span>
+                    <span className="font-medium">{formatRuntime(runtime)}</span>
                 </div>
             )}
-        </>
+        </div>
     );
 };

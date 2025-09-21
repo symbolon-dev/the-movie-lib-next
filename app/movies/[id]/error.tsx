@@ -27,8 +27,8 @@ export default function MovieError({ error, reset }: ErrorProps) {
                         <AlertTitle>Failed to load movie</AlertTitle>
                         <AlertDescription>
                             <p className="mb-4">
-                                We couldn't load the movie details. This might be due to an invalid
-                                movie ID or a temporary server issue.
+                                We couldn&apos;t load the movie details. This might be due to an
+                                invalid movie ID or a temporary server issue.
                             </p>
                             <div className="flex gap-2">
                                 <Button

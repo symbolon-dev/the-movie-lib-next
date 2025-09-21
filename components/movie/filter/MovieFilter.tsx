@@ -3,8 +3,8 @@
 import { GenreFilter } from '@/components/movie/filter/GenreFilter';
 import { SearchBar } from '@/components/movie/filter/SearchBar';
 import { SortSelect } from '@/components/movie/filter/SortSelect';
-import { MagicCard } from '@/components/ui/magic-card';
 import { Button } from '@/components/ui/button';
+import { MagicCard } from '@/components/ui/magic-card';
 import { useMovieStore } from '@/stores/movie-store';
 
 export const MovieFilter = () => {
@@ -35,10 +35,11 @@ export const MovieFilter = () => {
                     <Button
                         onClick={() => resetFilters()}
                         variant="outline"
-                        className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
+                        className="w-full"
+                        animationType="subtle"
                         disabled={!hasActiveFilters}
                     >
-                        Reset All Filters
+                        Reset Filters
                     </Button>
                 </div>
             </div>

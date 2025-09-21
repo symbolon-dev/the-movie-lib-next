@@ -27,7 +27,7 @@ export const PosterImage = memo(
     }: PosterImageProps) => {
         return (
             <div
-                className={`relative ${aspectRatio !== 'auto' ? `aspect-[${aspectRatio}]` : ''} ${className}`}
+                className={`relative overflow-hidden rounded-xl ${aspectRatio !== 'auto' ? `aspect-[${aspectRatio}]` : ''} ${className}`}
             >
                 {path ? (
                     <Image

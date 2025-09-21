@@ -1,5 +1,5 @@
-import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { PosterImage } from '@/components/movie/shared/PosterImage';
+import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
 
 type MoviePosterProps = {
     posterPath: string | undefined;
@@ -11,8 +11,8 @@ export const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
         <NeonGradientCard
             className="max-w-sm"
             neonColors={{
-                firstColor: "#61DAFB",
-                secondColor: "#E2E8F0"
+                firstColor: '#61DAFB',
+                secondColor: '#E2E8F0',
             }}
         >
             <PosterImage

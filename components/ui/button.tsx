@@ -1,20 +1,22 @@
+'use client';
+
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 export const buttonVariants = cva(
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer',
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-70 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer',
     {
         variants: {
             variant: {
-                default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-                destructive:
-                    'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-                outline:
-                    'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-                secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-                ghost: 'hover:bg-accent hover:text-accent-foreground',
+                default: 'bg-primary text-primary-foreground shadow',
+                destructive: 'bg-destructive text-destructive-foreground shadow-sm',
+                outline: 'border border-input bg-background shadow-sm',
+                'outline-primary': 'border border-primary text-primary bg-background shadow-sm',
+                secondary: 'bg-secondary text-secondary-foreground shadow-sm',
+                ghost: 'bg-transparent',
                 link: 'text-primary underline-offset-4 hover:underline',
             },
             size: {
@@ -34,17 +36,129 @@ export const buttonVariants = cva(
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
+        animationType?: 'default' | 'subtle' | 'back' | 'theme' | 'none';
     };
 
+const ANIMATION_CONFIGS = {
+    default: {
+        whileHover: {
+            scale: [1, 1.05, 1.02, 1.05],
+            rotate: [0, 2, -1, 0],
+            boxShadow: [
+                '0 2px 4px rgba(0, 0, 0, 0.1)',
+                '0 8px 25px rgba(59, 130, 246, 0.4)',
+                '0 12px 35px rgba(59, 130, 246, 0.6)',
+                '0 15px 40px rgba(59, 130, 246, 0.3)'
+            ],
+            filter: 'brightness(1.1) saturate(1.2)',
+            transition: {
+                duration: 0.6,
+                ease: "easeInOut",
+                times: [0, 0.3, 0.6, 1]
+            }
+        },
+        whileTap: {
+            scale: 0.92,
+            rotate: -2,
+            filter: 'brightness(0.9)',
+            transition: { duration: 0.1 }
+        },
+        initial: {
+            scale: 1,
+            rotate: 0,
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            filter: 'brightness(1)'
+        }
+    },
+    subtle: {
+        whileHover: {
+            scale: 1.02,
+            transition: { type: 'spring' as const, stiffness: 400, damping: 25 }
+        },
+        whileTap: {
+            scale: 0.98,
+            transition: { type: 'spring' as const, stiffness: 400, damping: 25 }
+        },
+        initial: { scale: 1 }
+    },
+    back: {
+        whileHover: {
+            transform: 'translateX(-2px)',
+            transition: { ease: [0, 0, 1, 1], duration: 0.1 }
+        },
+        whileTap: {
+            transform: 'translateX(-4px)',
+            transition: { ease: [0, 0, 1, 1], duration: 0.05 }
+        },
+        initial: { transform: 'translateX(0px)' }
+    },
+    theme: {
+        whileHover: {
+            scale: 1.1,
+            rotate: [0, -10, 10, 0],
+            boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+            transition: { duration: 0.4, ease: 'easeInOut' }
+        },
+        whileTap: {
+            scale: 0.95,
+            rotate: 180,
+            transition: { duration: 0.2 }
+        },
+        initial: {
+            scale: 1,
+            rotate: 0,
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+        }
+    },
+    none: {}
+};
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
-        const Comp = asChild ? Slot : 'button';
+    ({ className, variant, size, asChild = false, animationType, ...props }, ref) => {
+        const finalAnimationType = props.disabled ? 'none' : (animationType || 'default');
+        const animationProps = ANIMATION_CONFIGS[finalAnimationType];
+
+        if (asChild && finalAnimationType !== 'none') {
+            return (
+                <motion.div className="inline-block" {...(ANIMATION_CONFIGS[finalAnimationType] || {})}>
+                    <Slot
+                        className={cn(buttonVariants({ variant, size, className }))}
+                        ref={ref}
+                        {...props}
+                    />
+                </motion.div>
+            );
+        }
+
+        if (asChild) {
+            return (
+                <Slot
+                    className={cn(buttonVariants({ variant, size, className }))}
+                    ref={ref}
+                    {...props}
+                />
+            );
+        }
+
+        if (finalAnimationType === 'none') {
+            return (
+                <button
+                    className={cn(buttonVariants({ variant, size, className }))}
+                    ref={ref}
+                    {...props}
+                />
+            );
+        }
+
         return (
-            <Comp
+            <motion.button
                 className={cn(buttonVariants({ variant, size, className }))}
                 ref={ref}
+                {...animationProps}
                 {...props}
             />
         );
     },
 );
+
+Button.displayName = 'Button';

@@ -72,9 +72,10 @@ export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => 
         <Button
             ref={buttonRef}
             onClick={changeTheme}
-            variant="outline"
+            variant="outline-primary"
             size="icon"
-            className={`border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 hover:rotate-12 ${className}`}
+            animationType="theme"
+            className={className}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         >
             {isDark ? <SunDim className="h-4 w-4" /> : <Moon className="h-4 w-4" />}

@@ -31,8 +31,8 @@
   --color-card-foreground: oklch(15% 0 0);
   --color-popover: oklch(100% 0 0);
   --color-popover-foreground: oklch(15% 0 0);
-  --color-primary: oklch(75% 0.12 195);
-  --color-primary-foreground: oklch(15% 0 0);
+  --color-primary: oklch(45% 0.15 220);
+  --color-primary-foreground: oklch(98% 0 0);
   --color-secondary: oklch(94% 0 0);
   --color-secondary-foreground: oklch(20% 0 0);
   --color-muted: oklch(94% 0 0);
@@ -43,7 +43,7 @@
   --color-destructive-foreground: oklch(98% 0 0);
   --color-border: oklch(88% 0 0);
   --color-input: oklch(88% 0 0);
-  --color-ring: oklch(75% 0.12 195);
+  --color-ring: oklch(45% 0.15 220);
   --color-chart-1: oklch(75% 0.12 195);
   --color-chart-2: oklch(55% 0.12 164);
   --color-chart-3: oklch(45% 0.08 231);

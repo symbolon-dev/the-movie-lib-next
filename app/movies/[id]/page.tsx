@@ -11,8 +11,7 @@ type DetailProps = {
     params: Promise<{ id: string }>;
 };
 
-const MOVIE_REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
-export const revalidate = MOVIE_REVALIDATE_TIME;
+export const revalidate = 86400; // 24 hours
 
 export async function generateStaticParams() {
     try {
@@ -56,7 +55,7 @@ const getMovie = async (id: string) => {
                 accept: 'application/json',
                 Authorization: `Bearer ${API_KEY}`,
             },
-            next: { revalidate: MOVIE_REVALIDATE_TIME },
+            next: { revalidate: 86400 },
         });
 
         if (!response.ok) {
@@ -110,6 +109,8 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 
                         <MovieGenres genres={movie.genres} />
 
+                        <hr className="border-border mb-8" />
+
                         <MovieInfo
                             overview={movie.overview}
                             productionCompanies={movie.production_companies}
@@ -118,6 +119,8 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
                             budget={movie.budget}
                             revenue={movie.revenue}
                         />
+
+                        <hr className="border-border mt-8 mb-6" />
 
                         <MovieLinks homepage={movie.homepage} imdbId={movie.imdb_id} />
                     </div>

@@ -38,12 +38,8 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
     }, [query, searchQuery, setSearchQuery]);
 
     useEffect(() => {
-        if (searchQuery === query) {
-            return;
-        }
-
         setQuery(searchQuery);
-    }, [query, searchQuery]);
+    }, [searchQuery]);
 
     return (
         <div className={cn('relative flex items-center', className)}>

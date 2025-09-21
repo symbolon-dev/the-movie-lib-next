@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { MoonIcon } from '@radix-ui/react-icons';
-import { SunDim } from 'lucide-react';
+import { Moon, SunDim } from 'lucide-react';
 import { flushSync } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/stores/theme-store';
@@ -54,7 +53,7 @@ export const AnimatedThemeToggler = ({ className }: props) => {
     };
     return (
         <button ref={buttonRef} onClick={changeTheme} className={cn(className)}>
-            {mode === 'dark' ? <SunDim /> : <MoonIcon />}
+            {mode === 'dark' ? <SunDim /> : <Moon />}
         </button>
     );
 };

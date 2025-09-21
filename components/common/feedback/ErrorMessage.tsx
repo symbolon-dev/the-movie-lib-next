@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { AlertTriangle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { MagicCard } from '@/components/ui/magic-card';
 import { Button } from '@/components/ui/button';
+import { MagicCard } from '@/components/ui/magic-card';
 
 type ErrorMessageProps = {
     error: string;
@@ -49,10 +49,11 @@ export const ErrorMessage = ({
                     </div>
 
                     <div className="pt-4">
-                        <Button asChild className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105">
-                            <Link href={actionLink}>
-                                {actionText}
-                            </Link>
+                        <Button
+                            asChild
+                            className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
+                        >
+                            <Link href={actionLink}>{actionText}</Link>
                         </Button>
                     </div>
                 </div>
