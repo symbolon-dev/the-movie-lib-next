@@ -3,10 +3,10 @@
 import { useEffect } from 'react';
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieFilterSkeleton } from '@/components/skeleton/filter/MovieFilterSkeleton';
-import { useMovieStore } from '@/stores/movie-store';
+import { useGenreStore } from '@/stores/genre-store';
 
 const MovieFilterWithSkeleton = () => {
-    const { genres, getGenres } = useMovieStore();
+    const { genres, getGenres } = useGenreStore();
 
     useEffect(() => {
         if (!genres) {

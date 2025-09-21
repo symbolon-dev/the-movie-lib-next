@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { useMovieStore } from '@/stores/movie-store';
+import { useFilterStore } from '@/stores/filter-store';
 import { MovieSortOption } from '@/types/movie';
 
 const SORT_OPTIONS = [
@@ -31,7 +31,7 @@ type SortSelectProps = {
 };
 
 const SortSelect = ({ className = '' }: SortSelectProps) => {
-    const { sortBy, setSortBy } = useMovieStore();
+    const { sortBy, setSortBy } = useFilterStore();
 
     const handleValueChange = (value: string) => {
         setSortBy(value as MovieSortOption);

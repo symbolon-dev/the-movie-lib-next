@@ -5,10 +5,10 @@ import { SearchBar } from '@/components/movie/filter/SearchBar';
 import { SortSelect } from '@/components/movie/filter/SortSelect';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
-import { useMovieStore } from '@/stores/movie-store';
+import { useFilterStore } from '@/stores/filter-store';
 
 const MovieFilter = () => {
-    const { resetFilters, searchQuery, selectedGenres, sortBy } = useMovieStore();
+    const { resetFilters, searchQuery, selectedGenres, sortBy } = useFilterStore();
 
     const hasActiveFilters =
         searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';

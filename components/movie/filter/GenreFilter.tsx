@@ -4,14 +4,16 @@ import { useEffect } from 'react';
 import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { useMovieStore } from '@/stores/movie-store';
+import { useFilterStore } from '@/stores/filter-store';
+import { useGenreStore } from '@/stores/genre-store';
 
 type GenreFilterProps = {
     className?: string;
 };
 
 const GenreFilter = ({ className = '' }: GenreFilterProps) => {
-    const { selectedGenres, setSelectedGenres, genres, getGenres } = useMovieStore();
+    const { selectedGenres, setSelectedGenres } = useFilterStore();
+    const { genres, getGenres } = useGenreStore();
 
     const isSelected = (genreId: number) => selectedGenres.includes(genreId);
 

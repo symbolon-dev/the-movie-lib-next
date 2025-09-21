@@ -1,40 +1,25 @@
-//TODO: Store Refactor: Break down large functions into smaller, reusable functions to improve readability and maintainability.
-
 import { getTime } from 'date-fns';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { Movie, MovieDiscoverParams, MovieResponse, MovieSortOption } from '@/types/movie';
+import { Movie, MovieDiscoverParams, MovieResponse } from '@/types/movie';
 import { handleStoreError } from '@/utils/error-handler/store-error-handler';
+import { useFilterStore } from './filter-store';
+import { usePaginationStore } from './pagination-store';
+import { useCacheStore } from './cache-store';
 
 export type MovieState = {
     movies: Movie[] | undefined;
     isLoading: boolean;
     error: string | undefined;
-    sortBy: MovieSortOption;
-    selectedGenres: number[];
-    searchQuery: string;
-    genres: { id: number; name: string }[] | undefined;
-    currentPage: number;
-    totalPages: number;
-    totalResults: number;
-    lastFetchParams: string | undefined;
-    abortController: AbortController | undefined;
     dedupeMovies: () => void;
-    setSortBy: (sortOption: MovieSortOption) => void;
-    setSelectedGenres: (genres: number[]) => void;
-    setSearchQuery: (query: string) => void;
-    setPage: (page: number) => void;
+    clearMovies: () => void;
     loadMoreMovies: () => Promise<void>;
-    resetFilters: () => void;
     fetchMovies: () => Promise<void>;
     discoverMovies: (params?: MovieDiscoverParams) => Promise<void>;
     searchMovies: (query: string) => Promise<void>;
-    fetchGenres: () => Promise<void>;
-    getGenres: () => Promise<{ id: number; name: string }[] | undefined>;
     getMovies: () => Promise<Movie[]>;
     hasMoviesForCurrentParams: () => boolean;
     ensureMoviesLoaded: () => void;
-    invalidateCache: () => void;
 };
 
 const MIN_RESULTS = 25;
@@ -66,15 +51,6 @@ export const useMovieStore = create<MovieState>()(
             movies: undefined,
             isLoading: false,
             error: undefined,
-            sortBy: 'popularity.desc',
-            selectedGenres: [],
-            searchQuery: '',
-            genres: undefined,
-            currentPage: 1,
-            totalPages: 0,
-            totalResults: 0,
-            lastFetchParams: undefined,
-            abortController: undefined,
 
             dedupeMovies: () => {
                 const currentMovies = get().movies;
@@ -82,79 +58,27 @@ export const useMovieStore = create<MovieState>()(
                 set({ movies: dedupeMoviesById(currentMovies) });
             },
 
-            setSortBy: (sortOption: MovieSortOption) => {
-                set({
-                    sortBy: sortOption,
-                    currentPage: 1,
-                    movies: [],
-                    lastFetchParams: undefined,
-                });
-                get().fetchMovies();
+            clearMovies: () => {
+                set({ movies: undefined });
             },
 
-            setSelectedGenres: (genres: number[]) => {
-                set({
-                    selectedGenres: genres,
-                    currentPage: 1,
-                    movies: [],
-                    lastFetchParams: undefined,
-                });
-                get().fetchMovies();
-            },
-
-            setSearchQuery: (query: string) => {
-                const currentQuery = get().searchQuery;
-
-                set({
-                    searchQuery: query,
-                    currentPage: 1,
-                    lastFetchParams: undefined,
-                });
-
-                if (
-                    (currentQuery === '' && query !== '') ||
-                    (currentQuery !== '' && query === '')
-                ) {
-                    set({ movies: [] });
-                }
-
-                get().fetchMovies();
-            },
-
-            setPage: (page: number) => {
-                set({
-                    currentPage: page,
-                    lastFetchParams: undefined,
-                });
-                get().fetchMovies();
-            },
 
             loadMoreMovies: async () => {
-                const { currentPage, totalPages } = get();
-                if (currentPage < totalPages) {
-                    set({ currentPage: currentPage + 1 });
+                const paginationStore = usePaginationStore.getState();
+                if (paginationStore.canLoadMore()) {
+                    paginationStore.setPage(paginationStore.getNextPage());
                     await get().fetchMovies();
                 }
             },
 
-            resetFilters: () => {
-                set({
-                    searchQuery: '',
-                    selectedGenres: [],
-                    sortBy: 'popularity.desc',
-                    currentPage: 1,
-                    movies: [],
-                    lastFetchParams: undefined,
-                });
-                get().fetchMovies();
-            },
 
             fetchMovies: async () => {
                 if (get().hasMoviesForCurrentParams()) {
                     return;
                 }
 
-                const { searchQuery } = get();
+                const filterStore = useFilterStore.getState();
+                const { searchQuery } = filterStore;
 
                 if (searchQuery && searchQuery.trim().length > 0) {
                     return get().searchMovies(searchQuery);
@@ -164,20 +88,21 @@ export const useMovieStore = create<MovieState>()(
 
             discoverMovies: async (params?: MovieDiscoverParams) => {
                 try {
-                    const { abortController: existingController } = get();
-                    if (existingController) {
-                        existingController.abort();
-                    }
+                    const cacheStore = useCacheStore.getState();
+                    cacheStore.abortCurrentRequest();
 
                     const abortController = new AbortController();
+                    cacheStore.setAbortController(abortController);
 
                     set({
                         isLoading: true,
                         error: undefined,
-                        abortController,
                     });
 
-                    const { sortBy, selectedGenres, currentPage } = get();
+                    const filterStore = useFilterStore.getState();
+                    const paginationStore = usePaginationStore.getState();
+                    const { sortBy, selectedGenres } = filterStore;
+                    const { currentPage } = paginationStore;
 
                     const sortByParam = params?.sortBy || sortBy;
                     const genresParam = selectedGenres.length > 0 ? selectedGenres.join(',') : '';
@@ -185,10 +110,7 @@ export const useMovieStore = create<MovieState>()(
 
                     const url = `/api/movies/discover?sort_by=${sortByParam}&with_genres=${genresParam}&page=${pageToUse}`;
 
-                    const [response] = await Promise.all([
-                        fetch(url, { signal: abortController.signal }),
-                        new Promise((resolve) => setTimeout(resolve, 800)),
-                    ]);
+                    const response = await fetch(url, { signal: abortController.signal });
 
                     if (!response.ok) {
                         throw new Error(`Error fetching movies: ${response.statusText}`);
@@ -236,26 +158,28 @@ export const useMovieStore = create<MovieState>()(
                     }
 
                     const currentParams = JSON.stringify({
-                        searchQuery: get().searchQuery,
+                        searchQuery: filterStore.searchQuery,
                         sortBy: sortByParam,
                         selectedGenres,
                         currentPage: finalPageUsed,
                     });
 
+                    paginationStore.setPage(finalPageUsed);
+                    paginationStore.setPaginationData(movies.total_pages, movies.total_results);
+                    cacheStore.setLastFetchParams(currentParams);
+                    cacheStore.setAbortController(undefined);
+
                     set({
                         movies: aggregatedMovies,
                         isLoading: false,
-                        totalPages: movies.total_pages,
-                        totalResults: movies.total_results,
-                        lastFetchParams: currentParams,
-                        currentPage: finalPageUsed,
-                        abortController: undefined,
                     });
                 } catch (error) {
                     if ((error as Error).name === 'AbortError') {
                         return;
                     }
-                    set({ isLoading: false, abortController: undefined });
+                    const cacheStore = useCacheStore.getState();
+                    cacheStore.setAbortController(undefined);
+                    set({ isLoading: false });
                     handleStoreError(error, 'fetch movies', set);
                 }
             },
@@ -266,28 +190,26 @@ export const useMovieStore = create<MovieState>()(
                 }
 
                 try {
-                    const { abortController: existingController } = get();
-                    if (existingController) {
-                        existingController.abort();
-                    }
+                    const cacheStore = useCacheStore.getState();
+                    cacheStore.abortCurrentRequest();
 
                     const abortController = new AbortController();
+                    cacheStore.setAbortController(abortController);
 
                     set({
                         isLoading: true,
                         error: undefined,
-                        abortController,
                     });
 
-                    const { selectedGenres, sortBy, currentPage } = get();
+                    const filterStore = useFilterStore.getState();
+                    const paginationStore = usePaginationStore.getState();
+                    const { selectedGenres, sortBy } = filterStore;
+                    const { currentPage } = paginationStore;
 
                     const pageParam = currentPage ? `&page=${currentPage}` : '';
                     const url = `/api/movies/search?query=${encodeURIComponent(query)}${pageParam}`;
 
-                    const [response] = await Promise.all([
-                        fetch(url, { signal: abortController.signal }),
-                        new Promise((resolve) => setTimeout(resolve, 800)),
-                    ]);
+                    const response = await fetch(url, { signal: abortController.signal });
 
                     if (!response.ok) {
                         throw new Error(`Error searching movies: ${response.statusText}`);
@@ -396,78 +318,41 @@ export const useMovieStore = create<MovieState>()(
                         currentPage: finalPageUsed,
                     });
 
+                    paginationStore.setPage(finalPageUsed);
+                    paginationStore.setPaginationData(movies.total_pages, movies.total_results);
+                    cacheStore.setLastFetchParams(currentParams);
+                    cacheStore.setAbortController(undefined);
+
                     set({
                         movies: aggregatedMovies,
                         isLoading: false,
-                        totalPages: movies.total_pages,
-                        totalResults: movies.total_results,
-                        lastFetchParams: currentParams,
-                        currentPage: finalPageUsed,
-                        abortController: undefined,
                     });
                 } catch (error) {
                     if ((error as Error).name === 'AbortError') {
                         return;
                     }
-                    set({ isLoading: false, abortController: undefined });
+                    const cacheStore = useCacheStore.getState();
+                    cacheStore.setAbortController(undefined);
+                    set({ isLoading: false });
                     handleStoreError(error, 'search movies', set);
                 }
             },
 
-            fetchGenres: async () => {
-                try {
-                    set({
-                        isLoading: true,
-                        error: undefined,
-                    });
-
-                    const response = await fetch('/api/movies/genre');
-
-                    if (!response.ok) {
-                        throw new Error(`Error fetching genres: ${response.statusText}`);
-                    }
-
-                    const json = await response.json();
-                    if (json.error) {
-                        throw new Error(json.error);
-                    }
-
-                    set({
-                        genres: json.genres,
-                        isLoading: false,
-                    });
-                } catch (error) {
-                    set({ isLoading: false });
-                    handleStoreError(error, 'fetch genres', set);
-                }
-            },
-
-            getGenres: async (): Promise<{ id: number; name: string }[] | undefined> => {
-                if (get().genres) {
-                    return get().genres;
-                }
-                await get().fetchGenres();
-                return get().genres;
-            },
 
             getMovies: async (): Promise<Movie[]> => {
-                const {
-                    movies,
-                    searchQuery,
-                    sortBy,
-                    selectedGenres,
-                    currentPage,
-                    lastFetchParams,
-                } = get();
+                const { movies } = get();
+                const filterStore = useFilterStore.getState();
+                const paginationStore = usePaginationStore.getState();
+                const cacheStore = useCacheStore.getState();
 
                 const currentParams = JSON.stringify({
-                    searchQuery,
-                    sortBy,
-                    selectedGenres,
-                    currentPage,
+                    searchQuery: filterStore.searchQuery,
+                    sortBy: filterStore.sortBy,
+                    selectedGenres: filterStore.selectedGenres,
+                    currentPage: paginationStore.currentPage,
                 });
 
-                if (movies && lastFetchParams === currentParams) {
+                if (movies && cacheStore.hasValidCache(currentParams)) {
                     return movies;
                 }
 
@@ -480,34 +365,26 @@ export const useMovieStore = create<MovieState>()(
             },
 
             hasMoviesForCurrentParams: (): boolean => {
-                const {
-                    movies,
-                    searchQuery,
-                    sortBy,
-                    selectedGenres,
-                    currentPage,
-                    lastFetchParams,
-                } = get();
-
+                const { movies } = get();
                 if (!movies) return false;
 
+                const filterStore = useFilterStore.getState();
+                const paginationStore = usePaginationStore.getState();
+                const cacheStore = useCacheStore.getState();
+
                 const currentParams = JSON.stringify({
-                    searchQuery,
-                    sortBy,
-                    selectedGenres,
-                    currentPage,
+                    searchQuery: filterStore.searchQuery,
+                    sortBy: filterStore.sortBy,
+                    selectedGenres: filterStore.selectedGenres,
+                    currentPage: paginationStore.currentPage,
                 });
-                return lastFetchParams === currentParams;
+                return cacheStore.hasValidCache(currentParams);
             },
 
             ensureMoviesLoaded: (): void => {
                 if (!get().hasMoviesForCurrentParams()) {
                     get().fetchMovies();
                 }
-            },
-
-            invalidateCache: (): void => {
-                set({ lastFetchParams: undefined });
             },
         }),
         {
@@ -517,13 +394,6 @@ export const useMovieStore = create<MovieState>()(
             ),
             partialize: (state) => ({
                 movies: state.movies,
-                currentPage: state.currentPage,
-                totalPages: state.totalPages,
-                totalResults: state.totalResults,
-                lastFetchParams: state.lastFetchParams,
-                sortBy: state.sortBy,
-                selectedGenres: state.selectedGenres,
-                searchQuery: state.searchQuery,
             }),
             onRehydrateStorage: () => (hydratedState) => {
                 hydratedState?.dedupeMovies();

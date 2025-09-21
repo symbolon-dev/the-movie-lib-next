@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 import { PosterImage } from '@/components/movie/shared/PosterImage';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { useMovieStore } from '@/stores/movie-store';
+import { useCacheStore } from '@/stores/cache-store';
 import { Movie } from '@/types/movie';
 import { formatYear } from '@/utils/formatter';
 
@@ -14,7 +14,7 @@ type MovieCardProps = {
 };
 
 const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
-    const invalidateCache = useMovieStore((state) => state.invalidateCache);
+    const invalidateCache = useCacheStore((state) => state.invalidateCache);
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average ?? 0).toFixed(1);
 

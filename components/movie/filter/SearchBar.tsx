@@ -4,15 +4,15 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { Search, XCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { useMovieStore } from '@/stores/movie-store';
+import { useFilterStore } from '@/stores/filter-store';
 
 type SearchBarProps = {
     className?: string;
 };
 
 const SearchBar = ({ className = '' }: SearchBarProps) => {
-    const setSearchQuery = useMovieStore((state) => state.setSearchQuery);
-    const searchQuery = useMovieStore((state) => state.searchQuery);
+    const setSearchQuery = useFilterStore((state) => state.setSearchQuery);
+    const searchQuery = useFilterStore((state) => state.searchQuery);
     const [query, setQuery] = useState(searchQuery);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

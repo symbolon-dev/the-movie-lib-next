@@ -5,6 +5,7 @@ import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
 import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
 import { useMovieStore } from '@/stores/movie-store';
+import { usePaginationStore } from '@/stores/pagination-store';
 import type { MovieState } from '@/stores/movie-store';
 import { MovieList } from './MovieList';
 
@@ -13,8 +14,6 @@ const SCROLL_STORAGE_KEY = 'movie-results-scroll-position';
 const MovieResults = () => {
     const {
         movies,
-        currentPage,
-        totalPages,
         isLoading,
         error,
         loadMoreMovies,
@@ -22,6 +21,7 @@ const MovieResults = () => {
         fetchMovies,
         dedupeMovies,
     } = useMovieStore();
+    const { currentPage, totalPages } = usePaginationStore();
 
     type PersistHelpers = {
         rehydrate: () => Promise<void>;
