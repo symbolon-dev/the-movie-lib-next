@@ -11,8 +11,9 @@ type SearchBarProps = {
 };
 
 export const SearchBar = ({ className = '' }: SearchBarProps) => {
-    const { setSearchQuery } = useMovieStore();
-    const [query, setQuery] = useState('');
+    const setSearchQuery = useMovieStore((state) => state.setSearchQuery);
+    const searchQuery = useMovieStore((state) => state.searchQuery);
+    const [query, setQuery] = useState(searchQuery);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -25,12 +26,24 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
     };
 
     useEffect(() => {
+        if (query === searchQuery) {
+            return;
+        }
+
         const timer = setTimeout(() => {
             setSearchQuery(query);
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [query, setSearchQuery]);
+    }, [query, searchQuery, setSearchQuery]);
+
+    useEffect(() => {
+        if (searchQuery === query) {
+            return;
+        }
+
+        setQuery(searchQuery);
+    }, [query, searchQuery]);
 
     return (
         <div className={cn('relative flex items-center', className)}>
