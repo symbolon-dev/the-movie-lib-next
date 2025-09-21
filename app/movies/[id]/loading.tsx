@@ -1,7 +1,7 @@
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function Loading() {
+export const Loading = () => {
     return (
         <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-10 py-10">
             <div className="space-y-6">
@@ -80,4 +80,4 @@ export default function Loading() {
             </div>
         </div>
     );
-}
+};

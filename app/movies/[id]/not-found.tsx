@@ -1,6 +1,6 @@
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 
-export default function NotFound() {
+export const NotFound = () => {
     return (
         <ErrorMessage
             error="The requested movie could not be found"
@@ -10,4 +10,4 @@ export default function NotFound() {
             actionLink="/"
         />
     );
-}
+};

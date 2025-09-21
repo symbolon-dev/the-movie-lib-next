@@ -11,35 +11,9 @@ type DetailProps = {
     params: Promise<{ id: string }>;
 };
 
-export const revalidate = 86400; // 24 hours
+const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
 
-export async function generateStaticParams() {
-    try {
-        const baseUrl = process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
-            : (process.env.NEXT_APP_URL ?? 'http://localhost:3003');
-
-        const response = await fetch(
-            `${baseUrl}/api/movies/discover?sort_by=popularity.desc&page=1`,
-            { cache: 'force-cache' },
-        );
-
-        if (!response.ok) {
-            return [];
-        }
-
-        const data = await response.json();
-
-        return (
-            data.results?.slice(0, 25).map((movie: { id: number }) => ({
-                id: movie.id.toString(),
-            })) || []
-        );
-    } catch (error) {
-        console.error('Error generating static params:', error);
-        return [];
-    }
-}
+export const revalidate = REVALIDATE_TIME;
 
 const getMovie = async (id: string) => {
     try {
@@ -55,7 +29,7 @@ const getMovie = async (id: string) => {
                 accept: 'application/json',
                 Authorization: `Bearer ${API_KEY}`,
             },
-            next: { revalidate: 86400 },
+            next: { revalidate: REVALIDATE_TIME },
         });
 
         if (!response.ok) {
@@ -69,7 +43,7 @@ const getMovie = async (id: string) => {
     }
 };
 
-const MovieDetailPage = async ({ params }: DetailProps) => {
+export const MovieDetailPage = async ({ params }: DetailProps) => {
     const { id } = await params;
     if (!id) {
         notFound();
@@ -124,5 +98,3 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
         </div>
     );
 };
-
-export default MovieDetailPage;
