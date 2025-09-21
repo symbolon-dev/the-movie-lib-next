@@ -11,7 +11,7 @@ type MovieListProps = {
 
 export const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
     if (isLoading) {
-        return <ListSkeleton />;
+        return <ListSkeleton className={className} />;
     }
 
     if (movies.length === 0) {
@@ -26,12 +26,10 @@ export const MovieList = ({ movies, className = '', isLoading = false }: MovieLi
     }
 
     return (
-        <div className={className}>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                ))}
-            </div>
+        <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${className}`}>
+            {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+            ))}
         </div>
     );
 };

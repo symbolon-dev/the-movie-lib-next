@@ -36,9 +36,7 @@ export const MovieResults = () => {
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasRestoredScrollRef = useRef(false);
     const [autoLoadEnabled, setAutoLoadEnabled] = useState(false);
-    const [hasHydrated, setHasHydrated] = useState(() =>
-        movieStorePersist?.hasHydrated ? movieStorePersist.hasHydrated() : true,
-    );
+    const [hasHydrated, setHasHydrated] = useState(false);
 
     const displayMovies = useMemo(
         () => (movies ? Array.from(new Map(movies.map((movie) => [movie.id, movie])).values()) : []),
@@ -49,28 +47,24 @@ export const MovieResults = () => {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
+
         if (!movieStorePersist) {
             setHasHydrated(true);
             return;
         }
-
-        if (movieStorePersist.hasHydrated()) {
-            dedupeMovies();
-            setHasHydrated(true);
-            return;
-        }
-
-        const unsubscribeHydrate = movieStorePersist.onHydrate?.(() => {
-            setHasHydrated(false);
-        });
 
         const unsubscribeFinish = movieStorePersist.onFinishHydration?.((state) => {
             state.dedupeMovies();
             setHasHydrated(true);
         });
 
+        // Immediate check if already hydrated
+        if (movieStorePersist.hasHydrated()) {
+            dedupeMovies();
+            setHasHydrated(true);
+        }
+
         return () => {
-            unsubscribeHydrate?.();
             unsubscribeFinish?.();
         };
     }, [dedupeMovies, movieStorePersist]);
@@ -188,6 +182,7 @@ export const MovieResults = () => {
             <MovieList
                 movies={displayMovies}
                 isLoading={
+                    !hasHydrated ||
                     (isLoading && currentPage === 1) ||
                     (movieCount === 0 && !hasMoviesForCurrentParams())
                 }
