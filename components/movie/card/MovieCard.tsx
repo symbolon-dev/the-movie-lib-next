@@ -19,6 +19,14 @@ const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const rating = (movie.vote_average ?? 0).toFixed(1);
 
     const handleClick = () => {
+        // Save current scroll position before navigation
+        const scrollY = Math.max(0, Math.round(window.scrollY));
+        if (scrollY > 0) {
+            sessionStorage.setItem('movie-list-scroll-position', String(scrollY));
+        }
+        // Mark that we're navigating from movie list
+        sessionStorage.setItem('navigated-from-movie-list', 'true');
+
         invalidateCache();
     };
 
