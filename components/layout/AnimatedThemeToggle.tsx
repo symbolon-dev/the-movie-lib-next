@@ -1,48 +1,52 @@
-//TODO: Replace with Magic UI component
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Moon, SunDim } from 'lucide-react';
 import { flushSync } from 'react-dom';
-import { Button } from '@/components/ui/button';
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import { useThemeStore } from '@/stores/theme-store';
+import { applyDocumentTheme } from '@/utils/theme';
 
 type AnimatedThemeToggleProps = {
     className?: string;
 };
 
 const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
-    const { mode, toggleMode } = useThemeStore();
+    const mode = useThemeStore((state) => state.mode);
+    const toggleMode = useThemeStore((state) => state.toggleMode);
+    const hasHydrated = useThemeStore((state) => state.hasHydrated);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     useEffect(() => {
-        if (mode === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-        } else {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-        }
-    }, [mode]);
+        if (!hasHydrated) return;
+        applyDocumentTheme(mode);
+    }, [mode, hasHydrated]);
 
     const changeTheme = async () => {
-        if (!buttonRef.current || isTransitioning) return;
+        if (!buttonRef.current || isTransitioning || !hasHydrated) return;
 
-        // Check if View Transition API is supported
-        if (!document.startViewTransition) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const startViewTransition = document.startViewTransition?.bind(document);
+
+        if (!startViewTransition || prefersReducedMotion) {
             toggleMode();
             return;
         }
 
         setIsTransitioning(true);
 
-        await document.startViewTransition(() => {
-            flushSync(() => {
-                toggleMode();
-            });
-        }).ready;
+        try {
+            await startViewTransition(() => {
+                flushSync(() => {
+                    toggleMode();
+                });
+            }).ready;
+        } catch (error) {
+            console.error('Theme view transition failed', error);
+            setIsTransitioning(false);
+            toggleMode();
+            return;
+        }
 
         const { top, left, width, height } = buttonRef.current.getBoundingClientRect();
         const y = top + height / 2;
@@ -63,25 +67,23 @@ const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
             },
         );
 
-        animation.addEventListener('finish', () => {
+        const handleTransitionComplete = () => {
             setIsTransitioning(false);
-        });
+        };
+
+        animation.addEventListener('finish', handleTransitionComplete, { once: true });
+        animation.addEventListener('cancel', handleTransitionComplete, { once: true });
     };
 
-    const isDark = mode === 'dark';
-
     return (
-        <Button
+        <AnimatedThemeToggler
             ref={buttonRef}
-            onClick={changeTheme}
-            variant="outline-primary"
-            size="icon"
-            animationType="theme"
+            onToggle={changeTheme}
+            mode={mode}
             className={className}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-            {isDark ? <SunDim className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-        </Button>
+            disabled={!hasHydrated}
+            isTransitioning={isTransitioning}
+        />
     );
 };
 

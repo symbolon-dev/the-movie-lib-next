@@ -57,7 +57,7 @@ const ANIMATION_CONFIGS = {
             filter: 'brightness(1.1) saturate(1.2)',
             transition: {
                 duration: 0.6,
-                ease: 'easeInOut',
+                ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
                 times: [0, 0.3, 0.6, 1],
             },
         },
@@ -88,11 +88,11 @@ const ANIMATION_CONFIGS = {
     back: {
         whileHover: {
             transform: 'translateX(-2px)',
-            transition: { ease: [0, 0, 1, 1], duration: 0.1 },
+            transition: { ease: [0, 0, 1, 1] as [number, number, number, number], duration: 0.1 },
         },
         whileTap: {
             transform: 'translateX(-4px)',
-            transition: { ease: [0, 0, 1, 1], duration: 0.05 },
+            transition: { ease: [0, 0, 1, 1] as [number, number, number, number], duration: 0.05 },
         },
         initial: { transform: 'translateX(0px)' },
     },
@@ -101,7 +101,7 @@ const ANIMATION_CONFIGS = {
             scale: 1.1,
             rotate: [0, -10, 10, 0],
             boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
-            transition: { duration: 0.4, ease: 'easeInOut' },
+            transition: { duration: 0.4, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] },
         },
         whileTap: {
             scale: 0.95,
@@ -125,13 +125,13 @@ const ANIMATION_CONFIGS = {
             transition: {
                 duration: 2.2,
                 repeat: Infinity,
-                ease: 'easeInOut',
+                ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
             },
         },
         whileHover: {
             scale: 1.08,
             y: -6,
-            transition: { type: 'spring', stiffness: 300, damping: 20 },
+            transition: { type: 'spring' as const, stiffness: 300, damping: 20 },
         },
         whileTap: {
             scale: 0.95,
@@ -143,6 +143,17 @@ const ANIMATION_CONFIGS = {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, size, asChild = false, animationType, ...props }, ref) => {
+        const {
+            onDrag: _onDrag,
+            onDragCapture: _onDragCapture,
+            onDragEnd: _onDragEnd,
+            onDragEnter: _onDragEnter,
+            onDragLeave: _onDragLeave,
+            onDragOver: _onDragOver,
+            onDragStart: _onDragStart,
+            onDrop: _onDrop,
+            ...restProps
+        } = props;
         const finalAnimationType = props.disabled ? 'none' : animationType || 'default';
         const animationProps = ANIMATION_CONFIGS[finalAnimationType];
 
@@ -155,7 +166,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     <Slot
                         className={cn(buttonVariants({ variant, size, className }))}
                         ref={ref}
-                        {...props}
+                        {...restProps}
                     />
                 </motion.div>
             );
@@ -166,7 +177,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 <Slot
                     className={cn(buttonVariants({ variant, size, className }))}
                     ref={ref}
-                    {...props}
+                    {...restProps}
                 />
             );
         }
@@ -176,7 +187,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 <button
                     className={cn(buttonVariants({ variant, size, className }))}
                     ref={ref}
-                    {...props}
+                    {...restProps}
                 />
             );
         }
@@ -186,7 +197,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 className={cn(buttonVariants({ variant, size, className }))}
                 ref={ref}
                 {...animationProps}
-                {...props}
+                {...(restProps as Record<string, unknown>)}
             />
         );
     },
