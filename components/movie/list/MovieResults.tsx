@@ -192,7 +192,18 @@ const MovieResults = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            {error && <ErrorMessage error={error} />}
+            {error && (
+                <ErrorMessage
+                    error={error}
+                    onRetry={() => {
+                        import('@/stores/cache-store').then(({ useCacheStore }) => {
+                            const cacheStore = useCacheStore.getState();
+                            cacheStore.invalidateCache();
+                            fetchMovies();
+                        });
+                    }}
+                />
+            )}
 
             <MovieList
                 movies={displayMovies}

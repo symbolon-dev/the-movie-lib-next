@@ -6,8 +6,10 @@ export type GenreState = {
     genres: { id: number; name: string }[] | undefined;
     isLoading: boolean;
     error: string | undefined;
+    lastFetched: number | undefined;
     fetchGenres: () => Promise<void>;
     getGenres: () => Promise<{ id: number; name: string }[] | undefined>;
+    shouldRefetch: () => boolean;
 };
 
 const noopStorage: Storage = {
@@ -27,6 +29,7 @@ export const useGenreStore = create<GenreState>()(
             genres: undefined,
             isLoading: false,
             error: undefined,
+            lastFetched: undefined,
 
             fetchGenres: async () => {
                 try {
@@ -49,6 +52,7 @@ export const useGenreStore = create<GenreState>()(
                     set({
                         genres: json.genres,
                         isLoading: false,
+                        lastFetched: Date.now(),
                     });
                 } catch (error) {
                     set({ isLoading: false });
@@ -57,20 +61,31 @@ export const useGenreStore = create<GenreState>()(
             },
 
             getGenres: async (): Promise<{ id: number; name: string }[] | undefined> => {
-                if (get().genres) {
-                    return get().genres;
+                const state = get();
+                if (state.genres && !state.shouldRefetch()) {
+                    return state.genres;
                 }
                 await get().fetchGenres();
                 return get().genres;
+            },
+
+            shouldRefetch: (): boolean => {
+                const { lastFetched } = get();
+                if (!lastFetched) return true;
+
+                // Refetch after 24 hours (24 * 60 * 60 * 1000 ms)
+                const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+                return Date.now() - lastFetched > TWENTY_FOUR_HOURS;
             },
         }),
         {
             name: 'genre-store',
             storage: createJSONStorage(() =>
-                typeof window === 'undefined' ? noopStorage : sessionStorage,
+                typeof window === 'undefined' ? noopStorage : localStorage,
             ),
             partialize: (state) => ({
                 genres: state.genres,
+                lastFetched: state.lastFetched,
             }),
         },
     ),

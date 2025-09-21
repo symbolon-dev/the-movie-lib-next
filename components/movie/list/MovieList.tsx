@@ -1,6 +1,6 @@
 import { EmptyState } from '@/components/common/feedback/EmptyState';
 import { MovieCard } from '@/components/movie/card/MovieCard';
-import { ListSkeleton } from '@/components/skeleton/common/ListSkeleton';
+import { MovieListSkeleton } from '@/components/skeleton/MovieListSkeleton';
 import { Movie } from '@/types/movie';
 
 type MovieListProps = {
@@ -11,7 +11,7 @@ type MovieListProps = {
 
 const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
     if (isLoading) {
-        return <ListSkeleton className={className} />;
+        return <MovieListSkeleton className={className} />;
     }
 
     if (movies.length === 0) {

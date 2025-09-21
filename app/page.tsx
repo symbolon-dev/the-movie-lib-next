@@ -1,7 +1,25 @@
+import type { Metadata } from 'next';
 import { MovieFilterWithSkeleton } from '@/components/movie/filter/MovieFilterWithSkeleton';
 import { MovieResults } from '@/components/movie/list/MovieResults';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+    title: 'Movie Library - Discover Amazing Movies',
+    description: 'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
+    keywords: ['movies', 'films', 'cinema', 'entertainment', 'movie database', 'search movies', 'movie genres'],
+    openGraph: {
+        title: 'Movie Library - Discover Amazing Movies',
+        description: 'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
+        type: 'website',
+        siteName: 'Movie Library',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Movie Library - Discover Amazing Movies',
+        description: 'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
+    },
+};
 
 const Home = async () => {
     return (

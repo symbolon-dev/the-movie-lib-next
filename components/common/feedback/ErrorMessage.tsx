@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
@@ -12,6 +12,8 @@ type ErrorMessageProps = {
     title?: string;
     actionLink?: string;
     actionText?: string;
+    onRetry?: () => void;
+    showRetry?: boolean;
 };
 
 const ErrorMessage = ({
@@ -20,13 +22,28 @@ const ErrorMessage = ({
     title = 'Error',
     actionLink = '/',
     actionText = 'Back to Home',
+    onRetry,
+    showRetry = true,
 }: ErrorMessageProps) => {
     if (!error) return undefined;
 
     if (!fullPage) {
         return (
             <Alert variant="destructive" className="my-4">
-                <AlertDescription>{error}</AlertDescription>
+                <div className="flex items-center justify-between">
+                    <AlertDescription className="flex-1">{error}</AlertDescription>
+                    {onRetry && showRetry && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={onRetry}
+                            className="ml-4 h-8"
+                        >
+                            <RefreshCw className="h-3 w-3 mr-1" />
+                            Retry
+                        </Button>
+                    )}
+                </div>
             </Alert>
         );
     }
@@ -51,9 +68,19 @@ const ErrorMessage = ({
                         </p>
                     </div>
 
-                    <div className="pt-4">
+                    <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-center">
+                        {onRetry && showRetry && (
+                            <Button
+                                onClick={onRetry}
+                                className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
+                            >
+                                <RefreshCw className="mr-2 h-4 w-4" />
+                                Try Again
+                            </Button>
+                        )}
                         <Button
                             asChild
+                            variant={onRetry && showRetry ? "outline" : "default"}
                             className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
                         >
                             <Link href={actionLink}>{actionText}</Link>

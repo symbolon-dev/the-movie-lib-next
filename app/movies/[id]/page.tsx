@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
 import { MovieInfo } from '@/components/movie/detail/MovieInfo';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
+import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
@@ -12,6 +14,53 @@ type DetailProps = {
 const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
 
 export const revalidate = REVALIDATE_TIME;
+
+export async function generateMetadata({ params }: DetailProps): Promise<Metadata> {
+    const { id } = await params;
+
+    try {
+        const movie = await getMovie(id);
+
+        const title = `${movie.title} - Movie Library`;
+        const description = movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
+        const backdropUrl = movie.backdrop_path ? getMovieBackdropUrl(movie.backdrop_path, 'w1280') : undefined;
+
+        return {
+            title,
+            description,
+            openGraph: {
+                title: movie.title,
+                description,
+                type: 'video.movie',
+                images: backdropUrl ? [{
+                    url: backdropUrl,
+                    width: 1280,
+                    height: 720,
+                    alt: `${movie.title} backdrop`,
+                }] : [],
+                siteName: 'Movie Library',
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: movie.title,
+                description,
+                images: backdropUrl ? [backdropUrl] : [],
+            },
+            keywords: [
+                movie.title,
+                'movie',
+                'film',
+                'cinema',
+                ...movie.genres.map((g: { name: string }) => g.name),
+            ],
+        };
+    } catch (error) {
+        return {
+            title: 'Movie Not Found - Movie Library',
+            description: 'The requested movie could not be found.',
+        };
+    }
+}
 
 const getMovie = async (id: string) => {
     try {
