@@ -33,7 +33,10 @@ export const ErrorMessage = ({
 
     return (
         <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-gradient-to-br p-4">
-            <MagicCard gradientColor="#EF444455" className="w-full max-w-lg p-12 text-center">
+            <MagicCard
+                gradientColor="oklch(from var(--color-destructive) l c h / 0.33)"
+                className="w-full max-w-lg p-12 text-center"
+            >
                 <div className="space-y-6">
                     <div className="relative">
                         <div className="bg-destructive/10 mx-auto flex h-24 w-24 items-center justify-center rounded-full p-6">

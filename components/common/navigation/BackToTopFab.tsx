@@ -1,16 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const SHOW_AFTER_SCROLL = 320;
+const SHOW_AFTER_SCROLL = 320; // pixels
 
 export const BackToTopFab = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+
         const handleScroll = () => {
             setIsVisible(window.scrollY > SHOW_AFTER_SCROLL);
         };
@@ -21,32 +22,25 @@ export const BackToTopFab = () => {
     }, []);
 
     const scrollToTop = () => {
+        if (typeof window === 'undefined') return;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
-        <AnimatePresence>
-            {isVisible && (
-                <motion.div
-                    key="back-to-top-fab"
-                    initial={{ opacity: 0, scale: 0.6, y: 24 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: 16 }}
-                    transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="fixed right-6 bottom-6 z-50"
-                >
-                    <Button
-                        type="button"
-                        size="fab"
-                        variant="fab"
-                        animationType="float"
-                        onClick={scrollToTop}
-                        aria-label="Back to top"
-                    >
-                        <ArrowUp className="size-5" />
-                    </Button>
-                </motion.div>
-            )}
-        </AnimatePresence>
+        <Button
+            type="button"
+            size="fab"
+            variant="fab"
+            animationType="float"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className={`fixed right-6 bottom-6 z-50 transition-all duration-200 ease-out ${
+                isVisible
+                    ? 'translate-y-0 scale-100 opacity-100'
+                    : 'pointer-events-none translate-y-6 scale-60 opacity-0'
+            }`}
+        >
+            <ArrowUp className="size-5" />
+        </Button>
     );
 };
