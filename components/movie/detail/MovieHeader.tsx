@@ -1,57 +1,84 @@
-import Image from 'next/image';
-import { BackButton } from '@/components/common/navigation/BackButton';
-import { getMovieBackdropUrl } from '@/utils/image';
+import { PosterImage } from '@/components/movie/shared/PosterImage';
+import { MovieGenres } from '@/components/movie/detail/MovieGenres';
+import { MovieLinks } from '@/components/movie/detail/MovieLinks';
+import { MovieMetadata } from '@/components/movie/detail/MovieMetadata';
+import { MovieRating } from '@/components/movie/detail/MovieRating';
+import type { MovieGenre } from '@/types/movie';
 
 type MovieHeaderProps = {
     title: string;
     tagline: string | undefined;
-    backdropPath: string | undefined;
+    posterPath: string | undefined;
+    voteAverage: number;
+    voteCount: number;
+    releaseDate: string;
+    runtime: number | undefined;
+    genres: MovieGenre[];
+    homepage: string | undefined;
+    imdbId: string | undefined;
 };
 
-const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
-    const backdropUrl = backdropPath ? getMovieBackdropUrl(backdropPath, 'w1280') : undefined;
+const MovieHeader = ({
+    title,
+    tagline,
+    posterPath,
+    voteAverage,
+    voteCount,
+    releaseDate,
+    runtime,
+    genres,
+    homepage,
+    imdbId,
+}: MovieHeaderProps) => {
+    const hasLinks = Boolean(homepage || imdbId);
 
     return (
-        <header className="mb-10">
-            <div className="relative overflow-hidden rounded-3xl">
-                <div className="absolute inset-0">
-                    {backdropUrl ? (
-                        <Image
-                            src={backdropUrl}
-                            alt={`${title} backdrop`}
-                            fill
-                            priority
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                            className="object-cover"
-                        />
-                    ) : (
-                        <div className="from-primary/40 to-secondary/40 h-full w-full bg-gradient-to-br via-transparent" />
-                    )}
-                    <div className="from-background via-background/80 to-background/30 absolute inset-0 bg-gradient-to-t" />
-                </div>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:items-start">
+            <div className="w-full max-w-xs justify-self-center lg:justify-self-start">
+                <PosterImage
+                    path={posterPath}
+                    title={title}
+                    className="rounded-[24px] shadow-lg"
+                    sizes="(max-width: 1024px) 240px, 280px"
+                    fallbackText="No poster available"
+                />
+            </div>
 
-                <div className="absolute top-6 left-6 z-20 sm:top-10 sm:left-10">
-                    <BackButton
-                        href="/"
-                        label="Back"
-                        className="shadow-background/20 shadow-lg backdrop-blur-sm"
-                    />
-                </div>
-
-                <div className="relative z-10 px-6 py-16 sm:px-10 md:px-16 lg:py-24">
-                    <div className="max-w-3xl space-y-4">
-                        <h1 className="text-3xl leading-tight font-bold text-balance sm:text-4xl lg:text-5xl">
+                <div className="flex flex-col gap-6">
+                    <div className="space-y-3 text-center lg:text-left">
+                        <h1 className="text-foreground text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
                             {title}
                         </h1>
-                        {tagline && (
-                            <p className="text-muted-foreground text-lg italic sm:text-xl">
-                                &ldquo;{tagline}&rdquo;
-                            </p>
-                        )}
-                    </div>
+                    {tagline && (
+                        <p className="text-muted-foreground text-lg italic sm:text-xl">&ldquo;{tagline}&rdquo;</p>
+                    )}
                 </div>
+
+                <div className="flex flex-wrap items-center justify-center gap-6 text-center lg:justify-start lg:text-left">
+                    <MovieRating voteAverage={voteAverage} voteCount={voteCount} />
+
+                    <MovieMetadata releaseDate={releaseDate} runtime={runtime} />
+                </div>
+
+                {genres.length > 0 && (
+                    <MovieGenres
+                        genres={genres}
+                        className="mb-0"
+                        badgeVariant="outline"
+                        badgeClassName="border-border/60 bg-transparent"
+                    />
+                )}
+
+                {hasLinks && (
+                    <MovieLinks
+                        homepage={homepage}
+                        imdbId={imdbId}
+                        className="mt-4"
+                        buttonGroupClassName="justify-center sm:justify-start"
+                    />
+                )}
             </div>
-        </header>
+        </div>
     );
 };
 

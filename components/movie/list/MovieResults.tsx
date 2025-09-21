@@ -178,8 +178,8 @@ const MovieResults = () => {
                 }
             },
             {
-                rootMargin: '200px 0px',
-                threshold: 0.1,
+                rootMargin: '800px 0px',
+                threshold: 0,
             },
         );
 
@@ -205,7 +205,7 @@ const MovieResults = () => {
 
             <div
                 ref={sentinelRef}
-                className="my-8 flex min-h-[3rem] items-center justify-center"
+                className="-mt-32 mb-8 flex min-h-[3rem] items-center justify-center"
                 aria-live="polite"
             >
                 {hasMorePages && isLoading && currentPage > 1 && (

@@ -35,6 +35,14 @@ interface NeonGradientCardProps {
     children?: ReactNode;
 
     /**
+     * @default ""
+     * @type string
+     * @description
+     * Additional classes for the card content wrapper
+     */
+    contentClassName?: string;
+
+    /**
      * @default 5
      * @type number
      * @description
@@ -63,6 +71,7 @@ interface NeonGradientCardProps {
 
 const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
     className,
+    contentClassName,
     children,
     borderSize = 2,
     borderRadius = 20,
@@ -132,6 +141,7 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
                     'after:animate-background-position-spin',
                     'dark:bg-neutral-900',
                     'break-words',
+                    contentClassName,
                 )}
             >
                 {children}

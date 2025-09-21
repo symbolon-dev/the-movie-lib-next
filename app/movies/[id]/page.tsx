@@ -1,11 +1,9 @@
 import { notFound } from 'next/navigation';
-import { MovieGenres } from '@/components/movie/detail/MovieGenres';
+import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
+import { BackButton } from '@/components/common/navigation/BackButton';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
 import { MovieInfo } from '@/components/movie/detail/MovieInfo';
-import { MovieLinks } from '@/components/movie/detail/MovieLinks';
-import { MovieMetadata } from '@/components/movie/detail/MovieMetadata';
-import { MoviePoster } from '@/components/movie/detail/MoviePoster';
-import { MovieRating } from '@/components/movie/detail/MovieRating';
+import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
@@ -55,47 +53,44 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     }
 
     return (
-        <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-10 py-10">
-            <MovieHeader
-                title={movie.title}
-                tagline={movie.tagline}
-                backdropPath={movie.backdrop_path}
-            />
+        <>
+            <ScrollToTop />
+            <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
+                <BackButton href="/" label="Back to Movies" className="w-fit" />
 
-            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
-                <div className="lg:self-start">
-                    <MoviePoster posterPath={movie.poster_path} title={movie.title} />
-                </div>
-
-                <div className="text-foreground lg:col-start-2">
-                    <div className="mb-8 flex flex-wrap items-center justify-center gap-6 text-center sm:justify-start sm:text-left">
-                        <MovieRating
+                <NeonGradientCard
+                    className="rounded-3xl"
+                    contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10 dark:bg-neutral-900"
+                    neonColors={{ firstColor: 'var(--color-chart-1)', secondColor: 'var(--color-card)' }}
+                >
+                    <div className="flex flex-col gap-10">
+                        <MovieHeader
+                            title={movie.title}
+                            tagline={movie.tagline}
+                            posterPath={movie.poster_path}
                             voteAverage={movie.vote_average}
                             voteCount={movie.vote_count}
+                            releaseDate={movie.release_date}
+                            runtime={movie.runtime}
+                            genres={movie.genres}
+                            homepage={movie.homepage}
+                            imdbId={movie.imdb_id}
                         />
 
-                        <MovieMetadata releaseDate={movie.release_date} runtime={movie.runtime} />
+                        <hr className="border-border/60" />
+
+                        <MovieInfo
+                            overview={movie.overview}
+                            productionCompanies={movie.production_companies}
+                            productionCountries={movie.production_countries}
+                            spokenLanguages={movie.spoken_languages}
+                            budget={movie.budget}
+                            revenue={movie.revenue}
+                        />
                     </div>
-
-                    <MovieGenres genres={movie.genres} />
-
-                    <hr className="border-border/60 mb-8" />
-
-                    <MovieInfo
-                        overview={movie.overview}
-                        productionCompanies={movie.production_companies}
-                        productionCountries={movie.production_countries}
-                        spokenLanguages={movie.spoken_languages}
-                        budget={movie.budget}
-                        revenue={movie.revenue}
-                    />
-
-                    <hr className="border-border/60 mt-10 mb-6" />
-
-                    <MovieLinks homepage={movie.homepage} imdbId={movie.imdb_id} />
-                </div>
+                </NeonGradientCard>
             </div>
-        </div>
+        </>
     );
 };
 
