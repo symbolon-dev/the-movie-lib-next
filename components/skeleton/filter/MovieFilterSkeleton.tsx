@@ -1,12 +1,10 @@
-//TODO: Replace colors with Tailwind CSS variables
-
 import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const MovieFilterSkeleton = () => {
     return (
-        <MagicCard gradientColor="#61DAFB55" className="h-fit p-5 sm:p-6">
+        <MagicCard gradientColor="var(--color-primary)" className="h-fit p-5 sm:p-6">
             <div className="space-y-6">
                 <div className="space-y-4">
                     <Skeleton className="h-6 w-32" />

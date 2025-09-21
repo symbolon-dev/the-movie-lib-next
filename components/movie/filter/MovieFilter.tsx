@@ -1,5 +1,3 @@
-//TODO: Replace colors with Tailwind CSS variables
-
 'use client';
 
 import { GenreFilter } from '@/components/movie/filter/GenreFilter';
@@ -16,7 +14,7 @@ const MovieFilter = () => {
         searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
 
     return (
-        <MagicCard gradientColor="#61DAFB55" className="h-fit p-6">
+        <MagicCard gradientColor="var(--color-primary)" className="h-fit p-6">
             <div className="space-y-6">
                 <div className="space-y-4">
                     <h2 className="text-lg font-semibold">Search & Filter</h2>
