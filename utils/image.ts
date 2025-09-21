@@ -12,16 +12,18 @@ const getImageUrl = (path: string | undefined | null, size: string): string => {
     return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
 };
 
-export const getMoviePosterUrl = (
+const getMoviePosterUrl = (
     path: string | undefined | null,
     size: PosterSize = 'w500',
 ): string => {
     return getImageUrl(path, size);
 };
 
-export const getMovieBackdropUrl = (
+const getMovieBackdropUrl = (
     path: string | undefined | null,
     size: BackdropSize = 'original',
 ): string => {
     return getImageUrl(path, size);
 };
+
+export { getMoviePosterUrl, getMovieBackdropUrl };

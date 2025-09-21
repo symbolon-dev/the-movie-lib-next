@@ -12,7 +12,7 @@ interface MagicCardProps {
     gradientOpacity?: number;
 }
 
-export const MagicCard = ({
+const MagicCard = ({
     children,
     className,
     gradientSize = 200,
@@ -91,3 +91,5 @@ export const MagicCard = ({
         </div>
     );
 };
+
+export { MagicCard };

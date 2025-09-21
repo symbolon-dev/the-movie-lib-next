@@ -5,7 +5,7 @@ type MovieRatingProps = {
     voteCount: number;
 };
 
-export const MovieRating = ({ voteAverage, voteCount }: MovieRatingProps) => {
+const MovieRating = ({ voteAverage, voteCount }: MovieRatingProps) => {
     return (
         <div className="flex flex-wrap items-center gap-2 text-base sm:text-lg">
             <Star className="h-4 w-4" aria-hidden="true" />
@@ -18,3 +18,5 @@ export const MovieRating = ({ voteAverage, voteCount }: MovieRatingProps) => {
         </div>
     );
 };
+
+export { MovieRating };

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 import { useMovieStore } from '@/stores/movie-store';
 
-export const MovieFilter = () => {
+const MovieFilter = () => {
     const { resetFilters, searchQuery, selectedGenres, sortBy } = useMovieStore();
 
     const hasActiveFilters =
@@ -46,3 +46,5 @@ export const MovieFilter = () => {
         </MagicCard>
     );
 };
+
+export { MovieFilter };

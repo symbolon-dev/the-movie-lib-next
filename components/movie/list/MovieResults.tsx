@@ -10,7 +10,7 @@ import { MovieList } from './MovieList';
 
 const SCROLL_STORAGE_KEY = 'movie-results-scroll-position';
 
-export const MovieResults = () => {
+const MovieResults = () => {
     const {
         movies,
         currentPage,
@@ -206,3 +206,5 @@ export const MovieResults = () => {
         </div>
     );
 };
+
+export { MovieResults };

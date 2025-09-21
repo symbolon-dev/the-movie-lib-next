@@ -13,13 +13,12 @@ type MovieCardProps = {
     className?: string;
 };
 
-export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
+const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const invalidateCache = useMovieStore((state) => state.invalidateCache);
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average ?? 0).toFixed(1);
 
     const handleClick = () => {
-        // Invalidate cache so loading state triggers when returning
         invalidateCache();
     };
 
@@ -71,3 +70,5 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
 });
 
 MovieCard.displayName = 'MovieCard';
+
+export { MovieCard };

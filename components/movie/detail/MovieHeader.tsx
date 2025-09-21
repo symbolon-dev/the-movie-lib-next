@@ -8,7 +8,7 @@ type MovieHeaderProps = {
     backdropPath: string | undefined;
 };
 
-export const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
+const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) => {
     const backdropUrl = backdropPath ? getMovieBackdropUrl(backdropPath, 'w1280') : undefined;
 
     return (
@@ -54,3 +54,5 @@ export const MovieHeader = ({ title, tagline, backdropPath }: MovieHeaderProps) 
         </header>
     );
 };
+
+export { MovieHeader };

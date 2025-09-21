@@ -5,7 +5,7 @@ import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieFilterSkeleton } from '@/components/skeleton/filter/MovieFilterSkeleton';
 import { useMovieStore } from '@/stores/movie-store';
 
-export const MovieFilterWithSkeleton = () => {
+const MovieFilterWithSkeleton = () => {
     const { genres, getGenres } = useMovieStore();
 
     useEffect(() => {
@@ -21,3 +21,5 @@ export const MovieFilterWithSkeleton = () => {
 
     return <MovieFilter />;
 };
+
+export { MovieFilterWithSkeleton };

@@ -1,3 +1,5 @@
+//TODO: Replace with Magic UI component
+
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -10,7 +12,7 @@ type AnimatedThemeToggleProps = {
     className?: string;
 };
 
-export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
+const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
     const { mode, toggleMode } = useThemeStore();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -82,3 +84,5 @@ export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => 
         </Button>
     );
 };
+
+export { AnimatedThemeToggle };

@@ -6,7 +6,7 @@ type ListSkeletonProps = {
     className?: string;
 };
 
-export const ListSkeleton = ({ count = 32, className }: ListSkeletonProps) => {
+const ListSkeleton = ({ count = 32, className }: ListSkeletonProps) => {
     return (
         <div
             className={cn(
@@ -20,3 +20,5 @@ export const ListSkeleton = ({ count = 32, className }: ListSkeletonProps) => {
         </div>
     );
 };
+
+export { ListSkeleton };

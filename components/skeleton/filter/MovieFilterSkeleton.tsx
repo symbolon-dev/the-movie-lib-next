@@ -2,7 +2,7 @@ import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSke
 import { MagicCard } from '@/components/ui/magic-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const MovieFilterSkeleton = () => {
+const MovieFilterSkeleton = () => {
     return (
         <MagicCard gradientColor="#61DAFB55" className="h-fit p-5 sm:p-6">
             <div className="space-y-6">
@@ -28,3 +28,5 @@ export const MovieFilterSkeleton = () => {
         </MagicCard>
     );
 };
+
+export { MovieFilterSkeleton };

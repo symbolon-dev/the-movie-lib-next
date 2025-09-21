@@ -6,7 +6,7 @@ type MovieMetadataProps = {
     runtime: number | undefined;
 };
 
-export const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
+const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
     return (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:text-base">
             <div className="flex items-center gap-1">
@@ -23,3 +23,5 @@ export const MovieMetadata = ({ releaseDate, runtime }: MovieMetadataProps) => {
         </div>
     );
 };
+
+export { MovieMetadata };

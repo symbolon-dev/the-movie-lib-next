@@ -5,7 +5,7 @@ type MovieLinksProps = {
     imdbId: string | undefined;
 };
 
-export const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
+const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
     if (!homepage && !imdbId) return undefined;
 
     return (
@@ -34,3 +34,5 @@ export const MovieLinks = ({ homepage, imdbId }: MovieLinksProps) => {
         </div>
     );
 };
+
+export { MovieLinks };

@@ -6,7 +6,7 @@ type MoviePosterProps = {
     title: string;
 };
 
-export const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
+const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
     return (
         <NeonGradientCard
             className="mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:sticky lg:top-28"
@@ -25,3 +25,5 @@ export const MoviePoster = ({ posterPath, title }: MoviePosterProps) => {
         </NeonGradientCard>
     );
 };
+
+export { MoviePoster };

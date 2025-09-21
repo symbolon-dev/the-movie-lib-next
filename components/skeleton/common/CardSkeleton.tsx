@@ -6,7 +6,7 @@ type CardSkeletonProps = {
     className?: string;
 };
 
-export const CardSkeleton = ({ className }: CardSkeletonProps) => {
+const CardSkeleton = ({ className }: CardSkeletonProps) => {
     return (
         <Card
             className={cn(
@@ -39,3 +39,5 @@ export const CardSkeleton = ({ className }: CardSkeletonProps) => {
         </Card>
     );
 };
+
+export { CardSkeleton };

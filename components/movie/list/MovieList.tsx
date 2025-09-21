@@ -9,7 +9,7 @@ type MovieListProps = {
     isLoading?: boolean;
 };
 
-export const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
+const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
     if (isLoading) {
         return <ListSkeleton className={className} />;
     }
@@ -35,3 +35,5 @@ export const MovieList = ({ movies, className = '', isLoading = false }: MovieLi
         </div>
     );
 };
+
+export { MovieList };

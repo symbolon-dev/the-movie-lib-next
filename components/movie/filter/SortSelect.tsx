@@ -30,7 +30,7 @@ type SortSelectProps = {
     className?: string;
 };
 
-export const SortSelect = ({ className = '' }: SortSelectProps) => {
+const SortSelect = ({ className = '' }: SortSelectProps) => {
     const { sortBy, setSortBy } = useMovieStore();
 
     const handleValueChange = (value: string) => {
@@ -57,3 +57,5 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
         </div>
     );
 };
+
+export { SortSelect };

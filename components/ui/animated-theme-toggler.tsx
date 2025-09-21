@@ -10,7 +10,7 @@ type props = {
     className?: string;
 };
 
-export const AnimatedThemeToggler = ({ className }: props) => {
+const AnimatedThemeToggler = ({ className }: props) => {
     const { mode, toggleMode } = useThemeStore();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -57,3 +57,5 @@ export const AnimatedThemeToggler = ({ className }: props) => {
         </button>
     );
 };
+
+export { AnimatedThemeToggler };
