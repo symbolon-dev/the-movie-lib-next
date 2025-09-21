@@ -33,13 +33,8 @@ const ErrorMessage = ({
                 <div className="flex items-center justify-between">
                     <AlertDescription className="flex-1">{error}</AlertDescription>
                     {onRetry && showRetry && (
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={onRetry}
-                            className="ml-4 h-8"
-                        >
-                            <RefreshCw className="h-3 w-3 mr-1" />
+                        <Button variant="outline" size="sm" onClick={onRetry} className="ml-4 h-8">
+                            <RefreshCw className="mr-1 h-3 w-3" />
                             Retry
                         </Button>
                     )}
@@ -80,7 +75,7 @@ const ErrorMessage = ({
                         )}
                         <Button
                             asChild
-                            variant={onRetry && showRetry ? "outline" : "default"}
+                            variant={onRetry && showRetry ? 'outline' : 'default'}
                             className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
                         >
                             <Link href={actionLink}>{actionText}</Link>

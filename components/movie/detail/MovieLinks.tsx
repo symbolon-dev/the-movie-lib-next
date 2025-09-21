@@ -13,7 +13,9 @@ const MovieLinks = ({ homepage, imdbId, className, buttonGroupClassName }: Movie
 
     return (
         <div className={cn('mt-8', className)}>
-            <div className={cn('flex flex-col gap-3 sm:flex-row sm:flex-wrap', buttonGroupClassName)}>
+            <div
+                className={cn('flex flex-col gap-3 sm:flex-row sm:flex-wrap', buttonGroupClassName)}
+            >
                 {homepage && (
                     <Button asChild variant="outline-primary">
                         <a href={homepage} target="_blank" rel="noopener noreferrer">

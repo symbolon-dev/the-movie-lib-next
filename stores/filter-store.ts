@@ -33,7 +33,6 @@ export const useFilterStore = create<FilterState>()(
 
             setSortBy: (sortOption: MovieSortOption) => {
                 set({ sortBy: sortOption });
-                // Trigger fetch in movie store
                 setTimeout(() => {
                     import('./movie-store').then(({ useMovieStore }) => {
                         import('./pagination-store').then(({ usePaginationStore }) => {
@@ -53,7 +52,6 @@ export const useFilterStore = create<FilterState>()(
 
             setSelectedGenres: (genres: number[]) => {
                 set({ selectedGenres: genres });
-                // Trigger fetch in movie store
                 setTimeout(() => {
                     import('./movie-store').then(({ useMovieStore }) => {
                         import('./pagination-store').then(({ usePaginationStore }) => {
@@ -74,7 +72,6 @@ export const useFilterStore = create<FilterState>()(
             setSearchQuery: (query: string) => {
                 const currentQuery = get().searchQuery;
                 set({ searchQuery: query });
-                // Trigger fetch in movie store
                 setTimeout(() => {
                     import('./movie-store').then(({ useMovieStore }) => {
                         import('./pagination-store').then(({ usePaginationStore }) => {
@@ -86,7 +83,6 @@ export const useFilterStore = create<FilterState>()(
                                 paginationStore.resetPagination();
                                 cacheStore.invalidateCache();
 
-                                // Clear movies if switching between search and discover
                                 if (
                                     (currentQuery === '' && query !== '') ||
                                     (currentQuery !== '' && query === '')
@@ -107,7 +103,7 @@ export const useFilterStore = create<FilterState>()(
                     selectedGenres: [],
                     sortBy: 'popularity.desc',
                 });
-                // Trigger fetch in movie store
+
                 setTimeout(() => {
                     import('./movie-store').then(({ useMovieStore }) => {
                         import('./pagination-store').then(({ usePaginationStore }) => {

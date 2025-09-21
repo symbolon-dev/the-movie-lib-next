@@ -6,18 +6,29 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
     title: 'Movie Library - Discover Amazing Movies',
-    description: 'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
-    keywords: ['movies', 'films', 'cinema', 'entertainment', 'movie database', 'search movies', 'movie genres'],
+    description:
+        'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
+    keywords: [
+        'movies',
+        'films',
+        'cinema',
+        'entertainment',
+        'movie database',
+        'search movies',
+        'movie genres',
+    ],
     openGraph: {
         title: 'Movie Library - Discover Amazing Movies',
-        description: 'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
+        description:
+            'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
         type: 'website',
         siteName: 'Movie Library',
     },
     twitter: {
         card: 'summary_large_image',
         title: 'Movie Library - Discover Amazing Movies',
-        description: 'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
+        description:
+            'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
     },
 };
 

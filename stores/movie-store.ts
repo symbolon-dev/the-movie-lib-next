@@ -3,9 +3,9 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { Movie, MovieDiscoverParams, MovieResponse } from '@/types/movie';
 import { handleStoreError } from '@/utils/error-handler/store-error-handler';
+import { useCacheStore } from './cache-store';
 import { useFilterStore } from './filter-store';
 import { usePaginationStore } from './pagination-store';
-import { useCacheStore } from './cache-store';
 
 export type MovieState = {
     movies: Movie[] | undefined;
@@ -62,7 +62,6 @@ export const useMovieStore = create<MovieState>()(
                 set({ movies: undefined });
             },
 
-
             loadMoreMovies: async () => {
                 const paginationStore = usePaginationStore.getState();
                 if (paginationStore.canLoadMore()) {
@@ -70,7 +69,6 @@ export const useMovieStore = create<MovieState>()(
                     await get().fetchMovies();
                 }
             },
-
 
             fetchMovies: async () => {
                 if (get().hasMoviesForCurrentParams()) {
@@ -337,7 +335,6 @@ export const useMovieStore = create<MovieState>()(
                     handleStoreError(error, 'search movies', set);
                 }
             },
-
 
             getMovies: async (): Promise<Movie[]> => {
                 const { movies } = get();

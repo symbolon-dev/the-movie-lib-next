@@ -73,7 +73,6 @@ export const useGenreStore = create<GenreState>()(
                 const { lastFetched } = get();
                 if (!lastFetched) return true;
 
-                // Refetch after 24 hours (24 * 60 * 60 * 1000 ms)
                 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
                 return Date.now() - lastFetched > TWENTY_FOUR_HOURS;
             },

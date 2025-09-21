@@ -6,8 +6,8 @@ import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
 import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
 import { useMovieStore } from '@/stores/movie-store';
-import { usePaginationStore } from '@/stores/pagination-store';
 import type { MovieState } from '@/stores/movie-store';
+import { usePaginationStore } from '@/stores/pagination-store';
 import { MovieList } from './MovieList';
 
 const SCROLL_STORAGE_KEY = 'movie-list-scroll-position';
@@ -79,13 +79,11 @@ const MovieResults = () => {
         }
     }, [hasHydrated, hasMoviesForCurrentParams, fetchMovies]);
 
-
     useEffect(() => {
         if (typeof window === 'undefined') return;
         if (!hasHydrated) return;
         if (hasRestoredScrollRef.current) return;
 
-        // Only restore scroll if we navigated back from a movie detail page
         const cameFromMovieDetail = sessionStorage.getItem(NAVIGATION_STORAGE_KEY);
         if (!cameFromMovieDetail) {
             hasRestoredScrollRef.current = true;
@@ -122,16 +120,12 @@ const MovieResults = () => {
         }
     }, [hasHydrated, movieCount]);
 
-    // Handle route changes - clean up flags when not on movie pages
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
-        // Clear navigation flag when not on movie detail pages
         if (pathname === '/' || !pathname.includes('/movies/')) {
-            // Use a timeout to ensure the component is properly mounted
             const timeoutId = setTimeout(() => {
                 if (pathname === '/') {
-                    // Only clear on home page after component mount
                     sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
                     sessionStorage.removeItem(SCROLL_STORAGE_KEY);
                 }

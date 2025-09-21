@@ -1,8 +1,8 @@
-import { PosterImage } from '@/components/movie/shared/PosterImage';
 import { MovieGenres } from '@/components/movie/detail/MovieGenres';
 import { MovieLinks } from '@/components/movie/detail/MovieLinks';
 import { MovieMetadata } from '@/components/movie/detail/MovieMetadata';
 import { MovieRating } from '@/components/movie/detail/MovieRating';
+import { PosterImage } from '@/components/movie/shared/PosterImage';
 import type { MovieGenre } from '@/types/movie';
 
 type MovieHeaderProps = {
@@ -44,13 +44,15 @@ const MovieHeader = ({
                 />
             </div>
 
-                <div className="flex flex-col gap-6">
-                    <div className="space-y-3 text-center lg:text-left">
-                        <h1 className="text-foreground text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-                            {title}
-                        </h1>
+            <div className="flex flex-col gap-6">
+                <div className="space-y-3 text-center lg:text-left">
+                    <h1 className="text-foreground text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                        {title}
+                    </h1>
                     {tagline && (
-                        <p className="text-muted-foreground text-lg italic sm:text-xl">&ldquo;{tagline}&rdquo;</p>
+                        <p className="text-muted-foreground text-lg italic sm:text-xl">
+                            &ldquo;{tagline}&rdquo;
+                        </p>
                     )}
                 </div>
 

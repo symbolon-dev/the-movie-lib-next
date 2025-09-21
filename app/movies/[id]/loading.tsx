@@ -10,7 +10,10 @@ const Loading = () => {
             <NeonGradientCard
                 className="rounded-3xl"
                 contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10 dark:bg-neutral-900"
-                neonColors={{ firstColor: 'var(--color-chart-1)', secondColor: 'var(--color-card)' }}
+                neonColors={{
+                    firstColor: 'var(--color-chart-1)',
+                    secondColor: 'var(--color-card)',
+                }}
             >
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:items-start">
                     <div className="w-full max-w-xs justify-self-center lg:justify-self-start">

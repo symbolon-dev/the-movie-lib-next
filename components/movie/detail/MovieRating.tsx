@@ -21,7 +21,9 @@ const MovieRating = ({
             <Star className={cn('h-4 w-4', iconClassName)} aria-hidden="true" />
             <span className="font-semibold">{voteAverage.toFixed(1)}/10</span>
             {voteCount > 0 && (
-                <span className={cn('text-muted-foreground text-sm sm:text-base', voteCountClassName)}>
+                <span
+                    className={cn('text-muted-foreground text-sm sm:text-base', voteCountClassName)}
+                >
                     ({new Intl.NumberFormat().format(voteCount)} votes)
                 </span>
             )}

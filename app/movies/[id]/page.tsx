@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
+import { notFound } from 'next/navigation';
 import { BackButton } from '@/components/common/navigation/BackButton';
+import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
 import { MovieInfo } from '@/components/movie/detail/MovieInfo';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
@@ -22,8 +22,11 @@ export async function generateMetadata({ params }: DetailProps): Promise<Metadat
         const movie = await getMovie(id);
 
         const title = `${movie.title} - Movie Library`;
-        const description = movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
-        const backdropUrl = movie.backdrop_path ? getMovieBackdropUrl(movie.backdrop_path, 'w1280') : undefined;
+        const description =
+            movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
+        const backdropUrl = movie.backdrop_path
+            ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
+            : undefined;
 
         return {
             title,
@@ -32,12 +35,16 @@ export async function generateMetadata({ params }: DetailProps): Promise<Metadat
                 title: movie.title,
                 description,
                 type: 'video.movie',
-                images: backdropUrl ? [{
-                    url: backdropUrl,
-                    width: 1280,
-                    height: 720,
-                    alt: `${movie.title} backdrop`,
-                }] : [],
+                images: backdropUrl
+                    ? [
+                          {
+                              url: backdropUrl,
+                              width: 1280,
+                              height: 720,
+                              alt: `${movie.title} backdrop`,
+                          },
+                      ]
+                    : [],
                 siteName: 'Movie Library',
             },
             twitter: {
@@ -55,6 +62,7 @@ export async function generateMetadata({ params }: DetailProps): Promise<Metadat
             ],
         };
     } catch (error) {
+        console.error('Failed to generate movie metadata', error);
         return {
             title: 'Movie Not Found - Movie Library',
             description: 'The requested movie could not be found.',
@@ -110,7 +118,10 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
                 <NeonGradientCard
                     className="rounded-3xl"
                     contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10 dark:bg-neutral-900"
-                    neonColors={{ firstColor: 'var(--color-chart-1)', secondColor: 'var(--color-card)' }}
+                    neonColors={{
+                        firstColor: 'var(--color-chart-1)',
+                        secondColor: 'var(--color-card)',
+                    }}
                 >
                     <div className="flex flex-col gap-10">
                         <MovieHeader

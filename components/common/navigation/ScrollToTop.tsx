@@ -8,17 +8,15 @@ type ScrollToTopProps = {
 
 const ScrollToTop = ({ resetOnMount = true }: ScrollToTopProps) => {
     useEffect(() => {
-        if (resetOnMount && typeof window !== 'undefined') {
-            // Scroll to top immediately
+        if (typeof window === 'undefined' || !resetOnMount) return;
+
+        window.scrollTo(0, 0);
+
+        const timeoutId = setTimeout(() => {
             window.scrollTo(0, 0);
+        }, 50);
 
-            // Also ensure it happens after any potential layout changes
-            const timeoutId = setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 50);
-
-            return () => clearTimeout(timeoutId);
-        }
+        return () => clearTimeout(timeoutId);
     }, [resetOnMount]);
 
     return null;
