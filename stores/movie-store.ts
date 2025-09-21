@@ -17,8 +17,6 @@ export type MovieState = {
     totalResults: number;
     lastFetchParams: string | undefined;
     abortController: AbortController | undefined;
-    hasHydrated: boolean;
-    setHasHydrated: (value: boolean) => void;
     dedupeMovies: () => void;
     setSortBy: (sortOption: MovieSortOption) => void;
     setSelectedGenres: (genres: number[]) => void;
@@ -75,11 +73,6 @@ export const useMovieStore = create<MovieState>()(
             totalResults: 0,
             lastFetchParams: undefined,
             abortController: undefined,
-            hasHydrated: false,
-
-            setHasHydrated: (value: boolean) => {
-                set({ hasHydrated: value });
-            },
 
             dedupeMovies: () => {
                 const currentMovies = get().movies;
@@ -489,17 +482,8 @@ export const useMovieStore = create<MovieState>()(
                 selectedGenres: state.selectedGenres,
                 searchQuery: state.searchQuery,
             }),
-            skipHydration: true,
-            onRehydrateStorage: (state) => {
-                state?.setHasHydrated(false);
-                return (hydratedState, error) => {
-                    if (error) {
-                        state?.setHasHydrated(true);
-                        return;
-                    }
-                    hydratedState?.dedupeMovies();
-                    hydratedState?.setHasHydrated(true);
-                };
+            onRehydrateStorage: () => (hydratedState) => {
+                hydratedState?.dedupeMovies();
             },
         },
     ),

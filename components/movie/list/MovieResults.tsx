@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
 import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
@@ -20,8 +20,6 @@ export const MovieResults = () => {
         loadMoreMovies,
         hasMoviesForCurrentParams,
         fetchMovies,
-        hasHydrated,
-        setHasHydrated,
         dedupeMovies,
     } = useMovieStore();
 
@@ -37,6 +35,10 @@ export const MovieResults = () => {
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasRestoredScrollRef = useRef(false);
+    const [autoLoadEnabled, setAutoLoadEnabled] = useState(false);
+    const [hasHydrated, setHasHydrated] = useState(() =>
+        movieStorePersist?.hasHydrated ? movieStorePersist.hasHydrated() : true,
+    );
 
     const displayMovies = useMemo(
         () => (movies ? Array.from(new Map(movies.map((movie) => [movie.id, movie])).values()) : []),
@@ -47,7 +49,10 @@ export const MovieResults = () => {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        if (!movieStorePersist) return;
+        if (!movieStorePersist) {
+            setHasHydrated(true);
+            return;
+        }
 
         if (movieStorePersist.hasHydrated()) {
             dedupeMovies();
@@ -55,22 +60,20 @@ export const MovieResults = () => {
             return;
         }
 
-        const unsubscribeHydrate = movieStorePersist.onHydrate?.((state) => {
-            state.setHasHydrated(false);
+        const unsubscribeHydrate = movieStorePersist.onHydrate?.(() => {
+            setHasHydrated(false);
         });
 
         const unsubscribeFinish = movieStorePersist.onFinishHydration?.((state) => {
             state.dedupeMovies();
-            state.setHasHydrated(true);
+            setHasHydrated(true);
         });
-
-        void movieStorePersist.rehydrate();
 
         return () => {
             unsubscribeHydrate?.();
             unsubscribeFinish?.();
         };
-    }, [dedupeMovies, setHasHydrated]);
+    }, [dedupeMovies, movieStorePersist]);
 
     useEffect(() => {
         if (!hasHydrated) return;
@@ -109,6 +112,7 @@ export const MovieResults = () => {
         const stored = sessionStorage.getItem(SCROLL_STORAGE_KEY);
         if (!stored) {
             hasRestoredScrollRef.current = true;
+            setAutoLoadEnabled(true);
             return;
         }
 
@@ -116,6 +120,7 @@ export const MovieResults = () => {
         if (Number.isNaN(scrollY)) {
             sessionStorage.removeItem(SCROLL_STORAGE_KEY);
             hasRestoredScrollRef.current = true;
+            setAutoLoadEnabled(true);
             return;
         }
 
@@ -123,13 +128,34 @@ export const MovieResults = () => {
             window.scrollTo({ top: scrollY });
             sessionStorage.removeItem(SCROLL_STORAGE_KEY);
             hasRestoredScrollRef.current = true;
+            // Auto-load bleibt deaktiviert bis Nutzer interagiert
         });
     }, [hasHydrated, movieCount]);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        if (autoLoadEnabled) return;
+
+        const enable = () => setAutoLoadEnabled(true);
+
+        window.addEventListener('pointerdown', enable, { once: true });
+        window.addEventListener('wheel', enable, { once: true });
+        window.addEventListener('keydown', enable, { once: true });
+        window.addEventListener('touchstart', enable, { once: true });
+
+        return () => {
+            window.removeEventListener('pointerdown', enable);
+            window.removeEventListener('wheel', enable);
+            window.removeEventListener('keydown', enable);
+            window.removeEventListener('touchstart', enable);
+        };
+    }, [autoLoadEnabled]);
 
     useEffect(() => {
         if (!hasHydrated) return;
         if (!hasMorePages) return;
         if (!hasRestoredScrollRef.current) return;
+        if (!autoLoadEnabled) return;
 
         const sentinel = sentinelRef.current;
         if (!sentinel) return;
@@ -153,7 +179,7 @@ export const MovieResults = () => {
         return () => {
             observer.disconnect();
         };
-    }, [hasHydrated, hasMorePages, isLoading, loadMoreMovies]);
+    }, [autoLoadEnabled, hasHydrated, hasMorePages, isLoading, loadMoreMovies]);
 
     return (
         <div className="flex flex-col gap-6">
