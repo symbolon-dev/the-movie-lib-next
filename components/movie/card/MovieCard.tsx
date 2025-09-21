@@ -53,7 +53,7 @@ const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
 
                     <div className="absolute inset-x-0 bottom-0 translate-y-full px-5 pb-6 transition-transform duration-500 ease-out group-focus-within:translate-y-0 group-hover:translate-y-0">
                         <div className="space-y-3">
-                            <h3 className="line-clamp-2 text-lg font-semibold text-white drop-shadow-sm">
+                            <h3 className="heading-5 line-clamp-2 text-white drop-shadow-sm">
                                 {movie.title}
                             </h3>
 

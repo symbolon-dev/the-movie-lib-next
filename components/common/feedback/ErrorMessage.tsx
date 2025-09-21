@@ -57,8 +57,8 @@ const ErrorMessage = ({
                     </div>
 
                     <div className="space-y-3">
-                        <h2 className="text-foreground font-serif text-3xl font-bold">{title}</h2>
-                        <p className="text-muted-foreground text-lg leading-relaxed">
+                        <h2 className="heading-2 text-foreground font-serif">{title}</h2>
+                        <p className="text-lead text-muted-foreground">
                             {error || 'There was an error loading the data.'}
                         </p>
                     </div>

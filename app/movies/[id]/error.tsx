@@ -27,7 +27,7 @@ const MovieError = ({ error, reset }: ErrorProps) => {
                     <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>Failed to load movie</AlertTitle>
                     <AlertDescription>
-                        <p className="mb-4">
+                        <p className="text-body mb-4">
                             We couldn&apos;t load the movie details. This might be due to an invalid
                             movie ID or a temporary server issue.
                         </p>
@@ -62,7 +62,7 @@ const MovieError = ({ error, reset }: ErrorProps) => {
                         </div>
                         {process.env.NODE_ENV === 'development' && (
                             <details className="mt-4">
-                                <summary className="cursor-pointer text-sm font-medium">
+                                <summary className="text-body-sm cursor-pointer font-medium">
                                     Error details (dev only)
                                 </summary>
                                 <pre className="mt-2 overflow-auto rounded bg-gray-100 p-2 text-xs dark:bg-gray-800">

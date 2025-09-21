@@ -21,7 +21,9 @@ const Error = ({ error, reset }: ErrorProps) => {
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>Something went wrong</AlertTitle>
                 <AlertDescription>
-                    <p className="mb-4">An unexpected error occurred while loading the page.</p>
+                    <p className="text-body mb-4">
+                        An unexpected error occurred while loading the page.
+                    </p>
                     <div className="flex gap-2">
                         <Button
                             variant="outline"
@@ -44,7 +46,7 @@ const Error = ({ error, reset }: ErrorProps) => {
                     </div>
                     {process.env.NODE_ENV === 'development' && (
                         <details className="mt-4">
-                            <summary className="cursor-pointer text-sm font-medium">
+                            <summary className="text-body-sm cursor-pointer font-medium">
                                 Error details (dev only)
                             </summary>
                             <pre className="mt-2 overflow-auto rounded bg-gray-100 p-2 text-xs dark:bg-gray-800">

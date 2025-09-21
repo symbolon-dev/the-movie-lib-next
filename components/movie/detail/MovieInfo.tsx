@@ -27,8 +27,8 @@ const MovieInfo = ({
     return (
         <>
             <div className="mb-8">
-                <h2 className="text-foreground mb-4 text-xl font-bold">Overview</h2>
-                <p className="text-muted-foreground leading-relaxed">
+                <h2 className="heading-3 mb-4 text-foreground">Overview</h2>
+                <p className="text-body text-muted-foreground">
                     {overview || 'No description available'}
                 </p>
             </div>

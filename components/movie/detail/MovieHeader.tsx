@@ -46,11 +46,9 @@ const MovieHeader = ({
 
             <div className="flex flex-col gap-6">
                 <div className="space-y-3 text-center lg:text-left">
-                    <h1 className="text-foreground text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                        {title}
-                    </h1>
+                    <h1 className="heading-1 text-foreground">{title}</h1>
                     {tagline && (
-                        <p className="text-muted-foreground text-lg italic sm:text-xl">
+                        <p className="text-lead italic text-muted-foreground">
                             &ldquo;{tagline}&rdquo;
                         </p>
                     )}

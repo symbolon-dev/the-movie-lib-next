@@ -17,17 +17,17 @@ const MovieFilter = () => {
         <MagicCard gradientColor="var(--color-primary)" className="h-fit p-6">
             <div className="space-y-6">
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold">Search & Filter</h2>
+                    <h2 className="heading-4">Search & Filter</h2>
                     <SearchBar />
                 </div>
 
                 <div className="border-border border-t pt-4">
-                    <h3 className="text-muted-foreground mb-3 text-sm font-medium">Genres</h3>
+                    <h3 className="text-body-sm mb-3 font-medium text-muted-foreground">Genres</h3>
                     <GenreFilter />
                 </div>
 
                 <div className="border-border border-t pt-4">
-                    <h3 className="text-muted-foreground mb-3 text-sm font-medium">Sort By</h3>
+                    <h3 className="text-body-sm mb-3 font-medium text-muted-foreground">Sort By</h3>
                     <SortSelect />
                 </div>
 
