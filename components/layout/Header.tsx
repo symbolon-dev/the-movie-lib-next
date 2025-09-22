@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { AnimatedThemeToggle } from '@/components/layout/AnimatedThemeToggle';
 
 const Header = () => {

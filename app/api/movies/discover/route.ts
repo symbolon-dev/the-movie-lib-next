@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import { MovieDiscoverParams, MovieSortOption } from '@/types/movie';
 import TMDBApi from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+
 import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';

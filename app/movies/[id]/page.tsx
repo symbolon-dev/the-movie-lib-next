@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
@@ -13,9 +14,7 @@ type DetailProps = {
 
 const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
 
-export const revalidate = REVALIDATE_TIME;
-
-export async function generateMetadata({ params }: DetailProps): Promise<Metadata> {
+const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
     const { id } = await params;
 
     try {
@@ -68,7 +67,7 @@ export async function generateMetadata({ params }: DetailProps): Promise<Metadat
             description: 'The requested movie could not be found.',
         };
     }
-}
+};
 
 const getMovie = async (id: string) => {
     try {
@@ -155,3 +154,4 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 };
 
 export default MovieDetailPage;
+export { generateMetadata };

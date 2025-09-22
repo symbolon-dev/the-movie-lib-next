@@ -1,13 +1,15 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
 import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
-import { useMovieStore } from '@/stores/movie-store';
 import type { MovieState } from '@/stores/movie-store';
+import { useMovieStore } from '@/stores/movie-store';
 import { usePaginationStore } from '@/stores/pagination-store';
+
 import { MovieList } from './MovieList';
 
 const SCROLL_STORAGE_KEY = 'movie-list-scroll-position';

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import { MovieFilterWithSkeleton } from '@/components/movie/filter/MovieFilterWithSkeleton';
 import { MovieResults } from '@/components/movie/list/MovieResults';
 

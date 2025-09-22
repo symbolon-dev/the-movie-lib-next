@@ -1,13 +1,14 @@
 'use client';
 
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import {
+    type ComponentPropsWithoutRef,
     forwardRef,
+    type PointerEvent as ReactPointerEvent,
     useCallback,
     useEffect,
-    type ComponentPropsWithoutRef,
-    type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+
 import { cn } from '@/lib/utils';
 
 type MagicCardProps = ComponentPropsWithoutRef<'div'> & {

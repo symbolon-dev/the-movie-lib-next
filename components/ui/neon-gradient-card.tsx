@@ -1,14 +1,15 @@
 'use client';
 
 import {
+    type ComponentPropsWithoutRef,
+    type CSSProperties,
     forwardRef,
     useCallback,
     useEffect,
     useRef,
     useState,
-    type ComponentPropsWithoutRef,
-    type CSSProperties,
 } from 'react';
+
 import { cn } from '@/lib/utils';
 
 type NeonColorPair = {

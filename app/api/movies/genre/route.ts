@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import TMDBApi from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';
 

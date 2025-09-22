@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import { useThemeStore } from '@/stores/theme-store';
 import { applyDocumentTheme } from '@/utils/theme';

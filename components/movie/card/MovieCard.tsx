@@ -1,6 +1,7 @@
-import { memo } from 'react';
-import Link from 'next/link';
 import { Star } from 'lucide-react';
+import Link from 'next/link';
+import { memo } from 'react';
+
 import { PosterImage } from '@/components/movie/shared/PosterImage';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';

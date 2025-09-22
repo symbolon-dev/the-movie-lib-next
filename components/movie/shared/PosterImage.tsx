@@ -1,6 +1,7 @@
-import { memo } from 'react';
-import Image from 'next/image';
 import { Film } from 'lucide-react';
+import Image from 'next/image';
+import { memo } from 'react';
+
 import { getMoviePosterUrl } from '@/utils/image';
 
 type PosterImageProps = {
