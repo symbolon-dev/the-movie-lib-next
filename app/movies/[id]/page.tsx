@@ -110,13 +110,14 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 
     return (
         <>
+            <link rel="preconnect" href="https://image.tmdb.org" />
             <ScrollToTop />
             <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
                 <BackButton href="/" label="Back to Movies" className="w-fit" />
 
                 <NeonGradientCard
                     className="rounded-3xl"
-                    contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10 dark:bg-neutral-900"
+                    contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10"
                     neonColors={{
                         firstColor: 'var(--color-chart-1)',
                         secondColor: 'var(--color-card)',
