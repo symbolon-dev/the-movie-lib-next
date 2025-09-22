@@ -85,24 +85,23 @@ const MovieResults = () => {
         if (hasRestoredScrollRef.current) return;
 
         const cameFromMovieDetail = sessionStorage.getItem(NAVIGATION_STORAGE_KEY);
-        if (!cameFromMovieDetail) {
-            hasRestoredScrollRef.current = true;
-            setAutoLoadEnabled(true);
-            return;
-        }
-
         const stored = sessionStorage.getItem(SCROLL_STORAGE_KEY);
+
         if (!stored) {
             hasRestoredScrollRef.current = true;
             setAutoLoadEnabled(true);
-            sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
+            if (cameFromMovieDetail) {
+                sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
+            }
             return;
         }
 
         const scrollY = Number(stored);
         if (Number.isNaN(scrollY)) {
             sessionStorage.removeItem(SCROLL_STORAGE_KEY);
-            sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
+            if (cameFromMovieDetail) {
+                sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
+            }
             hasRestoredScrollRef.current = true;
             setAutoLoadEnabled(true);
             return;
@@ -112,8 +111,10 @@ const MovieResults = () => {
         if (movieCount > 0) {
             requestAnimationFrame(() => {
                 window.scrollTo({ top: scrollY, behavior: 'instant' });
-                sessionStorage.removeItem(SCROLL_STORAGE_KEY);
-                sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
+                // Only clear navigation flag if coming from movie detail
+                if (cameFromMovieDetail) {
+                    sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
+                }
                 hasRestoredScrollRef.current = true;
                 setAutoLoadEnabled(true);
             });
@@ -122,17 +123,23 @@ const MovieResults = () => {
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
+        if (pathname !== '/') return;
 
-        if (pathname === '/' || !pathname.includes('/movies/')) {
-            const timeoutId = setTimeout(() => {
-                if (pathname === '/') {
-                    sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
-                    sessionStorage.removeItem(SCROLL_STORAGE_KEY);
-                }
-            }, 100);
+        const saveScrollPosition = () => {
+            sessionStorage.setItem(SCROLL_STORAGE_KEY, window.scrollY.toString());
+        };
 
-            return () => clearTimeout(timeoutId);
-        }
+        const handleScroll = () => {
+            saveScrollPosition();
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        const intervalId = setInterval(saveScrollPosition, 1000);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearInterval(intervalId);
+        };
     }, [pathname]);
 
     useEffect(() => {

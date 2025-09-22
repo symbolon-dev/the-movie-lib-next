@@ -387,7 +387,7 @@ export const useMovieStore = create<MovieState>()(
         {
             name: 'movie-store',
             storage: createJSONStorage(() =>
-                typeof window === 'undefined' ? noopStorage : sessionStorage,
+                typeof window === 'undefined' ? noopStorage : localStorage,
             ),
             partialize: (state) => ({
                 movies: state.movies,

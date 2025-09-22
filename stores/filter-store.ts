@@ -133,7 +133,7 @@ export const useFilterStore = create<FilterState>()(
         {
             name: 'filter-store',
             storage: createJSONStorage(() =>
-                typeof window === 'undefined' ? noopStorage : sessionStorage,
+                typeof window === 'undefined' ? noopStorage : localStorage,
             ),
             partialize: (state) => ({
                 sortBy: state.sortBy,

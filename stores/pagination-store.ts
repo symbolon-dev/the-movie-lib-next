@@ -59,7 +59,7 @@ export const usePaginationStore = create<PaginationState>()(
         {
             name: 'pagination-store',
             storage: createJSONStorage(() =>
-                typeof window === 'undefined' ? noopStorage : sessionStorage,
+                typeof window === 'undefined' ? noopStorage : localStorage,
             ),
             partialize: (state) => ({
                 currentPage: state.currentPage,
