@@ -35,18 +35,10 @@ const useThemeStore = create<ThemeState>()(
         {
             name: 'theme-store',
             storage: createJSONStorage(() => localStorage),
-            onRehydrateStorage: () => (state, error) => {
-                const fallback = getSystemThemePreference();
-
-                if (error) {
-                    applyDocumentTheme(fallback);
-                    storeSet?.({ mode: fallback, hasHydrated: true });
-                    return;
-                }
-
-                const persistedMode = state?.mode ?? fallback;
-                applyDocumentTheme(persistedMode);
-                storeSet?.({ mode: persistedMode, hasHydrated: true });
+            onRehydrateStorage: () => () => {
+                const systemTheme = getSystemThemePreference();
+                storeSet?.({ mode: systemTheme, hasHydrated: true });
+                applyDocumentTheme(systemTheme);
             },
         },
     ),

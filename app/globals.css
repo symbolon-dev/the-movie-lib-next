@@ -167,8 +167,7 @@
   }
 
   .text-caption {
-    @apply font-sans font-medium uppercase text-xs sm:text-sm;
-    letter-spacing: 0.2em;
+    @apply font-sans font-medium uppercase text-xs sm:text-sm tracking-[0.15rem];
   }
 
   .text-mono {

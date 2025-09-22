@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
-import { ThemeScript } from '@/components/layout/ThemeScript';
 import './globals.css';
 
 const geist = Geist({
@@ -25,7 +24,6 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
         <body
             className={`${geist.variable} ${geistMono.variable} bg-background text-foreground min-h-screen font-sans antialiased`}
         >
-            <ThemeScript />
             <Header />
             <main className="container mx-auto px-4 md:px-8">{children}</main>
         </body>
