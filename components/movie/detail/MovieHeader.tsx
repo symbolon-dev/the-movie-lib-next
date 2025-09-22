@@ -30,8 +30,6 @@ const MovieHeader = ({
     homepage,
     imdbId,
 }: MovieHeaderProps) => {
-    const hasLinks = Boolean(homepage || imdbId);
-
     return (
         <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:items-start">
             <div className="w-full max-w-xs justify-self-center lg:justify-self-start">
@@ -69,7 +67,7 @@ const MovieHeader = ({
                     />
                 )}
 
-                {hasLinks && (
+                {(homepage || imdbId) && (
                     <MovieLinks
                         homepage={homepage}
                         imdbId={imdbId}

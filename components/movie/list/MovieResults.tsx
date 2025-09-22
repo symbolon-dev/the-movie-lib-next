@@ -107,11 +107,10 @@ const MovieResults = () => {
             return;
         }
 
-        // Wait for movies to be loaded before restoring scroll
         if (movieCount > 0) {
             requestAnimationFrame(() => {
                 window.scrollTo({ top: scrollY, behavior: 'instant' });
-                // Only clear navigation flag if coming from movie detail
+
                 if (cameFromMovieDetail) {
                     sessionStorage.removeItem(NAVIGATION_STORAGE_KEY);
                 }
