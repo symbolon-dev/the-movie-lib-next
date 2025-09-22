@@ -22,12 +22,12 @@ const MovieFilter = () => {
                 </div>
 
                 <div className="border-border border-t pt-4">
-                    <h3 className="text-body-sm mb-3 font-medium text-muted-foreground">Genres</h3>
+                    <h3 className="text-body-sm text-muted-foreground mb-3 font-medium">Genres</h3>
                     <GenreFilter />
                 </div>
 
                 <div className="border-border border-t pt-4">
-                    <h3 className="text-body-sm mb-3 font-medium text-muted-foreground">Sort By</h3>
+                    <h3 className="text-body-sm text-muted-foreground mb-3 font-medium">Sort By</h3>
                     <SortSelect />
                 </div>
 

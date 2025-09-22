@@ -38,7 +38,8 @@ const Home = async () => {
             <header className="space-y-3 text-center lg:text-left">
                 <h1 className="heading-1">Discover Your Next Favorite Movie</h1>
                 <p className="text-lead text-muted-foreground">
-                    Browse trending titles, fine-tune filters, and dive into detailed information for every film.
+                    Browse trending titles, fine-tune filters, and dive into detailed information
+                    for every film.
                 </p>
             </header>
 

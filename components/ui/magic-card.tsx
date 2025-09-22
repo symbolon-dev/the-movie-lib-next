@@ -1,25 +1,32 @@
-//TODO: Refactor
 'use client';
 
-import React, { useCallback, useEffect } from 'react';
+import {
+    forwardRef,
+    useCallback,
+    useEffect,
+    type ComponentPropsWithoutRef,
+    type PointerEvent as ReactPointerEvent,
+} from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-interface MagicCardProps {
-    children?: React.ReactNode;
-    className?: string;
+type MagicCardProps = ComponentPropsWithoutRef<'div'> & {
     gradientSize?: number;
     gradientColor?: string;
     gradientOpacity?: number;
-}
+};
 
-const MagicCard = ({
-    children,
-    className,
-    gradientSize = 200,
-    gradientColor,
-    gradientOpacity = 0.8,
-}: MagicCardProps) => {
+const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
+    const {
+        children,
+        className,
+        gradientSize = 200,
+        gradientColor = 'var(--color-primary)',
+        gradientOpacity = 0.8,
+        onPointerMove,
+        onPointerLeave,
+        ...rest
+    } = props;
     const mouseX = useMotionValue(-gradientSize);
     const mouseY = useMotionValue(-gradientSize);
 
@@ -29,12 +36,13 @@ const MagicCard = ({
     }, [gradientSize, mouseX, mouseY]);
 
     const handlePointerMove = useCallback(
-        (e: React.PointerEvent<HTMLDivElement>) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            mouseX.set(e.clientX - rect.left);
-            mouseY.set(e.clientY - rect.top);
+        (event: ReactPointerEvent<HTMLDivElement>) => {
+            const rect = event.currentTarget.getBoundingClientRect();
+            mouseX.set(event.clientX - rect.left);
+            mouseY.set(event.clientY - rect.top);
+            onPointerMove?.(event);
         },
-        [mouseX, mouseY],
+        [mouseX, mouseY, onPointerMove],
     );
 
     useEffect(() => {
@@ -73,12 +81,17 @@ const MagicCard = ({
 
     return (
         <div
+            ref={ref}
             onPointerMove={handlePointerMove}
-            onPointerLeave={reset}
+            onPointerLeave={(event) => {
+                reset();
+                onPointerLeave?.(event);
+            }}
             className={cn(
-                'group bg-card border-primary/30 text-foreground relative overflow-hidden rounded-xl border-2',
+                'group border-primary/30 bg-card text-foreground relative overflow-hidden rounded-xl border-2',
                 className,
             )}
+            {...rest}
         >
             <div className="relative z-10">{children}</div>
             <motion.div
@@ -91,6 +104,8 @@ const MagicCard = ({
             />
         </div>
     );
-};
+});
+
+MagicCard.displayName = 'MagicCard';
 
 export { MagicCard };

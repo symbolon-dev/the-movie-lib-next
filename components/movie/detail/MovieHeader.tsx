@@ -48,7 +48,7 @@ const MovieHeader = ({
                 <div className="space-y-3 text-center lg:text-left">
                     <h1 className="heading-1 text-foreground">{title}</h1>
                     {tagline && (
-                        <p className="text-lead italic text-muted-foreground">
+                        <p className="text-lead text-muted-foreground italic">
                             &ldquo;{tagline}&rdquo;
                         </p>
                     )}

@@ -1,14 +1,12 @@
-//TODO: Refactor component
-
 'use client';
 
-import * as React from 'react';
+import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { motion } from 'framer-motion';
+import { motion, type MotionProps } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-export const buttonVariants = cva(
+const buttonVariants = cva(
     'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-70 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer',
     {
         variants: {
@@ -37,13 +35,31 @@ export const buttonVariants = cva(
     },
 );
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+type MotionConflicts =
+    | 'onDrag'
+    | 'onDragStart'
+    | 'onDragEnd'
+    | 'onDragEnter'
+    | 'onDragLeave'
+    | 'onDragOver'
+    | 'onDragCapture'
+    | 'onDragExit'
+    | 'onDrop'
+    | 'onAnimationStart'
+    | 'onAnimationIteration'
+    | 'onAnimationEnd';
+
+type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, MotionConflicts>;
+
+type ButtonProps = NativeButtonProps &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
-        animationType?: 'default' | 'subtle' | 'back' | 'theme' | 'float' | 'none';
+        animationType?: ButtonAnimation;
     };
 
-const ANIMATION_CONFIGS = {
+type ButtonAnimation = 'default' | 'subtle' | 'back' | 'theme' | 'float' | 'none';
+
+const animationConfigs: Record<ButtonAnimation, MotionProps> = {
     default: {
         whileHover: {
             scale: [1, 1.05, 1.02, 1.05],
@@ -101,7 +117,10 @@ const ANIMATION_CONFIGS = {
             scale: 1.1,
             rotate: [0, -10, 10, 0],
             boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
-            transition: { duration: 0.4, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] },
+            transition: {
+                duration: 0.4,
+                ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
+            },
         },
         whileTap: {
             scale: 0.95,
@@ -141,67 +160,42 @@ const ANIMATION_CONFIGS = {
     none: {},
 };
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, animationType, ...props }, ref) => {
-        const {
-            onDrag: _onDrag,
-            onDragCapture: _onDragCapture,
-            onDragEnd: _onDragEnd,
-            onDragEnter: _onDragEnter,
-            onDragLeave: _onDragLeave,
-            onDragOver: _onDragOver,
-            onDragStart: _onDragStart,
-            onDrop: _onDrop,
-            ...restProps
-        } = props;
-        const finalAnimationType = props.disabled ? 'none' : animationType || 'default';
-        const animationProps = ANIMATION_CONFIGS[finalAnimationType];
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+    (
+        { className, variant, size, asChild = false, animationType = 'default', disabled, ...rest },
+        ref,
+    ) => {
+        const resolvedAnimation: ButtonAnimation = disabled ? 'none' : animationType;
+        const animationProps = animationConfigs[resolvedAnimation];
+        const mergedClassName = cn(buttonVariants({ variant, size, className }));
 
-        if (asChild && finalAnimationType !== 'none') {
+        if (asChild && resolvedAnimation !== 'none') {
             return (
-                <motion.div
-                    className="inline-block"
-                    {...(ANIMATION_CONFIGS[finalAnimationType] || {})}
-                >
-                    <Slot
-                        className={cn(buttonVariants({ variant, size, className }))}
-                        ref={ref}
-                        {...restProps}
-                    />
+                <motion.div className="inline-block" {...animationProps}>
+                    <Slot className={mergedClassName} ref={ref} {...rest} />
                 </motion.div>
             );
         }
 
         if (asChild) {
-            return (
-                <Slot
-                    className={cn(buttonVariants({ variant, size, className }))}
-                    ref={ref}
-                    {...restProps}
-                />
-            );
+            return <Slot className={mergedClassName} ref={ref} {...rest} />;
         }
 
-        if (finalAnimationType === 'none') {
-            return (
-                <button
-                    className={cn(buttonVariants({ variant, size, className }))}
-                    ref={ref}
-                    {...restProps}
-                />
-            );
+        if (resolvedAnimation === 'none') {
+            return <button className={mergedClassName} ref={ref} {...rest} />;
         }
 
         return (
             <motion.button
-                className={cn(buttonVariants({ variant, size, className }))}
+                className={mergedClassName}
                 ref={ref}
                 {...animationProps}
-                {...(restProps as Record<string, unknown>)}
+                {...(rest as NativeButtonProps)}
             />
         );
     },
 );
 Button.displayName = 'Button';
 
-export { Button };
+export { Button, buttonVariants };
+export type { ButtonProps, ButtonAnimation };
