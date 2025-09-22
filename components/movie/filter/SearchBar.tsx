@@ -1,7 +1,8 @@
 'use client';
 
-import { ChangeEvent, useEffect, useState } from 'react';
 import { Search, XCircle } from 'lucide-react';
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useFilterStore } from '@/stores/filter-store';

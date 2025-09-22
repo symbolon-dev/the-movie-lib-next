@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/schemas/movie';
 import { MovieDiscoverParams } from '@/types/movie';
 
@@ -16,6 +17,9 @@ const TMDBApi = async () => {
                 headers: {
                     accept: 'application/json',
                     Authorization: `Bearer ${API_KEY}`,
+                },
+                next: {
+                    revalidate: 60 * 60, // 1 hour cache
                 },
             });
 

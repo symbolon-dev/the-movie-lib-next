@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
 import { AlertTriangle, ArrowLeft, Home, RotateCcw } from 'lucide-react';
+import { useEffect } from 'react';
+
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';

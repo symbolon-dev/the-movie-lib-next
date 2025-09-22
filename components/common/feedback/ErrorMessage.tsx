@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';

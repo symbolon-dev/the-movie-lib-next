@@ -40,7 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Claude Config ignorieren
+# Claude Config
 claude.config.json
 .claude/
 CLAUDE.md

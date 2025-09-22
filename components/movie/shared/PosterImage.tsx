@@ -1,6 +1,7 @@
-import { memo } from 'react';
-import Image from 'next/image';
 import { Film } from 'lucide-react';
+import Image from 'next/image';
+import { memo } from 'react';
+
 import { getMoviePosterUrl } from '@/utils/image';
 
 type PosterImageProps = {
@@ -20,7 +21,7 @@ const PosterImage = memo(
         title,
         aspectRatio = '2/3',
         priority = false,
-        sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+        sizes = '(max-width: 640px) 180px, (max-width: 768px) 240px, (max-width: 1024px) 200px, 240px',
         className = '',
         showFallback = true,
         fallbackText = 'No Image Available',
@@ -31,12 +32,13 @@ const PosterImage = memo(
             >
                 {path ? (
                     <Image
-                        src={getMoviePosterUrl(path, 'w500')}
+                        src={getMoviePosterUrl(path, 'w342')}
                         alt={`Movie poster for ${title}`}
                         fill
                         sizes={sizes}
                         className="object-cover"
                         priority={priority}
+                        quality={85}
                     />
                 ) : showFallback ? (
                     <div

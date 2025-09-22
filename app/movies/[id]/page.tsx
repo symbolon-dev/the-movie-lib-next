@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
@@ -13,9 +14,7 @@ type DetailProps = {
 
 const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
 
-export const revalidate = REVALIDATE_TIME;
-
-export async function generateMetadata({ params }: DetailProps): Promise<Metadata> {
+const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
     const { id } = await params;
 
     try {
@@ -68,7 +67,7 @@ export async function generateMetadata({ params }: DetailProps): Promise<Metadat
             description: 'The requested movie could not be found.',
         };
     }
-}
+};
 
 const getMovie = async (id: string) => {
     try {
@@ -111,13 +110,14 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 
     return (
         <>
+            <link rel="preconnect" href="https://image.tmdb.org" />
             <ScrollToTop />
             <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
                 <BackButton href="/" label="Back to Movies" className="w-fit" />
 
                 <NeonGradientCard
                     className="rounded-3xl"
-                    contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10 dark:bg-neutral-900"
+                    contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10"
                     neonColors={{
                         firstColor: 'var(--color-chart-1)',
                         secondColor: 'var(--color-card)',
@@ -155,3 +155,4 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 };
 
 export default MovieDetailPage;
+export { generateMetadata };

@@ -1,9 +1,10 @@
 'use client';
 
-import { forwardRef, type ButtonHTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { motion, type MotionProps } from 'framer-motion';
+import { type ButtonHTMLAttributes, forwardRef } from 'react';
+
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
@@ -198,4 +199,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
-export type { ButtonProps, ButtonAnimation };
+export type { ButtonAnimation, ButtonProps };

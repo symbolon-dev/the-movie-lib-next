@@ -1,8 +1,10 @@
-import { ReactNode } from 'react';
+import './globals.css';
+
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { ReactNode } from 'react';
+
 import { Header } from '@/components/layout/Header';
-import './globals.css';
 
 const geist = Geist({
     subsets: ['latin'],

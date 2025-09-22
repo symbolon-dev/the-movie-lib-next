@@ -1,8 +1,9 @@
 'use client';
 
-import { forwardRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, SunDim } from 'lucide-react';
+import { forwardRef } from 'react';
+
 import { cn } from '@/lib/utils';
 
 export type ThemeMode = 'light' | 'dark';

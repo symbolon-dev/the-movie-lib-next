@@ -1,4 +1,5 @@
 import { ArrowDown, ArrowUp } from 'lucide-react';
+
 import {
     Select,
     SelectContent,
@@ -40,7 +41,7 @@ const SortSelect = ({ className = '' }: SortSelectProps) => {
     return (
         <div className={`w-full ${className}`}>
             <Select value={sortBy} onValueChange={handleValueChange}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full" aria-label="Sort movies by">
                     <SelectValue placeholder="Please select" />
                 </SelectTrigger>
                 <SelectContent>
