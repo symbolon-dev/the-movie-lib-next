@@ -7,16 +7,5 @@ export default {
     singleQuote: true,
     trailingComma: 'all',
     semi: true,
-    plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
-    importOrder: [
-        '^react$',
-        '^next(/.*)?$',
-        '<THIRD_PARTY_MODULES>',
-        '^@/(.*)$',
-        '^[./]',
-    ],
-    importOrderSeparation: true,
-    importOrderSortSpecifiers: true,
-    importOrderCaseInsensitive: true,
-    importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
+    plugins: ['prettier-plugin-tailwindcss'],
 };
