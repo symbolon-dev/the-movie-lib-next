@@ -1,24 +1,90 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-
-import MovieHeader from '@/components/features/movies/detail/MovieHeader';
-import MoviePoster from '@/components/features/movies/detail/MoviePoster';
-import MovieRating from '@/components/features/movies/detail/MovieRating';
-import MovieMetadata from '@/components/features/movies/detail/MovieMetadata';
-import MovieGenres from '@/components/features/movies/detail/MovieGenres';
-import MovieInfo from '@/components/features/movies/detail/MovieInfo';
-import MovieLinks from '@/components/features/movies/detail/MovieLinks';
+import { BackButton } from '@/components/common/navigation/BackButton';
+import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
+import { MovieHeader } from '@/components/movie/detail/MovieHeader';
+import { MovieInfo } from '@/components/movie/detail/MovieInfo';
+import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
+import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
+};
+
+const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
+
+export const revalidate = REVALIDATE_TIME;
+
+export async function generateMetadata({ params }: DetailProps): Promise<Metadata> {
+    const { id } = await params;
+
+    try {
+        const movie = await getMovie(id);
+
+        const title = `${movie.title} - Movie Library`;
+        const description =
+            movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
+        const backdropUrl = movie.backdrop_path
+            ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
+            : undefined;
+
+        return {
+            title,
+            description,
+            openGraph: {
+                title: movie.title,
+                description,
+                type: 'video.movie',
+                images: backdropUrl
+                    ? [
+                          {
+                              url: backdropUrl,
+                              width: 1280,
+                              height: 720,
+                              alt: `${movie.title} backdrop`,
+                          },
+                      ]
+                    : [],
+                siteName: 'Movie Library',
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: movie.title,
+                description,
+                images: backdropUrl ? [backdropUrl] : [],
+            },
+            keywords: [
+                movie.title,
+                'movie',
+                'film',
+                'cinema',
+                ...movie.genres.map((g: { name: string }) => g.name),
+            ],
+        };
+    } catch (error) {
+        console.error('Failed to generate movie metadata', error);
+        return {
+            title: 'Movie Not Found - Movie Library',
+            description: 'The requested movie could not be found.',
+        };
+    }
 }
 
 const getMovie = async (id: string) => {
     try {
-        const origin = process.env.NEXT_APP_URL ?? 'http://localhost:3000';
-        const url = `${origin}/api/movies/${id}`;
+        const API_KEY = process.env.TMDB_API_KEY;
+        const BASE_URL = process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3';
 
-        const response = await fetch(url, {
-            cache: 'no-store'
+        if (!API_KEY) {
+            throw new Error('TMDB API key is not defined');
+        }
+
+        const response = await fetch(`${BASE_URL}/movie/${id}`, {
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${API_KEY}`,
+            },
+            next: { revalidate: REVALIDATE_TIME },
         });
 
         if (!response.ok) {
@@ -44,36 +110,34 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 px-4 py-10 md:px-8">
-            <div className="container mx-auto">
-                <MovieHeader
-                    title={movie.title}
-                    tagline={movie.tagline}
-                    backdropPath={movie.backdrop_path}
-                />
+        <>
+            <ScrollToTop />
+            <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
+                <BackButton href="/" label="Back to Movies" className="w-fit" />
 
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                    <div>
-                        <MoviePoster
-                            posterPath={movie.poster_path}
+                <NeonGradientCard
+                    className="rounded-3xl"
+                    contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10 dark:bg-neutral-900"
+                    neonColors={{
+                        firstColor: 'var(--color-chart-1)',
+                        secondColor: 'var(--color-card)',
+                    }}
+                >
+                    <div className="flex flex-col gap-10">
+                        <MovieHeader
                             title={movie.title}
+                            tagline={movie.tagline}
+                            posterPath={movie.poster_path}
+                            voteAverage={movie.vote_average}
+                            voteCount={movie.vote_count}
+                            releaseDate={movie.release_date}
+                            runtime={movie.runtime}
+                            genres={movie.genres}
+                            homepage={movie.homepage}
+                            imdbId={movie.imdb_id}
                         />
-                    </div>
 
-                    <div className="text-white md:col-span-2">
-                        <div className="mb-6 flex flex-wrap items-center gap-6">
-                            <MovieRating
-                                voteAverage={movie.vote_average}
-                                voteCount={movie.vote_count}
-                            />
-
-                            <MovieMetadata
-                                releaseDate={movie.release_date}
-                                runtime={movie.runtime}
-                            />
-                        </div>
-
-                        <MovieGenres genres={movie.genres} />
+                        <hr className="border-border/60" />
 
                         <MovieInfo
                             overview={movie.overview}
@@ -83,15 +147,10 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
                             budget={movie.budget}
                             revenue={movie.revenue}
                         />
-
-                        <MovieLinks
-                            homepage={movie.homepage}
-                            imdbId={movie.imdb_id}
-                        />
                     </div>
-                </div>
+                </NeonGradientCard>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -1,21 +1,20 @@
 import { NextResponse } from 'next/server';
+import TMDBApi from '@/utils/api';
+import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
-import TMDBApi from '@/lib/api';
+const CACHE_TIME = 60 * 60 * 24 * 7; // 7 days
+const REVALIDATE_TIME = 60 * 60 * 24; // 1 day
 
-export async function GET() {
+export const GET = async () => {
     try {
         const api = await TMDBApi();
         const movies = await api.fetchMovieGenres();
-        return NextResponse.json(movies);
-    } catch (error) {
-        console.error('Error in genre route:', error);
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        return NextResponse.json(
-            {
-                error: 'Failed to fetch genres',
-                details: errorMessage,
+        return NextResponse.json(movies, {
+            headers: {
+                'Cache-Control': `public, s-maxage=${CACHE_TIME}, stale-while-revalidate=${REVALIDATE_TIME}`,
             },
-            { status: 500 },
-        );
+        });
+    } catch (error) {
+        return handleApiError(error, 'genre', 'genres');
     }
-}
+};
