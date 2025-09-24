@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import {
     GenreResponseSchema,
     GenreSchema,
@@ -60,15 +61,15 @@ type MovieDiscoverParams = {
 };
 
 export type {
+    GenreResponse,
     Movie,
     MovieDetail,
-    MovieResponse,
+    MovieDiscoverParams,
+    MovieFilter,
     MovieGenre,
-    GenreResponse,
+    MovieResponse,
+    MovieSortOption,
     ProductionCompany,
     ProductionCountry,
     SpokenLanguage,
-    MovieSortOption,
-    MovieFilter,
-    MovieDiscoverParams,
 };
