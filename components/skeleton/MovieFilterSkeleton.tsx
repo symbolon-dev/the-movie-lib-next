@@ -1,4 +1,3 @@
-import { GenreFilterSkeleton } from '@/components/skeleton/GenreFilterSkeleton';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -13,7 +12,11 @@ const MovieFilterSkeleton = () => {
 
                 <div className="border-border border-t pt-4">
                     <Skeleton className="mb-3 h-4 w-20" />
-                    <GenreFilterSkeleton />
+                    <div className="flex flex-wrap gap-2">
+                        {Array.from({ length: 19 }).map((_, index) => (
+                            <Skeleton key={index} className="h-6 w-16 rounded-md" />
+                        ))}
+                    </div>
                 </div>
 
                 <div className="border-border border-t pt-4">

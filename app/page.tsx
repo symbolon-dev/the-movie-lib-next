@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { MovieFilterWithSkeleton } from '@/components/movie/filter/MovieFilterWithSkeleton';
+import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieResults } from '@/components/movie/list/MovieResults';
 
 export const dynamic = 'force-dynamic';
@@ -49,7 +49,7 @@ const Home = async () => {
 
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
                     <section id="filters" className="lg:sticky lg:top-28">
-                        <MovieFilterWithSkeleton />
+                        <MovieFilter />
                     </section>
 
                     <section id="results">

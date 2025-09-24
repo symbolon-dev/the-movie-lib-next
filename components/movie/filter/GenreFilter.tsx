@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { GenreFilterSkeleton } from '@/components/skeleton/GenreFilterSkeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useFilterStore } from '@/stores/filter-store';
@@ -33,7 +33,13 @@ const GenreFilter = ({ className = '' }: GenreFilterProps) => {
     }, [genres, getGenres]);
 
     if (!genres) {
-        return <GenreFilterSkeleton className={className} />;
+        return (
+            <div className={cn('flex flex-wrap gap-2', className)}>
+                {Array.from({ length: 19 }).map((_, index) => (
+                    <Skeleton key={index} className="h-6 w-16 rounded-md" />
+                ))}
+            </div>
+        );
     }
 
     return (
