@@ -14,7 +14,6 @@ import { cn } from '@/lib/utils';
 type MagicCardProps = ComponentPropsWithoutRef<'div'> & {
     gradientSize?: number;
     gradientColor?: string;
-    gradientOpacity?: number;
 };
 
 const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
@@ -23,7 +22,6 @@ const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
         className,
         gradientSize = 200,
         gradientColor = 'var(--color-primary)',
-        gradientOpacity = 0.8,
         onPointerMove,
         onPointerLeave,
         ...rest
@@ -96,10 +94,9 @@ const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
         >
             <div className="relative z-10">{children}</div>
             <motion.div
-                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:[opacity:var(--magic-card-opacity)]"
                 style={{
                     background: gradientColor,
-                    opacity: gradientOpacity,
                     ...style,
                 }}
             />

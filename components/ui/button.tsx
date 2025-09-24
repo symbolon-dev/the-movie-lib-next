@@ -183,13 +183,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         }
 
         if (resolvedAnimation === 'none') {
-            return <button className={mergedClassName} ref={ref} {...rest} />;
+            return <button className={mergedClassName} ref={ref} disabled={disabled} {...rest} />;
         }
 
         return (
             <motion.button
                 className={mergedClassName}
                 ref={ref}
+                disabled={disabled}
                 {...animationProps}
                 {...(rest as NativeButtonProps)}
             />

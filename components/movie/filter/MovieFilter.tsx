@@ -14,7 +14,7 @@ const MovieFilter = () => {
         searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
 
     return (
-        <MagicCard gradientColor="var(--color-accent)" gradientOpacity={0.2} className="h-fit p-6">
+        <MagicCard gradientColor="var(--color-primary)" className="h-fit p-6">
             <div className="space-y-6">
                 <div className="space-y-4">
                     <h2 className="heading-4">Search & Filter</h2>
