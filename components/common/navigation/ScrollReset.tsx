@@ -2,11 +2,11 @@
 
 import { useEffect } from 'react';
 
-type ScrollToTopProps = {
+type ScrollResetProps = {
     resetOnMount?: boolean;
 };
 
-const ScrollToTop = ({ resetOnMount = true }: ScrollToTopProps) => {
+const ScrollReset = ({ resetOnMount = true }: ScrollResetProps) => {
     useEffect(() => {
         if (typeof window === 'undefined' || !resetOnMount) return;
 
@@ -22,4 +22,4 @@ const ScrollToTop = ({ resetOnMount = true }: ScrollToTopProps) => {
     return null;
 };
 
-export { ScrollToTop };
+export { ScrollReset };

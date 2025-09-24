@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
-import { MovieFilterSkeleton } from '@/components/skeleton/filter/MovieFilterSkeleton';
+import { MovieFilterSkeleton } from '@/components/skeleton/MovieFilterSkeleton';
 import { useGenreStore } from '@/stores/genre-store';
 
 const MovieFilterWithSkeleton = () => {

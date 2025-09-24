@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { BackButton } from '@/components/common/navigation/BackButton';
-import { ScrollToTop } from '@/components/common/navigation/ScrollToTop';
+import { ScrollReset } from '@/components/common/navigation/ScrollReset';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
 import { MovieInfo } from '@/components/movie/detail/MovieInfo';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
@@ -111,7 +111,7 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     return (
         <>
             <link rel="preconnect" href="https://image.tmdb.org" />
-            <ScrollToTop />
+            <ScrollReset />
             <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
                 <BackButton href="/" label="Back to Movies" className="w-fit" />
 

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
+import { GenreFilterSkeleton } from '@/components/skeleton/GenreFilterSkeleton';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useFilterStore } from '@/stores/filter-store';

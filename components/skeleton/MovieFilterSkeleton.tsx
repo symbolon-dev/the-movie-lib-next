@@ -1,4 +1,4 @@
-import { GenreFilterSkeleton } from '@/components/skeleton/filter/GenreFilterSkeleton';
+import { GenreFilterSkeleton } from '@/components/skeleton/GenreFilterSkeleton';
 import { MagicCard } from '@/components/ui/magic-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
