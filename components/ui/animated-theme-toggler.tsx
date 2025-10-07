@@ -14,7 +14,7 @@ type AnimatedThemeTogglerProps = {
     className?: string;
     disabled?: boolean;
     isTransitioning?: boolean;
-};
+} & React.ComponentProps<'button'>;
 
 const iconTransition = {
     duration: 0.28,

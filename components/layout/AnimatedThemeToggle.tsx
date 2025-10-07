@@ -83,6 +83,7 @@ const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
 
     return (
         <AnimatedThemeToggler
+            ref={buttonRef}
             onToggle={changeTheme}
             mode={resolvedTheme as ThemeMode}
             className={className}

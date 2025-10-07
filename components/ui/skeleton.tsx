@@ -1,13 +1,14 @@
-import * as React from 'react';
-
 import { cn } from '@/lib/utils';
 
-type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
+const Skeleton = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div
+        data-slot="skeleton"
+        className={cn('bg-accent animate-pulse rounded-md', className)}
+        {...props}
+    />
+);
 
-const Skeleton = ({ className, ...props }: SkeletonProps) => {
-    return <div className={cn('bg-primary/20 animate-pulse rounded-md', className)} {...props} />;
-};
-
-Skeleton.displayName = 'Skeleton';
+type SkeletonProps = React.ComponentProps<'div'>;
 
 export { Skeleton };
+export type { SkeletonProps };

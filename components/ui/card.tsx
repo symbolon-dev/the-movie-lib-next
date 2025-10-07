@@ -2,52 +2,83 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-type CardProps = React.HTMLAttributes<HTMLDivElement>;
-
-const Card = ({ className, ...props }: CardProps) => (
+const Card = ({ className, ...props }: React.ComponentProps<'div'>) => (
     <div
+        data-slot="card"
         className={cn(
-            'bg-card text-card-foreground border-border rounded-xl border shadow',
+            'bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm',
             className,
         )}
         {...props}
     />
 );
-Card.displayName = 'Card';
 
-type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CardHeader = ({ className, ...props }: CardHeaderProps) => (
-    <div className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
+const CardHeader = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div
+        data-slot="card-header"
+        className={cn(
+            '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',
+            className,
+        )}
+        {...props}
+    />
 );
-CardHeader.displayName = 'CardHeader';
 
-type CardTitleProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CardTitle = ({ className, ...props }: CardTitleProps) => (
-    <div className={cn('leading-none font-semibold tracking-tight', className)} {...props} />
+const CardTitle = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div
+        data-slot="card-title"
+        className={cn('leading-none font-semibold', className)}
+        {...props}
+    />
 );
-CardTitle.displayName = 'CardTitle';
 
-type CardDescriptionProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CardDescription = ({ className, ...props }: CardDescriptionProps) => (
-    <div className={cn('text-muted-foreground text-sm', className)} {...props} />
+const CardDescription = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div
+        data-slot="card-description"
+        className={cn('text-muted-foreground text-sm', className)}
+        {...props}
+    />
 );
-CardDescription.displayName = 'CardDescription';
 
-type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CardContent = ({ className, ...props }: CardContentProps) => (
-    <div className={cn('p-6 pt-0', className)} {...props} />
+const CardAction = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div
+        data-slot="card-action"
+        className={cn(
+            'col-start-2 row-span-2 row-start-1 self-start justify-self-end',
+            className,
+        )}
+        {...props}
+    />
 );
-CardContent.displayName = 'CardContent';
 
-type CardFooterProps = React.HTMLAttributes<HTMLDivElement>;
-
-const CardFooter = ({ className, ...props }: CardFooterProps) => (
-    <div className={cn('flex items-center p-6 pt-0', className)} {...props} />
+const CardContent = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div data-slot="card-content" className={cn('px-6', className)} {...props} />
 );
-CardFooter.displayName = 'CardFooter';
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+const CardFooter = ({ className, ...props }: React.ComponentProps<'div'>) => (
+    <div
+        data-slot="card-footer"
+        className={cn('flex items-center px-6 [.border-t]:pt-6', className)}
+        {...props}
+    />
+);
+
+type CardProps = React.ComponentProps<'div'>;
+type CardHeaderProps = React.ComponentProps<'div'>;
+type CardTitleProps = React.ComponentProps<'div'>;
+type CardDescriptionProps = React.ComponentProps<'div'>;
+type CardActionProps = React.ComponentProps<'div'>;
+type CardContentProps = React.ComponentProps<'div'>;
+type CardFooterProps = React.ComponentProps<'div'>;
+
+export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+
+export type {
+    CardActionProps,
+    CardContentProps,
+    CardDescriptionProps,
+    CardFooterProps,
+    CardHeaderProps,
+    CardProps,
+    CardTitleProps,
+};
