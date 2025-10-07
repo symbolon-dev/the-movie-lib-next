@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieResults } from '@/components/movie/list/MovieResults';
 
-export const dynamic = 'force-dynamic';
+const dynamic = 'force-dynamic';
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
     title: 'Movie Library - Discover Amazing Movies',
     description:
         'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
@@ -61,4 +61,5 @@ const Home = async () => {
     );
 };
 
+export { dynamic, metadata };
 export default Home;

@@ -18,11 +18,9 @@ export const useMovies = () => {
     const sortBy = searchParams.get('sort') || 'popularity.desc';
     const genres = searchParams.get('genres') || '';
 
-    // Track filter changes to reset pagination
     const filterKey = `${query}-${sortBy}-${genres}`;
     const previousFilterKey = useRef(filterKey);
 
-    // One-time restoration check on mount
     useEffect(() => {
         const cameFromMovieDetail = sessionStorage.getItem('navigated-from-movie-list') === 'true';
 
@@ -46,11 +44,10 @@ export const useMovies = () => {
         }
 
         setIsRestored(true);
-    }, []); // Only run once on mount
+    }, []);
 
-    // Reset when filters change (but not on first load if we're restoring)
     useEffect(() => {
-        if (!isRestored) return; // Don't reset until we've checked for restoration
+        if (!isRestored) return;
 
         if (previousFilterKey.current !== filterKey) {
             setCurrentPage(1);
@@ -59,13 +56,12 @@ export const useMovies = () => {
         }
     }, [filterKey, isRestored]);
 
-    // Build API URL based on whether we're searching or discovering
     const apiUrl = query
         ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${currentPage}`
         : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${currentPage}`;
 
     const { data, error, isLoading, mutate } = useSWR<MovieResponse>(
-        isRestored ? [apiUrl, filterKey] : null, // Don't fetch until restored
+        isRestored ? [apiUrl, filterKey] : undefined,
         ([url]) => fetcher(url),
         {
             revalidateOnFocus: false,
@@ -74,14 +70,11 @@ export const useMovies = () => {
         },
     );
 
-    // Update movies when data changes (but not if we've already restored from sessionStorage)
     useEffect(() => {
         if (data && isRestored) {
             if (currentPage === 1 && allMovies.length === 0) {
-                // Only replace if we don't have restored movies
                 setAllMovies(data.results);
             } else if (currentPage > 1) {
-                // Append new pages
                 setAllMovies((prev) => {
                     const newMovies = data.results.filter(
                         (movie) => !prev.some((existing) => existing.id === movie.id),
@@ -98,7 +91,6 @@ export const useMovies = () => {
         }
     }, [isLoading, data, currentPage]);
 
-    // Save state when movies or page changes (for navigation persistence)
     useEffect(() => {
         if (allMovies.length > 0) {
             sessionStorage.setItem('movie-list-movies', JSON.stringify(allMovies));

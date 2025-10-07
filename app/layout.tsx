@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
     variable: '--font-geist-mono',
 });
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
     title: 'The Movie Lib - Next',
     description: 'Discover and explore movies with The Movie Lib',
 };
@@ -32,4 +32,5 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
     </html>
 );
 
+export { metadata };
 export default RootLayout;

@@ -19,7 +19,7 @@ const ScrollReset = ({ resetOnMount = true }: ScrollResetProps) => {
         return () => clearTimeout(timeoutId);
     }, [resetOnMount]);
 
-    return null;
+    return undefined;
 };
 
 export { ScrollReset };
