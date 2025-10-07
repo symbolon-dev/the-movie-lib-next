@@ -1,22 +1,35 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
+import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
-import { useTheme } from '@/hooks/use-theme';
 
 type AnimatedThemeToggleProps = {
     className?: string;
 };
 
 const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
-    const { mode, toggleMode, hasHydrated } = useTheme();
+    const { setTheme, resolvedTheme } = useTheme();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null;
+    }
+
+    const toggleMode = () => {
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    };
 
     const changeTheme = async () => {
-        if (!buttonRef.current || isTransitioning || !hasHydrated) return;
+        if (!buttonRef.current || isTransitioning) return;
 
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const startViewTransition = document.startViewTransition?.bind(document);
@@ -72,9 +85,9 @@ const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
         <AnimatedThemeToggler
             ref={buttonRef}
             onToggle={changeTheme}
-            mode={mode}
+            mode={resolvedTheme as 'light' | 'dark'}
             className={className}
-            disabled={!hasHydrated}
+            disabled={!resolvedTheme}
             isTransitioning={isTransitioning}
         />
     );
