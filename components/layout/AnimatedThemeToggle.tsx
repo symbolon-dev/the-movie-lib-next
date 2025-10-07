@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
+import { AnimatedThemeToggler, ThemeMode } from '@/components/ui/animated-theme-toggler';
 
 type AnimatedThemeToggleProps = {
     className?: string;
@@ -83,9 +83,8 @@ const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
 
     return (
         <AnimatedThemeToggler
-            ref={buttonRef}
             onToggle={changeTheme}
-            mode={resolvedTheme as 'light' | 'dark'}
+            mode={resolvedTheme as ThemeMode}
             className={className}
             disabled={!resolvedTheme}
             isTransitioning={isTransitioning}

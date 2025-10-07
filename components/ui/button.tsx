@@ -3,7 +3,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { motion, type MotionProps } from 'framer-motion';
-import { type ButtonHTMLAttributes, forwardRef } from 'react';
+import React, { type ButtonHTMLAttributes } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -161,42 +161,44 @@ const animationConfigs: Record<ButtonAnimation, MotionProps> = {
     none: {},
 };
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-    (
-        { className, variant, size, asChild = false, animationType = 'default', disabled, ...rest },
-        ref,
-    ) => {
-        const resolvedAnimation: ButtonAnimation = disabled ? 'none' : animationType;
-        const animationProps = animationConfigs[resolvedAnimation];
-        const mergedClassName = cn(buttonVariants({ variant, size, className }));
+const Button = ({
+    className,
+    variant,
+    size,
+    asChild = false,
+    animationType = 'default',
+    disabled,
+    ...rest
+}: ButtonProps) => {
+    const resolvedAnimation: ButtonAnimation = disabled ? 'none' : animationType;
+    const animationProps = animationConfigs[resolvedAnimation];
+    const mergedClassName = cn(buttonVariants({ variant, size, className }));
 
-        if (asChild && resolvedAnimation !== 'none') {
-            return (
-                <motion.div className="inline-block" tabIndex={-1} {...animationProps}>
-                    <Slot className={mergedClassName} ref={ref} {...rest} />
-                </motion.div>
-            );
-        }
-
-        if (asChild) {
-            return <Slot className={mergedClassName} ref={ref} {...rest} />;
-        }
-
-        if (resolvedAnimation === 'none') {
-            return <button className={mergedClassName} ref={ref} disabled={disabled} {...rest} />;
-        }
-
+    if (asChild && resolvedAnimation !== 'none') {
         return (
-            <motion.button
-                className={mergedClassName}
-                ref={ref}
-                disabled={disabled}
-                {...animationProps}
-                {...(rest as NativeButtonProps)}
-            />
+            <motion.div className="inline-block" tabIndex={-1} {...animationProps}>
+                <Slot className={mergedClassName} {...rest} />
+            </motion.div>
         );
-    },
-);
+    }
+
+    if (asChild) {
+        return <Slot className={mergedClassName} {...rest} />;
+    }
+
+    if (resolvedAnimation === 'none') {
+        return <button className={mergedClassName} disabled={disabled} {...rest} />;
+    }
+
+    return (
+        <motion.button
+            className={mergedClassName}
+            disabled={disabled}
+            {...animationProps}
+            {...(rest as NativeButtonProps)}
+        />
+    );
+};
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };

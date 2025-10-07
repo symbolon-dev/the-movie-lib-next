@@ -1,4 +1,6 @@
-const applyDocumentTheme = (mode: 'light' | 'dark') => {
+import { ThemeMode } from '@/components/ui/animated-theme-toggler';
+
+const applyDocumentTheme = (mode: ThemeMode) => {
     if (typeof document === 'undefined') return;
 
     const root = document.documentElement;

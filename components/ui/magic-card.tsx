@@ -1,9 +1,8 @@
 'use client';
 
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import {
-    type ComponentPropsWithoutRef,
-    forwardRef,
+import React, {
+    type ComponentProps,
     type PointerEvent as ReactPointerEvent,
     useCallback,
     useEffect,
@@ -11,12 +10,12 @@ import {
 
 import { cn } from '@/lib/utils';
 
-type MagicCardProps = ComponentPropsWithoutRef<'div'> & {
+type MagicCardProps = ComponentProps<'div'> & {
     gradientSize?: number;
     gradientColor?: string;
 };
 
-const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
+const MagicCard = (props: MagicCardProps) => {
     const {
         children,
         className,
@@ -80,7 +79,6 @@ const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
 
     return (
         <div
-            ref={ref}
             onPointerMove={handlePointerMove}
             onPointerLeave={(event) => {
                 reset();
@@ -102,7 +100,7 @@ const MagicCard = forwardRef<HTMLDivElement, MagicCardProps>((props, ref) => {
             />
         </div>
     );
-});
+};
 
 MagicCard.displayName = 'MagicCard';
 
