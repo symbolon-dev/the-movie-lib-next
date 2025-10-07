@@ -36,7 +36,7 @@ const AnimatedThemeToggler = ({
             type="button"
             onClick={onToggle}
             className={cn(
-                'group border-border/70 bg-background/90 text-foreground shadow-primary/10 hover:border-primary/70 hover:text-primary focus-visible:ring-ring focus-visible:ring-offset-background relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border p-0.5 shadow-lg transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60',
+                'group border-border/70 bg-background/90 text-foreground shadow-primary/10 hover:border-primary/70 hover:text-primary focus-visible:ring-ring focus-visible:ring-offset-background relative inline-flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-0.5 shadow-lg transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60',
                 isTransitioning && 'cursor-wait',
                 className,
             )}
