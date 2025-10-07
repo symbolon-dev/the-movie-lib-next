@@ -44,7 +44,6 @@ Develop a web application that displays a movie list with search, filter, and so
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com)
 - [shadcn/ui](https://ui.shadcn.com) (UI Components)
-- [Zustand](https://github.com/pmndrs/zustand) (State Management)
 - [Zod](https://zod.dev) (Runtime Type Validation)
 - [Lucide React](https://lucide.dev) (Icons)
 - [date-fns](https://date-fns.org) (Date Utilities)
@@ -112,7 +111,6 @@ pnpm dev
 │   ├── movie/             # Movie-specific components
 │   ├── common/            # Reusable components
 │   └── layout/            # Layout components
-├── stores/                # Zustand state management
 ├── utils/                 # Utility functions
 ├── types/                 # TypeScript definitions
 └── schemas/               # Zod validation schemas
@@ -120,7 +118,6 @@ pnpm dev
 
 ## Architecture
 
-- **State Management**: Zustand for global state (movies, theme)
 - **API Layer**: Internal Next.js API routes proxy TMDB requests
 - **Type Safety**: Zod schemas for runtime validation + TypeScript
 - **Styling**: Tailwind CSS with shadcn/ui component system
