@@ -5,13 +5,10 @@ import { SearchBar } from '@/components/movie/filter/SearchBar';
 import { SortSelect } from '@/components/movie/filter/SortSelect';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
-import { useFilterStore } from '@/stores/filter-store';
+import { useMovieFilters } from '@/hooks/use-movie-filters';
 
 const MovieFilter = () => {
-    const { resetFilters, searchQuery, selectedGenres, sortBy } = useFilterStore();
-
-    const hasActiveFilters =
-        searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
+    const { resetFilters, hasActiveFilters } = useMovieFilters();
 
     return (
         <MagicCard gradientColor="var(--color-primary)" className="h-fit p-6">

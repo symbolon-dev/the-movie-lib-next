@@ -5,15 +5,13 @@ import { useEffect, useRef } from 'react';
 import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
 import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
 import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
-import { useMovieStore } from '@/stores/movie-store';
-import { usePaginationStore } from '@/stores/pagination-store';
+import { useMovies } from '@/hooks/use-movies';
 
 import { MovieList } from './MovieList';
 
 const MovieResults = () => {
-    const { movies, isLoading, error, loadMoreMovies, hasMoviesForCurrentParams, fetchMovies } =
-        useMovieStore();
-    const { currentPage, totalPages } = usePaginationStore();
+    const { movies, isLoading, error, currentPage, totalPages, loadMoreMovies, mutate } =
+        useMovies();
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasMorePages = currentPage < totalPages;
@@ -33,19 +31,13 @@ const MovieResults = () => {
     }, [movies]);
 
     useEffect(() => {
-        if (!hasMoviesForCurrentParams()) {
-            fetchMovies();
-        }
-    }, [hasMoviesForCurrentParams, fetchMovies]);
-
-    useEffect(() => {
         if (!hasMorePages || !sentinelRef.current) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
                 const [entry] = entries;
                 if (entry?.isIntersecting && !isLoading) {
-                    void loadMoreMovies();
+                    loadMoreMovies();
                 }
             },
             { rootMargin: '200px 0px' },
@@ -62,7 +54,7 @@ const MovieResults = () => {
                 <ErrorMessage
                     error={error}
                     onRetry={() => {
-                        fetchMovies();
+                        mutate();
                     }}
                 />
             )}

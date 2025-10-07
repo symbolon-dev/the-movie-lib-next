@@ -1,27 +1,19 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
-import { useThemeStore } from '@/stores/theme-store';
-import { applyDocumentTheme } from '@/utils/theme';
+import { useTheme } from '@/hooks/use-theme';
 
 type AnimatedThemeToggleProps = {
     className?: string;
 };
 
 const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
-    const mode = useThemeStore((state) => state.mode);
-    const toggleMode = useThemeStore((state) => state.toggleMode);
-    const hasHydrated = useThemeStore((state) => state.hasHydrated);
+    const { mode, toggleMode, hasHydrated } = useTheme();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
-
-    useEffect(() => {
-        if (!hasHydrated) return;
-        applyDocumentTheme(mode);
-    }, [mode, hasHydrated]);
 
     const changeTheme = async () => {
         if (!buttonRef.current || isTransitioning || !hasHydrated) return;

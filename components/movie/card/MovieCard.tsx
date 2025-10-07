@@ -5,7 +5,6 @@ import { memo } from 'react';
 import { PosterImage } from '@/components/movie/shared/PosterImage';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { useCacheStore } from '@/stores/cache-store';
 import { Movie } from '@/types/movie';
 import { formatYear } from '@/utils/formatter';
 
@@ -15,7 +14,6 @@ type MovieCardProps = {
 };
 
 const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
-    const invalidateCache = useCacheStore((state) => state.invalidateCache);
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average ?? 0).toFixed(1);
 
@@ -26,8 +24,6 @@ const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
         }
 
         sessionStorage.setItem('navigated-from-movie-list', 'true');
-
-        invalidateCache();
     };
 
     return (
