@@ -2,8 +2,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 type MovieLinksProps = {
-    homepage: string | undefined;
-    imdbId: string | undefined;
+    homepage: string | null;
+    imdbId: string | null;
     className?: string;
     buttonGroupClassName?: string;
 };

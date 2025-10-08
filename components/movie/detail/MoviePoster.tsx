@@ -2,7 +2,7 @@ import { PosterImage } from '@/components/movie/shared/PosterImage';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
 
 type MoviePosterProps = {
-    posterPath: string | undefined;
+    posterPath: string | null;
     title: string;
 };
 

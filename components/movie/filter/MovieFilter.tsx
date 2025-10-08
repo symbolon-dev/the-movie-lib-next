@@ -6,8 +6,13 @@ import { SortSelect } from '@/components/movie/filter/SortSelect';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
+import { MovieGenre } from '@/types/movie';
 
-const MovieFilter = () => {
+type MovieFilterProps = {
+    genres: MovieGenre[];
+};
+
+const MovieFilter = ({ genres }: MovieFilterProps) => {
     const { resetFilters, hasActiveFilters } = useMovieFilters();
 
     return (
@@ -20,7 +25,7 @@ const MovieFilter = () => {
 
                 <div className="border-border border-t pt-4">
                     <h3 className="text-body-sm text-muted-foreground mb-3 font-medium">Genres</h3>
-                    <GenreFilter />
+                    <GenreFilter genres={genres} />
                 </div>
 
                 <div className="border-border border-t pt-4">

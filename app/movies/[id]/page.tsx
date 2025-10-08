@@ -6,13 +6,13 @@ import { ScrollReset } from '@/components/common/navigation/ScrollReset';
 import { MovieHeader } from '@/components/movie/detail/MovieHeader';
 import { MovieInfo } from '@/components/movie/detail/MovieInfo';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
+import { MovieDetailSchema } from '@/schemas/movie';
+import TMDBApi from '@/utils/api';
 import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
 };
-
-const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
 
 const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
     const { id } = await params;
@@ -71,26 +71,16 @@ const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
 
 const getMovie = async (id: string) => {
     try {
-        const API_KEY = process.env.TMDB_API_KEY;
-        const BASE_URL = process.env.TMDB_BASE_URL || 'https://api.themoviedb.org/3';
+        const api = await TMDBApi();
+        const data = await api.fetchMovieDetails(id);
+        const validated = MovieDetailSchema.safeParse(data);
 
-        if (!API_KEY) {
-            throw new Error('TMDB API key is not defined');
+        if (!validated.success) {
+            console.error('Movie validation failed:', validated.error);
+            throw new Error('Invalid movie data');
         }
 
-        const response = await fetch(`${BASE_URL}/movie/${id}`, {
-            headers: {
-                accept: 'application/json',
-                Authorization: `Bearer ${API_KEY}`,
-            },
-            next: { revalidate: REVALIDATE_TIME },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error fetching movie: ${response.statusText}`);
-        }
-
-        return await response.json();
+        return validated.data;
     } catch (error) {
         console.error(`Error fetching movie with ID ${id}:`, error);
         throw error;

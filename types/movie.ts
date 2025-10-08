@@ -6,6 +6,9 @@ import {
     MovieDetailSchema,
     MovieResponseSchema,
     MovieSchema,
+    ProductionCompanySchema,
+    ProductionCountrySchema,
+    SpokenLanguageSchema,
 } from '@/schemas/movie';
 
 type Movie = z.infer<typeof MovieSchema>;
@@ -13,24 +16,9 @@ type MovieDetail = z.infer<typeof MovieDetailSchema>;
 type MovieResponse = z.infer<typeof MovieResponseSchema>;
 type MovieGenre = z.infer<typeof GenreSchema>;
 type GenreResponse = z.infer<typeof GenreResponseSchema>;
-
-type ProductionCompany = {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string;
-};
-
-type ProductionCountry = {
-    iso_3166_1: string;
-    name: string;
-};
-
-type SpokenLanguage = {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-};
+type ProductionCompany = z.infer<typeof ProductionCompanySchema>;
+type ProductionCountry = z.infer<typeof ProductionCountrySchema>;
+type SpokenLanguage = z.infer<typeof SpokenLanguageSchema>;
 
 type MovieSortOption =
     | 'popularity.desc'

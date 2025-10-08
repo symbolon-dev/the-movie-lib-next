@@ -1,18 +1,17 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useGenres } from '@/hooks/use-genres';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
 import { cn } from '@/lib/utils';
+import { MovieGenre } from '@/types/movie';
 
 type GenreFilterProps = {
+    genres: MovieGenre[];
     className?: string;
 };
 
-const GenreFilter = ({ className = '' }: GenreFilterProps) => {
+const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
     const { selectedGenres, setSelectedGenres } = useMovieFilters();
-    const { genres, isLoading } = useGenres();
 
     const isSelected = (genreId: number) => selectedGenres.includes(genreId);
 
@@ -23,16 +22,6 @@ const GenreFilter = ({ className = '' }: GenreFilterProps) => {
                 : [...selectedGenres, genreId],
         );
     };
-
-    if (isLoading || !genres) {
-        return (
-            <div className={cn('flex flex-wrap gap-2', className)}>
-                {Array.from({ length: 19 }).map((_, index) => (
-                    <Skeleton key={index} className="h-6 w-16 rounded-md" />
-                ))}
-            </div>
-        );
-    }
 
     return (
         <div className={cn('flex flex-wrap gap-2', className)}>

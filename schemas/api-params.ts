@@ -27,7 +27,3 @@ export const SearchMoviesParamsSchema = z.object({
     query: z.string().min(1, 'Search query is required'),
     page: z.coerce.number().int().min(1).max(500).default(1),
 });
-
-export const MovieIdParamSchema = z.object({
-    id: z.coerce.number().int().positive('Invalid movie ID'),
-});

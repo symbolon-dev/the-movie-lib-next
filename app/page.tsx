@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieResults } from '@/components/movie/list/MovieResults';
+import { GenreResponseSchema } from '@/schemas/movie';
+import TMDBApi from '@/utils/api';
 
 const dynamic = 'force-dynamic';
 
@@ -33,7 +35,22 @@ const metadata: Metadata = {
     },
 };
 
+const getGenres = async () => {
+    try {
+        const api = await TMDBApi();
+        const data = await api.fetchMovieGenres();
+        const validated = GenreResponseSchema.safeParse(data);
+
+        return validated.success ? validated.data : { genres: [] };
+    } catch (error) {
+        console.error('Failed to fetch genres:', error);
+        return { genres: [] };
+    }
+};
+
 const Home = async () => {
+    const { genres } = await getGenres();
+
     return (
         <>
             <link rel="preconnect" href="https://api.themoviedb.org" />
@@ -49,7 +66,7 @@ const Home = async () => {
 
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
                     <section id="filters" className="lg:sticky lg:top-28">
-                        <MovieFilter />
+                        <MovieFilter genres={genres} />
                     </section>
 
                     <section id="results">

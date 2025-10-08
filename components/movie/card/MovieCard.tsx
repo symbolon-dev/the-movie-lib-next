@@ -41,7 +41,7 @@ const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
             >
                 <div className="round relative h-full overflow-hidden rounded-xl">
                     <PosterImage
-                        path={movie.poster_path ?? undefined}
+                        path={movie.poster_path}
                         title={movie.title}
                         className="transition-transform duration-500 ease-out group-focus-within:-translate-y-2 group-focus-within:scale-105 group-hover:-translate-y-2 group-hover:scale-105"
                     />
