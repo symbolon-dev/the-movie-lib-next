@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { MovieSortOptionSchema } from '@/schemas/api-params';
 import {
     GenreResponseSchema,
     GenreSchema,
@@ -20,21 +21,7 @@ export type ProductionCompany = z.infer<typeof ProductionCompanySchema>;
 export type ProductionCountry = z.infer<typeof ProductionCountrySchema>;
 export type SpokenLanguage = z.infer<typeof SpokenLanguageSchema>;
 
-export type MovieSortOption =
-    | 'popularity.desc'
-    | 'popularity.asc'
-    | 'primary_release_date.desc'
-    | 'primary_release_date.asc'
-    | 'title.asc'
-    | 'title.desc'
-    | 'vote_average.desc'
-    | 'vote_average.asc'
-    | 'original_title.asc'
-    | 'original_title.desc'
-    | 'revenue.asc'
-    | 'revenue.desc'
-    | 'vote_count.asc'
-    | 'vote_count.desc';
+export type MovieSortOption = z.infer<typeof MovieSortOptionSchema>;
 
 export type MovieDiscoverParams = {
     page?: number;

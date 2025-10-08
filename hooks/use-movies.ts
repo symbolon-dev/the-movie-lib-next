@@ -4,12 +4,25 @@ import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 
+import { MovieResponseSchema } from '@/schemas/movie';
 import { Movie, MovieResponse } from '@/types/movie';
 
-const fetcher = async (url: string) => {
+const fetcher = async (url: string): Promise<MovieResponse> => {
     const res = await fetch(url);
-    const json = res.json();
-    return json;
+
+    if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(errorData.error || `HTTP ${res.status}: ${res.statusText}`);
+    }
+
+    const json = await res.json();
+    const validated = MovieResponseSchema.safeParse(json);
+
+    if (!validated.success) {
+        throw new Error('Invalid response format from API');
+    }
+
+    return validated.data;
 };
 
 export const useMovies = () => {
