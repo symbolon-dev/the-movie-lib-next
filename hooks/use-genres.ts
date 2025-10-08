@@ -2,7 +2,11 @@
 
 import useSWR from 'swr';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    const json = res.json();
+    return json;
+};
 
 type Genre = {
     id: number;

@@ -6,7 +6,11 @@ import useSWR from 'swr';
 
 import { Movie, MovieResponse } from '@/types/movie';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    const json = res.json();
+    return json;
+};
 
 export const useMovies = () => {
     const searchParams = useSearchParams();
