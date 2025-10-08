@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
 import { DiscoverMoviesParamsSchema } from '@/schemas/api-params';
-import { MovieResponseSchema } from '@/schemas/movie';
-import { MovieDiscoverParams } from '@/types/movie';
 import TMDBApi from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
@@ -17,18 +15,14 @@ export const GET = async (request: NextRequest) => {
             with_genres: searchParams.get('with_genres'),
         });
 
-        const params: MovieDiscoverParams = {
+        const api = TMDBApi();
+        const movies = await api.discoverMovies({
             page: validatedParams.page,
             sortBy: validatedParams.sort_by,
             withGenres: validatedParams.with_genres,
-        };
+        });
 
-        const api = await TMDBApi();
-        const movies = await api.discoverMovies(params);
-
-        const validatedResponse = MovieResponseSchema.parse(movies);
-
-        return NextResponse.json(validatedResponse);
+        return NextResponse.json(movies);
     } catch (error) {
         if (error instanceof ZodError) {
             return NextResponse.json(

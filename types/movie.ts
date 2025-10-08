@@ -36,12 +36,6 @@ type MovieSortOption =
     | 'vote_count.asc'
     | 'vote_count.desc';
 
-type MovieFilter = {
-    query: string;
-    genre: string;
-    sortBy: MovieSortOption;
-};
-
 type MovieDiscoverParams = {
     page?: number;
     sortBy?: MovieSortOption;
@@ -53,7 +47,6 @@ export type {
     Movie,
     MovieDetail,
     MovieDiscoverParams,
-    MovieFilter,
     MovieGenre,
     MovieResponse,
     MovieSortOption,
