@@ -20,7 +20,7 @@ export type ProductionCompany = z.infer<typeof ProductionCompanySchema>;
 export type ProductionCountry = z.infer<typeof ProductionCountrySchema>;
 export type SpokenLanguage = z.infer<typeof SpokenLanguageSchema>;
 
-type MovieSortOption =
+export type MovieSortOption =
     | 'popularity.desc'
     | 'popularity.asc'
     | 'primary_release_date.desc'
