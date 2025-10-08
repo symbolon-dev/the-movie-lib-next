@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorBoundary } from '@/components/common/feedback/ErrorBoundary';
+import { ServerErrorBoundary } from '@/components/common/feedback/ServerErrorBoundary';
 
 type ErrorProps = {
     error: Error & { digest?: string };
@@ -9,7 +9,7 @@ type ErrorProps = {
 
 const MovieError = ({ error, reset }: ErrorProps) => {
     return (
-        <ErrorBoundary
+        <ServerErrorBoundary
             error={error}
             reset={reset}
             title="Failed to load movie"

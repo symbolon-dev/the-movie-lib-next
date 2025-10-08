@@ -15,7 +15,7 @@ type ErrorBoundaryProps = {
     variant?: 'page' | 'section';
 };
 
-export const ErrorBoundary = ({
+export const ServerErrorBoundary = ({
     error,
     reset,
     title = 'Something went wrong',

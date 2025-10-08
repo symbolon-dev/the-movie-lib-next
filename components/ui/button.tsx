@@ -123,11 +123,7 @@ const animationConfigs: Record<ButtonAnimation, any> = {
     none: {},
 };
 
-type MotionConflicts =
-    | 'onAnimationStart'
-    | 'onDrag'
-    | 'onDragEnd'
-    | 'onDragStart';
+type MotionConflicts = 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart';
 
 type ButtonProps = Omit<React.ComponentProps<'button'>, MotionConflicts> &
     VariantProps<typeof buttonVariants> & {

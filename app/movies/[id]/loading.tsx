@@ -7,7 +7,7 @@ const Loading = () => {
     return (
         <>
             <ScrollReset />
-            <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-10 pt-6 pb-12">
+            <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
                 <BackButton href="/" label="Back to Movies" className="w-fit" />
 
                 <NeonGradientCard

@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorBoundary } from '@/components/common/feedback/ErrorBoundary';
+import { ServerErrorBoundary } from '@/components/common/feedback/ServerErrorBoundary';
 
 type ErrorProps = {
     error: Error & { digest?: string };
@@ -8,7 +8,7 @@ type ErrorProps = {
 };
 
 const Error = ({ error, reset }: ErrorProps) => {
-    return <ErrorBoundary error={error} reset={reset} variant="page" />;
+    return <ServerErrorBoundary error={error} reset={reset} variant="page" />;
 };
 
 export default Error;
