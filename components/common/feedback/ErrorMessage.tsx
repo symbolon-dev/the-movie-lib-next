@@ -17,7 +17,7 @@ type ErrorMessageProps = {
     showRetry?: boolean;
 };
 
-const ErrorMessage = ({
+export const ErrorMessage = ({
     error,
     fullPage = false,
     title = 'Error',
@@ -87,5 +87,3 @@ const ErrorMessage = ({
         </div>
     );
 };
-
-export { ErrorMessage };

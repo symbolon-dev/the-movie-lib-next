@@ -11,14 +11,14 @@ import {
     SpokenLanguageSchema,
 } from '@/schemas/movie';
 
-type Movie = z.infer<typeof MovieSchema>;
-type MovieDetail = z.infer<typeof MovieDetailSchema>;
-type MovieResponse = z.infer<typeof MovieResponseSchema>;
-type MovieGenre = z.infer<typeof GenreSchema>;
-type GenreResponse = z.infer<typeof GenreResponseSchema>;
-type ProductionCompany = z.infer<typeof ProductionCompanySchema>;
-type ProductionCountry = z.infer<typeof ProductionCountrySchema>;
-type SpokenLanguage = z.infer<typeof SpokenLanguageSchema>;
+export type Movie = z.infer<typeof MovieSchema>;
+export type MovieDetail = z.infer<typeof MovieDetailSchema>;
+export type MovieResponse = z.infer<typeof MovieResponseSchema>;
+export type MovieGenre = z.infer<typeof GenreSchema>;
+export type GenreResponse = z.infer<typeof GenreResponseSchema>;
+export type ProductionCompany = z.infer<typeof ProductionCompanySchema>;
+export type ProductionCountry = z.infer<typeof ProductionCountrySchema>;
+export type SpokenLanguage = z.infer<typeof SpokenLanguageSchema>;
 
 type MovieSortOption =
     | 'popularity.desc'
@@ -36,21 +36,8 @@ type MovieSortOption =
     | 'vote_count.asc'
     | 'vote_count.desc';
 
-type MovieDiscoverParams = {
+export type MovieDiscoverParams = {
     page?: number;
     sortBy?: MovieSortOption;
     withGenres?: string;
-};
-
-export type {
-    GenreResponse,
-    Movie,
-    MovieDetail,
-    MovieDiscoverParams,
-    MovieGenre,
-    MovieResponse,
-    MovieSortOption,
-    ProductionCompany,
-    ProductionCountry,
-    SpokenLanguage,
 };

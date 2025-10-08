@@ -9,7 +9,7 @@ import { useMovies } from '@/hooks/use-movies';
 
 import { MovieList } from './MovieList';
 
-const MovieResults = () => {
+export const MovieResults = () => {
     const { movies, isLoading, error, currentPage, totalPages, loadMoreMovies, mutate } =
         useMovies();
 
@@ -78,5 +78,3 @@ const MovieResults = () => {
         </div>
     );
 };
-
-export { MovieResults };

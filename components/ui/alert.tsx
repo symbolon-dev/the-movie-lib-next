@@ -19,7 +19,7 @@ const alertVariants = cva(
     },
 );
 
-const Alert = ({
+export const Alert = ({
     className,
     variant,
     ...props
@@ -32,7 +32,7 @@ const Alert = ({
     />
 );
 
-const AlertTitle = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const AlertTitle = ({ className, ...props }: React.ComponentProps<'div'>) => (
     <div
         data-slot="alert-title"
         className={cn('col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight', className)}
@@ -40,7 +40,7 @@ const AlertTitle = ({ className, ...props }: React.ComponentProps<'div'>) => (
     />
 );
 
-const AlertDescription = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const AlertDescription = ({ className, ...props }: React.ComponentProps<'div'>) => (
     <div
         data-slot="alert-description"
         className={cn(
@@ -51,9 +51,6 @@ const AlertDescription = ({ className, ...props }: React.ComponentProps<'div'>) 
     />
 );
 
-type AlertProps = React.ComponentProps<'div'> & VariantProps<typeof alertVariants>;
-type AlertTitleProps = React.ComponentProps<'div'>;
-type AlertDescriptionProps = React.ComponentProps<'div'>;
-
-export { Alert, AlertDescription, AlertTitle };
-export type { AlertDescriptionProps, AlertProps, AlertTitleProps };
+export type AlertProps = React.ComponentProps<'div'> & VariantProps<typeof alertVariants>;
+export type AlertTitleProps = React.ComponentProps<'div'>;
+export type AlertDescriptionProps = React.ComponentProps<'div'>;

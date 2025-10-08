@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { AnimatedThemeToggle } from '@/components/layout/AnimatedThemeToggle';
 
-const Header = () => {
+export const Header = () => {
     const handleLogoClick = () => {
         sessionStorage.removeItem('movie-list-scroll-position');
         sessionStorage.removeItem('navigated-from-movie-list');
@@ -21,5 +21,3 @@ const Header = () => {
         </header>
     );
 };
-
-export { Header };

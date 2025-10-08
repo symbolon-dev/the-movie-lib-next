@@ -13,7 +13,7 @@ type MovieCardProps = {
     className?: string;
 };
 
-const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
+export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average ?? 0).toFixed(1);
 
@@ -74,5 +74,3 @@ const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
 });
 
 MovieCard.displayName = 'MovieCard';
-
-export { MovieCard };

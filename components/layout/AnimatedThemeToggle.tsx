@@ -10,7 +10,7 @@ type AnimatedThemeToggleProps = {
     className?: string;
 };
 
-const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
+export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
     const { setTheme, resolvedTheme } = useTheme();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -92,5 +92,3 @@ const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
         />
     );
 };
-
-export { AnimatedThemeToggle };

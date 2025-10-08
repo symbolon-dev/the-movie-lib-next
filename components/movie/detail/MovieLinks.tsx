@@ -8,7 +8,12 @@ type MovieLinksProps = {
     buttonGroupClassName?: string;
 };
 
-const MovieLinks = ({ homepage, imdbId, className, buttonGroupClassName }: MovieLinksProps) => {
+export const MovieLinks = ({
+    homepage,
+    imdbId,
+    className,
+    buttonGroupClassName,
+}: MovieLinksProps) => {
     if (!homepage && !imdbId) return undefined;
 
     return (
@@ -39,5 +44,3 @@ const MovieLinks = ({ homepage, imdbId, className, buttonGroupClassName }: Movie
         </div>
     );
 };
-
-export { MovieLinks };

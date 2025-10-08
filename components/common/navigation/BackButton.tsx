@@ -9,7 +9,7 @@ type BackButtonProps = {
     className?: string;
 };
 
-const BackButton = ({ href, label = 'Back', className = '' }: BackButtonProps) => {
+export const BackButton = ({ href, label = 'Back', className = '' }: BackButtonProps) => {
     return (
         <Button asChild variant="outline-primary" animationType="back" className={className}>
             <Link href={href}>
@@ -19,5 +19,3 @@ const BackButton = ({ href, label = 'Back', className = '' }: BackButtonProps) =
         </Button>
     );
 };
-
-export { BackButton };

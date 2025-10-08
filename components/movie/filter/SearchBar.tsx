@@ -11,7 +11,7 @@ type SearchBarProps = {
     className?: string;
 };
 
-const SearchBar = ({ className = '' }: SearchBarProps) => {
+export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieFilters();
     const [query, setQuery] = useState(searchQuery);
 
@@ -68,5 +68,3 @@ const SearchBar = ({ className = '' }: SearchBarProps) => {
         </div>
     );
 };
-
-export { SearchBar };

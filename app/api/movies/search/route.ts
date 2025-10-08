@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
 import { SearchMoviesParamsSchema } from '@/schemas/api-params';
-import TMDBApi from '@/utils/api';
+import { TMDBApi } from '@/utils/api';
 import { handleApiError } from '@/utils/error-handler/api-error-handler';
 
 export const GET = async (request: NextRequest) => {

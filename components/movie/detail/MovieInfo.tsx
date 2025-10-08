@@ -14,7 +14,7 @@ type MovieInfoProps = {
     revenue: number;
 };
 
-const MovieInfo = ({
+export const MovieInfo = ({
     overview,
     productionCompanies,
     productionCountries,
@@ -69,5 +69,3 @@ const MovieInfo = ({
         </>
     );
 };
-
-export { MovieInfo };

@@ -18,7 +18,7 @@ type MovieHeaderProps = {
     imdbId: string | null;
 };
 
-const MovieHeader = ({
+export const MovieHeader = ({
     title,
     tagline,
     posterPath,
@@ -79,5 +79,3 @@ const MovieHeader = ({
         </div>
     );
 };
-
-export { MovieHeader };

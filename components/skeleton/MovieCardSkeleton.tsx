@@ -2,7 +2,7 @@ type MovieCardSkeletonProps = {
     className?: string;
 };
 
-const MovieCardSkeleton = ({ className = '' }: MovieCardSkeletonProps) => {
+export const MovieCardSkeleton = ({ className = '' }: MovieCardSkeletonProps) => {
     return (
         <div className={`group relative ${className}`}>
             {/* Main card skeleton with gradient shimmer */}
@@ -38,5 +38,3 @@ const MovieCardSkeleton = ({ className = '' }: MovieCardSkeletonProps) => {
         </div>
     );
 };
-
-export { MovieCardSkeleton };

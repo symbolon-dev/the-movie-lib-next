@@ -15,7 +15,7 @@ type MagicCardProps = ComponentProps<'div'> & {
     gradientColor?: string;
 };
 
-const MagicCard = (props: MagicCardProps) => {
+export const MagicCard = (props: MagicCardProps) => {
     const {
         children,
         className,
@@ -103,5 +103,3 @@ const MagicCard = (props: MagicCardProps) => {
 };
 
 MagicCard.displayName = 'MagicCard';
-
-export { MagicCard };

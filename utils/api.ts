@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/schemas/movie';
 import { MovieDiscoverParams } from '@/types/movie';
 
-const TMDBApi = () => {
+export const TMDBApi = () => {
     const API_KEY = process.env.TMDB_API_KEY;
     const BASE_URL = process.env.TMDB_BASE_URL;
 
@@ -88,5 +88,3 @@ const TMDBApi = () => {
         fetchMovieGenres,
     };
 };
-
-export default TMDBApi;

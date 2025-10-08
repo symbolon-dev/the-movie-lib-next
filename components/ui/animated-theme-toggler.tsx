@@ -21,7 +21,7 @@ const iconTransition = {
     ease: [0.2, 0.8, 0.2, 1] as [number, number, number, number],
 };
 
-const AnimatedThemeToggler = ({
+export const AnimatedThemeToggler = ({
     mode,
     onToggle,
     className,
@@ -85,5 +85,3 @@ const AnimatedThemeToggler = ({
 };
 
 AnimatedThemeToggler.displayName = 'AnimatedThemeToggler';
-
-export { AnimatedThemeToggler };

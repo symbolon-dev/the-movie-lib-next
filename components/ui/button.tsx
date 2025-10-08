@@ -164,7 +164,7 @@ type ButtonProps = Omit<React.ComponentProps<'button'>, MotionConflicts> &
         animationType?: ButtonAnimation;
     };
 
-const Button = ({
+export const Button = ({
     className,
     variant,
     size,
@@ -207,6 +207,3 @@ const Button = ({
 };
 
 Button.displayName = 'Button';
-
-export { Button, buttonVariants };
-export type { ButtonAnimation, ButtonProps };

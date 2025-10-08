@@ -9,7 +9,7 @@ type LoadingSpinnerProps = {
     className?: string;
 };
 
-const LoadingSpinner = ({ size = 32, className }: LoadingSpinnerProps) => {
+export const LoadingSpinner = ({ size = 32, className }: LoadingSpinnerProps) => {
     return (
         <motion.span
             role="status"
@@ -27,5 +27,3 @@ const LoadingSpinner = ({ size = 32, className }: LoadingSpinnerProps) => {
         </motion.span>
     );
 };
-
-export { LoadingSpinner };

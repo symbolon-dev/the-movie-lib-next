@@ -9,7 +9,12 @@ type MovieGenresProps = {
     badgeVariant?: BadgeProps['variant'];
 };
 
-const MovieGenres = ({ genres, className, badgeClassName, badgeVariant }: MovieGenresProps) => {
+export const MovieGenres = ({
+    genres,
+    className,
+    badgeClassName,
+    badgeVariant,
+}: MovieGenresProps) => {
     return (
         <div className={cn('mb-6', className)}>
             <div className="flex flex-wrap justify-center gap-2 md:justify-start">
@@ -22,5 +27,3 @@ const MovieGenres = ({ genres, className, badgeClassName, badgeVariant }: MovieG
         </div>
     );
 };
-
-export { MovieGenres };

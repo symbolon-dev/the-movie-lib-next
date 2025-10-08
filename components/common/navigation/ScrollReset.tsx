@@ -6,7 +6,7 @@ type ScrollResetProps = {
     resetOnMount?: boolean;
 };
 
-const ScrollReset = ({ resetOnMount = true }: ScrollResetProps) => {
+export const ScrollReset = ({ resetOnMount = true }: ScrollResetProps) => {
     useEffect(() => {
         if (typeof window === 'undefined' || !resetOnMount) return;
 
@@ -21,5 +21,3 @@ const ScrollReset = ({ resetOnMount = true }: ScrollResetProps) => {
 
     return undefined;
 };
-
-export { ScrollReset };

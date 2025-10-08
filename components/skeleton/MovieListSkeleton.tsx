@@ -5,7 +5,7 @@ type MovieListSkeletonProps = {
     className?: string;
 };
 
-const MovieListSkeleton = ({ count = 20, className = '' }: MovieListSkeletonProps) => {
+export const MovieListSkeleton = ({ count = 20, className = '' }: MovieListSkeletonProps) => {
     return (
         <div
             className={`grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${className}`}
@@ -16,5 +16,3 @@ const MovieListSkeleton = ({ count = 20, className = '' }: MovieListSkeletonProp
         </div>
     );
 };
-
-export { MovieListSkeleton };

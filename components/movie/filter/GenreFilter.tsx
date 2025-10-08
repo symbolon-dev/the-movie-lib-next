@@ -10,7 +10,7 @@ type GenreFilterProps = {
     className?: string;
 };
 
-const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
+export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
     const { selectedGenres, setSelectedGenres } = useMovieFilters();
 
     const isSelected = (genreId: number) => selectedGenres.includes(genreId);
@@ -52,5 +52,3 @@ const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
         </div>
     );
 };
-
-export { GenreFilter };

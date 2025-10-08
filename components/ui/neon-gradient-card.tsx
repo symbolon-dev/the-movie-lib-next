@@ -28,7 +28,7 @@ const DEFAULT_COLORS: NeonColorPair = {
     secondColor: '#00FFF1',
 };
 
-const NeonGradientCard = (props: NeonGradientCardProps) => {
+export const NeonGradientCard = (props: NeonGradientCardProps) => {
     const {
         className,
         contentClassName,
@@ -107,5 +107,3 @@ const NeonGradientCard = (props: NeonGradientCardProps) => {
 };
 
 NeonGradientCard.displayName = 'NeonGradientCard';
-
-export { NeonGradientCard };

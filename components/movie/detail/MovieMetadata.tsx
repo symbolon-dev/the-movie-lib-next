@@ -11,7 +11,7 @@ type MovieMetadataProps = {
     valueClassName?: string;
 };
 
-const MovieMetadata = ({
+export const MovieMetadata = ({
     releaseDate,
     runtime,
     className,
@@ -41,5 +41,3 @@ const MovieMetadata = ({
         </div>
     );
 };
-
-export { MovieMetadata };

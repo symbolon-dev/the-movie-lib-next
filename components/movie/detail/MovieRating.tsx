@@ -10,7 +10,7 @@ type MovieRatingProps = {
     voteCountClassName?: string;
 };
 
-const MovieRating = ({
+export const MovieRating = ({
     voteAverage,
     voteCount,
     className,
@@ -31,5 +31,3 @@ const MovieRating = ({
         </div>
     );
 };
-
-export { MovieRating };

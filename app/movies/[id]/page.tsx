@@ -7,14 +7,14 @@ import { MovieHeader } from '@/components/movie/detail/MovieHeader';
 import { MovieInfo } from '@/components/movie/detail/MovieInfo';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
 import { MovieDetailSchema } from '@/schemas/movie';
-import TMDBApi from '@/utils/api';
+import { TMDBApi } from '@/utils/api';
 import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
 };
 
-const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
     const { id } = await params;
 
     try {
@@ -71,7 +71,7 @@ const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
 
 const getMovie = async (id: string) => {
     try {
-        const api = await TMDBApi();
+        const api = TMDBApi();
         const data = await api.fetchMovieDetails(id);
         const validated = MovieDetailSchema.safeParse(data);
 
@@ -145,4 +145,3 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
 };
 
 export default MovieDetailPage;
-export { generateMetadata };

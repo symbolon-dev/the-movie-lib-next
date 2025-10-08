@@ -7,7 +7,7 @@ type InfoSectionProps = {
     visible?: boolean;
 };
 
-const InfoSection = ({ title, content, icon, visible = true }: InfoSectionProps) => {
+export const InfoSection = ({ title, content, icon, visible = true }: InfoSectionProps) => {
     if (!visible || !content) return undefined;
 
     return (
@@ -20,5 +20,3 @@ const InfoSection = ({ title, content, icon, visible = true }: InfoSectionProps)
         </div>
     );
 };
-
-export { InfoSection };
