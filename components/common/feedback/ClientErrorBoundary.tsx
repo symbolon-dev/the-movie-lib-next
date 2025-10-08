@@ -1,6 +1,7 @@
 'use client';
 
-import { Component, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { ErrorMessage } from './ErrorMessage';
 
@@ -9,39 +10,21 @@ type Props = {
     fallback?: ReactNode;
 };
 
-type State = {
-    hasError: boolean;
-    error: Error | null;
+export const ClientErrorBoundary = ({ children, fallback }: Props) => {
+    return (
+        <ErrorBoundary
+            fallbackRender={({ error, resetErrorBoundary }) => {
+                if (fallback) {
+                    return <>{fallback}</>;
+                }
+
+                return <ErrorMessage error={error} onRetry={resetErrorBoundary} />;
+            }}
+            onError={(error) => {
+                console.error('ClientErrorBoundary caught error:', error);
+            }}
+        >
+            {children}
+        </ErrorBoundary>
+    );
 };
-
-export class ClientErrorBoundary extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = { hasError: false, error: null };
-    }
-
-    static getDerivedStateFromError(error: Error): State {
-        return { hasError: true, error };
-    }
-
-    componentDidCatch(error: Error) {
-        console.error('ClientErrorBoundary caught error:', error);
-    }
-
-    render() {
-        if (this.state.hasError && this.state.error) {
-            if (this.props.fallback) {
-                return this.props.fallback;
-            }
-
-            return (
-                <ErrorMessage
-                    error={this.state.error}
-                    onRetry={() => this.setState({ hasError: false, error: null })}
-                />
-            );
-        }
-
-        return this.props.children;
-    }
-}

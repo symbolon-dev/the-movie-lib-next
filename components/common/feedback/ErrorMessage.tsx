@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 
 type ErrorMessageProps = {
-    error: string;
+    error: string | Error;
     fullPage?: boolean;
     title?: string;
     actionLink?: string;
@@ -28,11 +28,13 @@ export const ErrorMessage = ({
 }: ErrorMessageProps) => {
     if (!error) return undefined;
 
+    const errorMessage = error instanceof Error ? error.message : error;
+
     if (!fullPage) {
         return (
             <Alert variant="destructive" className="my-4">
                 <div className="flex items-center justify-between">
-                    <AlertDescription className="flex-1">{error}</AlertDescription>
+                    <AlertDescription className="flex-1">{errorMessage}</AlertDescription>
                     {onRetry && showRetry && (
                         <Button variant="outline" size="sm" onClick={onRetry} className="ml-4 h-8">
                             <RefreshCw className="mr-1 h-3 w-3" />
@@ -60,7 +62,7 @@ export const ErrorMessage = ({
                     <div className="space-y-3">
                         <h2 className="heading-2 text-foreground font-serif">{title}</h2>
                         <p className="text-lead text-muted-foreground">
-                            {error || 'There was an error loading the data.'}
+                            {errorMessage || 'There was an error loading the data.'}
                         </p>
                     </div>
 
