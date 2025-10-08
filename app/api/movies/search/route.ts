@@ -25,6 +25,6 @@ export const GET = async (request: NextRequest) => {
                 { status: 400 },
             );
         }
-        return handleApiError(error, 'search', 'movies');
+        return handleApiError(error, 'GET /api/movies/search');
     }
 };

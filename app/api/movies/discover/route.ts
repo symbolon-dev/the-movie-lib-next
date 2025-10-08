@@ -30,6 +30,6 @@ export const GET = async (request: NextRequest) => {
                 { status: 400 },
             );
         }
-        return handleApiError(error, 'discover', 'movies');
+        return handleApiError(error, 'GET /api/movies/discover');
     }
 };
