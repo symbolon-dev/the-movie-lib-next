@@ -43,7 +43,7 @@ export const useMovieFilters = () => {
             }
 
             const url = newParams.toString() ? `${pathname}?${newParams.toString()}` : pathname;
-            router.push(url);
+            router.replace(url, { scroll: false });
         },
         [searchParams, router, pathname],
     );
