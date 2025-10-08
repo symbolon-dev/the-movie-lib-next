@@ -2,7 +2,7 @@
 
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { motion, type MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -41,23 +41,9 @@ const buttonVariants = cva(
     },
 );
 
-type MotionConflicts =
-    | 'onDrag'
-    | 'onDragStart'
-    | 'onDragEnd'
-    | 'onDragEnter'
-    | 'onDragLeave'
-    | 'onDragOver'
-    | 'onDragCapture'
-    | 'onDragExit'
-    | 'onDrop'
-    | 'onAnimationStart'
-    | 'onAnimationIteration'
-    | 'onAnimationEnd';
+type ButtonAnimation = 'default' | 'subtle' | 'back' | 'float' | 'none';
 
-type ButtonAnimation = 'default' | 'subtle' | 'back' | 'theme' | 'float' | 'none';
-
-const animationConfigs: Record<ButtonAnimation, MotionProps> = {
+const animationConfigs: Record<ButtonAnimation, any> = {
     default: {
         whileHover: {
             scale: [1, 1.05, 1.02, 1.05],
@@ -110,27 +96,6 @@ const animationConfigs: Record<ButtonAnimation, MotionProps> = {
         },
         initial: { transform: 'translateX(0px)' },
     },
-    theme: {
-        whileHover: {
-            scale: 1.1,
-            rotate: [0, -10, 10, 0],
-            boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
-            transition: {
-                duration: 0.4,
-                ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
-            },
-        },
-        whileTap: {
-            scale: 0.95,
-            rotate: 180,
-            transition: { duration: 0.2 },
-        },
-        initial: {
-            scale: 1,
-            rotate: 0,
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        },
-    },
     float: {
         initial: {
             scale: 1,
@@ -158,6 +123,12 @@ const animationConfigs: Record<ButtonAnimation, MotionProps> = {
     none: {},
 };
 
+type MotionConflicts =
+    | 'onAnimationStart'
+    | 'onDrag'
+    | 'onDragEnd'
+    | 'onDragStart';
+
 type ButtonProps = Omit<React.ComponentProps<'button'>, MotionConflicts> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
@@ -169,24 +140,22 @@ export const Button = ({
     variant,
     size,
     asChild = false,
-    animationType = 'default',
     disabled,
+    animationType = 'default',
     ...props
 }: ButtonProps) => {
+    const mergedClassName = cn(buttonVariants({ variant, size, className }));
     const resolvedAnimation: ButtonAnimation = disabled ? 'none' : animationType;
     const animationProps = animationConfigs[resolvedAnimation];
-    const mergedClassName = cn(buttonVariants({ variant, size, className }));
 
-    if (asChild && resolvedAnimation !== 'none') {
-        return (
+    if (asChild) {
+        return resolvedAnimation !== 'none' ? (
             <motion.div className="inline-block" tabIndex={-1} {...animationProps}>
                 <Slot data-slot="button" className={mergedClassName} {...props} />
             </motion.div>
+        ) : (
+            <Slot data-slot="button" className={mergedClassName} {...props} />
         );
-    }
-
-    if (asChild) {
-        return <Slot data-slot="button" className={mergedClassName} {...props} />;
     }
 
     if (resolvedAnimation === 'none') {
@@ -199,7 +168,6 @@ export const Button = ({
         <motion.button
             data-slot="button"
             className={mergedClassName}
-            disabled={disabled}
             {...animationProps}
             {...props}
         />
