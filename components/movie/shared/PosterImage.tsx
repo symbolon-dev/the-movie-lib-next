@@ -2,6 +2,7 @@ import { Film } from 'lucide-react';
 import Image from 'next/image';
 import { memo } from 'react';
 
+import { cn } from '@/lib/utils';
 import { getMoviePosterUrl } from '@/utils/image';
 
 type PosterImageProps = {
@@ -28,7 +29,11 @@ export const PosterImage = memo(
     }: PosterImageProps) => {
         return (
             <div
-                className={`relative overflow-hidden rounded-xl ${aspectRatio !== 'auto' ? `aspect-[${aspectRatio}]` : ''} ${className}`}
+                className={cn(
+                    'relative overflow-hidden rounded-xl',
+                    aspectRatio === '2/3' && 'aspect-[2/3]',
+                    className,
+                )}
             >
                 {path ? (
                     <Image

@@ -49,7 +49,7 @@ export const useMovieFilters = () => {
     );
 
     const resetFilters = useCallback(() => {
-        router.push(pathname);
+        router.replace(pathname, { scroll: false });
     }, [router, pathname]);
 
     const hasActiveFilters =

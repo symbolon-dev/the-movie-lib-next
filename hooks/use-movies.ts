@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
+import { z } from 'zod';
 
-import { MovieResponseSchema } from '@/schemas/movie';
+import { MovieResponseSchema, MovieSchema } from '@/schemas/movie';
 import { Movie, MovieResponse } from '@/types/movie';
 
 const fetcher = async (url: string): Promise<MovieResponse> => {
@@ -49,13 +50,21 @@ export const useMovies = () => {
             if (savedMovies && savedPage && savedFilterKey === filterKey) {
                 try {
                     const parsedMovies = JSON.parse(savedMovies);
-                    setAllMovies(parsedMovies);
-                    setCurrentPage(parseInt(savedPage));
-                    previousFilterKey.current = filterKey;
-                    setIsRestored(true);
-                    return;
+                    const validated = z.array(MovieSchema).safeParse(parsedMovies);
+
+                    if (validated.success) {
+                        setAllMovies(validated.data);
+                        setCurrentPage(parseInt(savedPage));
+                        previousFilterKey.current = filterKey;
+                        setIsRestored(true);
+                        return;
+                    } else {
+                        console.error('Invalid movie data in sessionStorage');
+                        sessionStorage.removeItem('movie-list-movies');
+                    }
                 } catch (error) {
                     console.error('Failed to restore movie state:', error);
+                    sessionStorage.removeItem('movie-list-movies');
                 }
             }
         }

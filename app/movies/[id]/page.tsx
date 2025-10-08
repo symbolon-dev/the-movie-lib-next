@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
 
 import { BackButton } from '@/components/common/navigation/BackButton';
@@ -69,7 +70,7 @@ export const generateMetadata = async ({ params }: DetailProps): Promise<Metadat
     }
 };
 
-const getMovie = async (id: string) => {
+const getMovie = cache(async (id: string) => {
     try {
         const api = TMDBApi();
         const data = await api.fetchMovieDetails(id);
@@ -85,7 +86,7 @@ const getMovie = async (id: string) => {
         console.error(`Error fetching movie with ID ${id}:`, error);
         throw error;
     }
-};
+});
 
 const MovieDetailPage = async ({ params }: DetailProps) => {
     const { id } = await params;

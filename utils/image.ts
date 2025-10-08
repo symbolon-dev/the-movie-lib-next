@@ -1,4 +1,4 @@
-const TMDB_IMAGE_BASE_URL = process.env.TMDB_IMAGE_BASE_URL || 'https://image.tmdb.org/t/p';
+const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
 type PosterSize = 'w92' | 'w154' | 'w185' | 'w342' | 'w500' | 'w780' | 'original';
 

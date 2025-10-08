@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { ClientErrorBoundary } from '@/components/common/feedback/ClientErrorBoundary';
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieResults } from '@/components/movie/list/MovieResults';
 import { GenreResponseSchema } from '@/schemas/movie';
@@ -70,7 +71,9 @@ const Home = async () => {
                     </section>
 
                     <section id="results">
-                        <MovieResults />
+                        <ClientErrorBoundary>
+                            <MovieResults />
+                        </ClientErrorBoundary>
                     </section>
                 </div>
             </div>
