@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const handleApiError = (error: unknown, endpoint: string) => {
+export const createErrorResponse = (error: unknown, endpoint: string) => {
     console.error(`Error in ${endpoint}:`, error);
 
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

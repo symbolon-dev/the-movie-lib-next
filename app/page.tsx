@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 
 import { ClientErrorBoundary } from '@/components/common/feedback/ClientErrorBoundary';
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieResults } from '@/components/movie/list/MovieResults';
+import { TMDBApi } from '@/lib/tmdb';
 import { GenreResponseSchema } from '@/schemas/movie';
-import { MovieListSkeleton } from '@/components/skeleton/MovieListSkeleton';
 import type { MovieGenre } from '@/types/movie';
-import { TMDBApi } from '@/utils/api';
 
 export const dynamic = 'force-dynamic';
 
@@ -79,9 +77,7 @@ const Home = async () => {
 
                     <section id="results">
                         <ClientErrorBoundary>
-                            <Suspense fallback={<MovieListSkeleton />}>
-                                <MovieResults />
-                            </Suspense>
+                            <MovieResults />
                         </ClientErrorBoundary>
                     </section>
                 </div>

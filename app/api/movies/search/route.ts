@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
+import { TMDBApi } from '@/lib/tmdb';
 import { SearchMoviesParamsSchema } from '@/schemas/api-params';
-import { TMDBApi } from '@/utils/api';
-import { handleApiError } from '@/utils/error-handler/api-error-handler';
+import { createErrorResponse } from '@/utils/next-error-response';
 
 export const GET = async (request: NextRequest) => {
     try {
@@ -25,6 +25,6 @@ export const GET = async (request: NextRequest) => {
                 { status: 400 },
             );
         }
-        return handleApiError(error, 'GET /api/movies/search');
+        return createErrorResponse(error, 'GET /api/movies/search');
     }
 };

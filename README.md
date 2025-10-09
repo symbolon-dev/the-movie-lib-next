@@ -105,15 +105,18 @@ pnpm dev
 ## Project Structure
 
 ```
-├── app/                    # Next.js App Router
+├── app/                    # Next.js App Router (pages & API routes)
 ├── components/             # React components
 │   ├── ui/                # shadcn/ui components
 │   ├── movie/             # Movie-specific components
 │   ├── common/            # Reusable components
-│   └── layout/            # Layout components
-├── utils/                 # Utility functions
-├── types/                 # TypeScript definitions
-└── schemas/               # Zod validation schemas
+│   ├── layout/            # Layout components
+│   └── skeleton/          # Loading skeletons
+├── hooks/                 # Custom React hooks
+├── lib/                   # External integrations & data access
+├── schemas/               # Zod validation schemas
+├── types/                 # TypeScript type definitions
+└── utils/                 # Helper & utility functions
 ```
 
 ## Architecture

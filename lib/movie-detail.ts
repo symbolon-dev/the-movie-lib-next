@@ -1,8 +1,8 @@
 import { cache } from 'react';
 
+import { TMDBApi } from '@/lib/tmdb';
 import { MovieDetailSchema } from '@/schemas/movie';
 import type { MovieDetail } from '@/types/movie';
-import { TMDBApi } from '@/utils/api';
 
 export const getMovie = cache(async (id: string): Promise<MovieDetail> => {
     const api = TMDBApi();
