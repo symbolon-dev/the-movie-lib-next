@@ -1,4 +1,4 @@
-import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
+import { ErrorMessage } from '@/components/shared/error-message';
 
 const NotFound = () => (
     <ErrorMessage

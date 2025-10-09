@@ -1,6 +1,6 @@
-import { EmptyState } from '@/components/common/feedback/EmptyState';
-import { MovieCard } from '@/components/movie/card/MovieCard';
-import { MovieListSkeleton } from '@/components/skeleton/MovieListSkeleton';
+import { MovieCard } from '@/components/movie/movie-card/movie-card';
+import { MovieListSkeleton } from '@/components/movie/movie-list/movie-list-skeleton';
+import { EmptyState } from '@/components/shared/empty-state';
 import { Movie } from '@/types/movie';
 
 type MovieListProps = {

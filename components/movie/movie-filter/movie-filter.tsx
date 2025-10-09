@@ -1,8 +1,8 @@
 'use client';
 
-import { GenreFilter } from '@/components/movie/filter/GenreFilter';
-import { SearchBar } from '@/components/movie/filter/SearchBar';
-import { SortSelect } from '@/components/movie/filter/SortSelect';
+import { GenreFilter } from '@/components/movie/movie-filter/genre-filter';
+import { SearchBar } from '@/components/movie/movie-filter/search-bar';
+import { SortSelect } from '@/components/movie/movie-filter/sort-select';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 import { useMovieFilters } from '@/hooks/use-movie-filters';

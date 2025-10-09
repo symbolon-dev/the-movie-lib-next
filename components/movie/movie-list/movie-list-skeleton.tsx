@@ -1,4 +1,4 @@
-import { MovieCardSkeleton } from './MovieCardSkeleton';
+import { MovieCardSkeleton } from '@/components/movie/movie-card/movie-card-skeleton';
 
 type MovieListSkeletonProps = {
     count?: number;

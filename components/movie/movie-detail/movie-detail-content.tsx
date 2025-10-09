@@ -1,5 +1,5 @@
-import { MovieHeader } from '@/components/movie/detail/MovieHeader';
-import { MovieInfo } from '@/components/movie/detail/MovieInfo';
+import { MovieHero } from '@/components/movie/movie-detail/movie-hero';
+import { MovieInfo } from '@/components/movie/movie-detail/movie-info';
 import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
 import { getMovie } from '@/lib/movie-detail';
 
@@ -20,7 +20,7 @@ export const MovieDetailContent = async ({ id }: MovieDetailContentProps) => {
             }}
         >
             <div className="flex flex-col gap-10">
-                <MovieHeader
+                <MovieHero
                     title={movie.title}
                     tagline={movie.tagline}
                     posterPath={movie.poster_path}

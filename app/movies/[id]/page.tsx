@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { BackButton } from '@/components/common/navigation/BackButton';
-import { ScrollReset } from '@/components/common/navigation/ScrollReset';
-import { MovieDetailContent } from '@/components/movie/detail/MovieDetailContent';
-import { MovieDetailSkeleton } from '@/components/skeleton/MovieDetailSkeleton';
+import { BackButton } from '@/components/layout/back-button';
+import { ScrollReset } from '@/components/layout/scroll-reset';
+import { MovieDetailContent } from '@/components/movie/movie-detail/movie-detail-content';
+import { MovieDetailSkeleton } from '@/components/movie/movie-detail/movie-detail-skeleton';
 import { getMovie } from '@/lib/movie-detail';
 import { getMovieBackdropUrl } from '@/utils/image';
 

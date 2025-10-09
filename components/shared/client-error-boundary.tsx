@@ -3,7 +3,7 @@
 import { type ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { ErrorMessage } from './ErrorMessage';
+import { ErrorMessage } from './error-message';
 
 type Props = {
     children: ReactNode;

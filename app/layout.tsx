@@ -6,7 +6,7 @@ import { ThemeProvider } from 'next-themes';
 import NextTopLoader from 'nextjs-toploader';
 import { ReactNode } from 'react';
 
-import { Header } from '@/components/layout/Header';
+import { Header } from '@/components/layout/header';
 
 const geist = Geist({
     subsets: ['latin'],

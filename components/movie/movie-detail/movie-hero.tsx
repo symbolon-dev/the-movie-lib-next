@@ -1,11 +1,11 @@
-import { MovieGenres } from '@/components/movie/detail/MovieGenres';
-import { MovieLinks } from '@/components/movie/detail/MovieLinks';
-import { MovieMetadata } from '@/components/movie/detail/MovieMetadata';
-import { MovieRating } from '@/components/movie/detail/MovieRating';
-import { PosterImage } from '@/components/movie/shared/PosterImage';
+import { MovieGenres } from '@/components/movie/movie-detail/sections/movie-genres';
+import { MovieLinks } from '@/components/movie/movie-detail/sections/movie-links';
+import { MovieMetadata } from '@/components/movie/movie-detail/sections/movie-metadata';
+import { MovieRating } from '@/components/movie/movie-detail/sections/movie-rating';
+import { PosterImage } from '@/components/movie/shared/poster-image';
 import type { MovieGenre } from '@/types/movie';
 
-type MovieHeaderProps = {
+type MovieHeroProps = {
     title: string;
     tagline: string | null;
     posterPath: string | null;
@@ -18,7 +18,7 @@ type MovieHeaderProps = {
     imdbId: string | null;
 };
 
-export const MovieHeader = ({
+export const MovieHero = ({
     title,
     tagline,
     posterPath,
@@ -29,7 +29,7 @@ export const MovieHeader = ({
     genres,
     homepage,
     imdbId,
-}: MovieHeaderProps) => {
+}: MovieHeroProps) => {
     return (
         <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:items-start">
             <div className="w-full max-w-xs justify-self-center lg:justify-self-start">

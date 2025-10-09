@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
-import { ClientErrorBoundary } from '@/components/common/feedback/ClientErrorBoundary';
-import { MovieFilter } from '@/components/movie/filter/MovieFilter';
-import { MovieResults } from '@/components/movie/list/MovieResults';
+import { MovieFilter } from '@/components/movie/movie-filter/movie-filter';
+import { MovieResults } from '@/components/movie/movie-list/movie-results';
+import { ClientErrorBoundary } from '@/components/shared/client-error-boundary';
 import { TMDBApi } from '@/lib/tmdb';
 import { GenreResponseSchema } from '@/schemas/movie';
 import type { MovieGenre } from '@/types/movie';

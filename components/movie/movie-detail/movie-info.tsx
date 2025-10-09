@@ -1,9 +1,29 @@
 import { DollarSign } from 'lucide-react';
+import { ReactNode } from 'react';
 
 import { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
 import { formatCurrency } from '@/utils/formatter';
 
-import { InfoSection } from './InfoSection';
+type InfoCardProps = {
+    title: string;
+    content: string | undefined;
+    icon?: ReactNode;
+    visible?: boolean;
+};
+
+const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
+    if (!visible || !content) return null;
+
+    return (
+        <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
+            <h3 className="heading-6 text-foreground mb-2 flex items-center gap-2">
+                {icon}
+                {title}
+            </h3>
+            <div className="text-body-sm text-muted-foreground">{content}</div>
+        </div>
+    );
+};
 
 type MovieInfoProps = {
     overview: string;
@@ -36,31 +56,31 @@ export const MovieInfo = ({
             </div>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
-                <InfoSection
+                <InfoCard
                     title="Production"
                     content={companies}
                     visible={productionCompanies.length > 0}
                 />
 
-                <InfoSection
+                <InfoCard
                     title="Countries"
                     content={countries}
                     visible={productionCountries.length > 0}
                 />
 
-                <InfoSection
+                <InfoCard
                     title="Languages"
                     content={languages}
                     visible={spokenLanguages.length > 0}
                 />
 
-                <InfoSection
+                <InfoCard
                     title="Budget"
                     content={budget > 0 ? formatCurrency(budget) : undefined}
                     icon={<DollarSign className="h-4 w-4" />}
                 />
 
-                <InfoSection
+                <InfoCard
                     title="Revenue"
                     content={revenue > 0 ? formatCurrency(revenue) : undefined}
                     icon={<DollarSign className="h-4 w-4" />}

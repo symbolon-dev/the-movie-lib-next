@@ -1,13 +1,13 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
-import { ErrorMessage } from '@/components/common/feedback/ErrorMessage';
-import { LoadingSpinner } from '@/components/common/loading/LoadingSpinner';
-import { BackToTopFab } from '@/components/common/navigation/BackToTopFab';
+import { ToTopFab } from '@/components/layout/to-top-fab';
+import { ErrorMessage } from '@/components/shared/error-message';
 import { useMovies } from '@/hooks/use-movies';
 
-import { MovieList } from './MovieList';
+import { MovieList } from './movie-list';
 
 export const MovieResults = () => {
     const { movies, isLoading, error, currentPage, totalPages, loadMoreMovies, mutate } =
@@ -68,13 +68,21 @@ export const MovieResults = () => {
             >
                 {hasMorePages && isLoading && currentPage > 1 && (
                     <div className="text-muted-foreground flex items-center gap-3 text-sm">
-                        <LoadingSpinner size={28} />
+                        <motion.span
+                            role="status"
+                            aria-label="Loading"
+                            className="border-muted border-t-primary inline-block size-7 rounded-full border-2"
+                            animate={{ rotate: 360 }}
+                            transition={{ repeat: Infinity, ease: 'linear', duration: 0.8 }}
+                        >
+                            <span className="sr-only">Loading</span>
+                        </motion.span>
                         <span>Loading more movies…</span>
                     </div>
                 )}
             </div>
 
-            <BackToTopFab />
+            <ToTopFab />
         </div>
     );
 };

@@ -6,11 +6,11 @@ import { flushSync } from 'react-dom';
 
 import { AnimatedThemeToggler, ThemeMode } from '@/components/ui/animated-theme-toggler';
 
-type AnimatedThemeToggleProps = {
+type ThemeToggleProps = {
     className?: string;
 };
 
-export const AnimatedThemeToggle = ({ className }: AnimatedThemeToggleProps) => {
+export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const { setTheme, resolvedTheme } = useTheme();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);

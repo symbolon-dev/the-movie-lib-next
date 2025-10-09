@@ -2,7 +2,7 @@ import { Star } from 'lucide-react';
 import Link from 'next/link';
 import { memo } from 'react';
 
-import { PosterImage } from '@/components/movie/shared/PosterImage';
+import { PosterImage } from '@/components/movie/shared/poster-image';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Movie } from '@/types/movie';

@@ -1,6 +1,6 @@
 'use client';
 
-import { ServerErrorBoundary } from '@/components/common/feedback/ServerErrorBoundary';
+import { ServerErrorBoundary } from '@/components/shared/server-error-boundary';
 
 type ErrorProps = {
     error: Error & { digest?: string };

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 const SHOW_AFTER_SCROLL = 320; // pixels
 
-export const BackToTopFab = () => {
+export const ToTopFab = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {

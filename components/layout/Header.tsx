@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { AnimatedThemeToggle } from '@/components/layout/AnimatedThemeToggle';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
 
 export const Header = () => {
     const handleLogoClick = () => {
@@ -16,7 +16,7 @@ export const Header = () => {
                 <Link href="/" onClick={handleLogoClick}>
                     <span className="heading-4 text-foreground">The Movie Lib</span>
                 </Link>
-                <AnimatedThemeToggle />
+                <ThemeToggle />
             </div>
         </header>
     );
