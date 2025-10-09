@@ -14,20 +14,39 @@ export const MovieResults = () => {
         useMovies();
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
+    const hasScrolled = useRef(false);
     const hasMorePages = currentPage < totalPages;
 
     useEffect(() => {
+        if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+
+        return () => {
+            if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'auto';
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (hasScrolled.current || !movies || movies.length === 0) return;
+
         const cameFromMovieDetail = sessionStorage.getItem('navigated-from-movie-list');
         const savedScroll = sessionStorage.getItem('movie-list-scroll-position');
 
-        if (cameFromMovieDetail && savedScroll && movies && movies.length > 0) {
+        if (cameFromMovieDetail && savedScroll) {
             const scrollY = Number(savedScroll);
             requestAnimationFrame(() => {
                 window.scrollTo({ top: scrollY, behavior: 'instant' });
             });
             sessionStorage.removeItem('movie-list-scroll-position');
             sessionStorage.removeItem('navigated-from-movie-list');
+        } else {
+            window.scrollTo({ top: 0, behavior: 'auto' });
         }
+
+        hasScrolled.current = true;
     }, [movies]);
 
     useEffect(() => {
