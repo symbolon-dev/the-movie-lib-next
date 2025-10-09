@@ -98,7 +98,7 @@ export const useMovies = () => {
 
     useEffect(() => {
         if (data && isRestored) {
-            if (currentPage === 1 && allMovies.length === 0) {
+            if (currentPage === 1) {
                 setAllMovies(data.results);
             } else if (currentPage > 1) {
                 setAllMovies((prev) => {
@@ -109,7 +109,7 @@ export const useMovies = () => {
                 });
             }
         }
-    }, [data, currentPage, isRestored, allMovies.length]);
+    }, [data, currentPage, isRestored]);
 
     const loadMoreMovies = useCallback(() => {
         if (!isLoading && data && currentPage < data.total_pages) {

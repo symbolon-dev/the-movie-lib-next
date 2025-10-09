@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
-import { cache, Suspense } from 'react';
+import { Suspense } from 'react';
 
 import { BackButton } from '@/components/common/navigation/BackButton';
 import { ScrollReset } from '@/components/common/navigation/ScrollReset';
 import { MovieDetailContent } from '@/components/movie/detail/MovieDetailContent';
 import { MovieDetailSkeleton } from '@/components/skeleton/MovieDetailSkeleton';
-import { MovieDetailSchema } from '@/schemas/movie';
-import type { MovieDetail } from '@/types/movie';
-import { TMDBApi } from '@/utils/api';
+import { getMovie } from '@/lib/movie-detail';
 import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
@@ -66,19 +64,6 @@ export const generateMetadata = async ({ params }: DetailProps): Promise<Metadat
         };
     }
 };
-
-const getMovie = cache(async (id: string): Promise<MovieDetail> => {
-    const api = TMDBApi();
-    const data = await api.fetchMovieDetails(id);
-    const validated = MovieDetailSchema.safeParse(data);
-
-    if (!validated.success) {
-        console.error('Movie validation failed:', validated.error);
-        throw new Error('Invalid movie data');
-    }
-
-    return validated.data;
-});
 
 const MovieDetailPage = async ({ params }: DetailProps) => {
     const { id } = await params;
