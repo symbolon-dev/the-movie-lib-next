@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { ClientErrorBoundary } from '@/components/common/feedback/ClientErrorBoundary';
 import { MovieFilter } from '@/components/movie/filter/MovieFilter';
 import { MovieResults } from '@/components/movie/list/MovieResults';
 import { GenreResponseSchema } from '@/schemas/movie';
+import { MovieListSkeleton } from '@/components/skeleton/MovieListSkeleton';
+import type { MovieGenre } from '@/types/movie';
 import { TMDBApi } from '@/utils/api';
 
 export const dynamic = 'force-dynamic';
@@ -21,12 +24,16 @@ export const metadata: Metadata = {
         'search movies',
         'movie genres',
     ],
+    alternates: {
+        canonical: '/',
+    },
     openGraph: {
         title: 'Movie Library - Discover Amazing Movies',
         description:
             'Explore thousands of movies, filter by genre, search for your favorites, and discover new films to watch.',
         type: 'website',
         siteName: 'Movie Library',
+        url: '/',
     },
     twitter: {
         card: 'summary_large_image',
@@ -36,7 +43,7 @@ export const metadata: Metadata = {
     },
 };
 
-const getGenres = async () => {
+const getGenres = async (): Promise<{ genres: MovieGenre[] }> => {
     try {
         const api = TMDBApi();
         const data = await api.fetchMovieGenres();
@@ -72,7 +79,9 @@ const Home = async () => {
 
                     <section id="results">
                         <ClientErrorBoundary>
-                            <MovieResults />
+                            <Suspense fallback={<MovieListSkeleton />}>
+                                <MovieResults />
+                            </Suspense>
                         </ClientErrorBoundary>
                     </section>
                 </div>
