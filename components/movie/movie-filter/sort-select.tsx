@@ -8,6 +8,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
+import { cn } from '@/lib/utils';
 import { MovieSortOption } from '@/types/movie';
 
 const SORT_OPTIONS = [
@@ -39,7 +40,7 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
     };
 
     return (
-        <div className={`w-full ${className}`}>
+        <div className={cn('w-full', className)}>
             <Select value={sortBy} onValueChange={handleValueChange}>
                 <SelectTrigger className="w-full" aria-label="Sort movies by">
                     <SelectValue placeholder="Please select" />

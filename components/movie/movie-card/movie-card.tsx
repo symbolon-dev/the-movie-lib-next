@@ -17,15 +17,6 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average ?? 0).toFixed(1);
 
-    const handleClick = () => {
-        const scrollY = Math.max(0, Math.round(window.scrollY));
-        if (scrollY > 0) {
-            sessionStorage.setItem('movie-list-scroll-position', String(scrollY));
-        }
-
-        sessionStorage.setItem('navigated-from-movie-list', 'true');
-    };
-
     return (
         <Card
             className={cn(
@@ -37,7 +28,6 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
                 href={`/movies/${movie.id}`}
                 className="group relative block h-full rounded-xl focus:outline-none"
                 aria-label={`View details for ${movie.title}`}
-                onClick={handleClick}
             >
                 <div className="round relative h-full overflow-hidden rounded-xl">
                     <PosterImage

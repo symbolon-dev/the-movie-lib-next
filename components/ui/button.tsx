@@ -43,6 +43,9 @@ const buttonVariants = cva(
 
 type ButtonAnimation = 'default' | 'subtle' | 'back' | 'float' | 'none';
 
+// Framer Motion animation configs require complex types that are difficult to model precisely.
+// Using `any` here is acceptable for this specific use case.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const animationConfigs: Record<ButtonAnimation, any> = {
     default: {
         whileHover: {

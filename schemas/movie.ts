@@ -2,14 +2,14 @@ import { z } from 'zod';
 
 export const MovieSchema = z.object({
     adult: z.boolean(),
-    backdrop_path: z.string().nullable(),
+    backdrop_path: z.string().nullish(),
     genre_ids: z.array(z.number()),
     id: z.number(),
     original_language: z.string(),
     original_title: z.string(),
     overview: z.string(),
     popularity: z.number(),
-    poster_path: z.string().nullable(),
+    poster_path: z.string().nullish(),
     release_date: z.string(),
     title: z.string(),
     video: z.boolean(),
@@ -24,7 +24,7 @@ export const GenreSchema = z.object({
 
 export const ProductionCompanySchema = z.object({
     id: z.number(),
-    logo_path: z.string().nullable(),
+    logo_path: z.string().nullish(),
     name: z.string(),
     origin_country: z.string(),
 });
@@ -47,18 +47,18 @@ export const MovieDetailSchema = MovieSchema.extend({
             id: z.number(),
             name: z.string(),
         })
-        .nullable(),
+        .nullish(),
     budget: z.number(),
     genres: z.array(GenreSchema),
-    homepage: z.string().nullable(),
-    imdb_id: z.string().nullable(),
+    homepage: z.string().nullish(),
+    imdb_id: z.string().nullish(),
     production_companies: z.array(ProductionCompanySchema),
     production_countries: z.array(ProductionCountrySchema),
     revenue: z.number(),
     runtime: z.number(),
     spoken_languages: z.array(SpokenLanguageSchema),
     status: z.string(),
-    tagline: z.string().nullable(),
+    tagline: z.string().nullish(),
     video: z.boolean(),
 });
 

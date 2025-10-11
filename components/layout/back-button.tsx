@@ -1,21 +1,27 @@
+'use client';
+
 import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 
 type BackButtonProps = {
-    href: string;
     label?: string;
     className?: string;
 };
 
-export const BackButton = ({ href, label = 'Back', className = '' }: BackButtonProps) => {
+export const BackButton = ({ label = 'Back', className = '' }: BackButtonProps) => {
+    const router = useRouter();
+
     return (
-        <Button asChild variant="outline-primary" animationType="back" className={className}>
-            <Link href={href}>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {label}
-            </Link>
+        <Button
+            variant="outline-primary"
+            animationType="back"
+            className={className}
+            onClick={() => router.back()}
+        >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            {label}
         </Button>
     );
 };

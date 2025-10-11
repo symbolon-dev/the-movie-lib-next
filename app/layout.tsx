@@ -7,6 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { ReactNode } from 'react';
 
 import { Header } from '@/components/layout/header';
+import { ScrollToTop } from '@/components/layout/scroll-to-top';
 
 const geist = Geist({
     subsets: ['latin'],
@@ -30,6 +31,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
         >
             <NextTopLoader color="#2563eb" height={3} showSpinner={false} />
             <ThemeProvider attribute="class">
+                <ScrollToTop />
                 <Header />
                 <main className="container mx-auto px-4 md:px-8">{children}</main>
             </ThemeProvider>

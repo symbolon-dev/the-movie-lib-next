@@ -2,8 +2,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 type MovieLinksProps = {
-    homepage: string | null;
-    imdbId: string | null;
+    homepage: string | null | undefined;
+    imdbId: string | null | undefined;
     className?: string;
     buttonGroupClassName?: string;
 };
@@ -14,7 +14,7 @@ export const MovieLinks = ({
     className,
     buttonGroupClassName,
 }: MovieLinksProps) => {
-    if (!homepage && !imdbId) return undefined;
+    if (!homepage && !imdbId) return null;
 
     return (
         <div className={cn('mt-8', className)}>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useDebounce } from '@uidotdev/usehooks';
 import { Search, XCircle } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -14,6 +15,7 @@ type SearchBarProps = {
 export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieFilters();
     const [query, setQuery] = useState(searchQuery);
+    const debouncedQuery = useDebounce(query, 300);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -26,16 +28,10 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
     };
 
     useEffect(() => {
-        if (query === searchQuery) {
-            return;
+        if (debouncedQuery !== searchQuery) {
+            setSearchQuery(debouncedQuery);
         }
-
-        const timer = setTimeout(() => {
-            setSearchQuery(query);
-        }, 300);
-
-        return () => clearTimeout(timer);
-    }, [query, searchQuery, setSearchQuery]);
+    }, [debouncedQuery, searchQuery, setSearchQuery]);
 
     useEffect(() => {
         setQuery(searchQuery);

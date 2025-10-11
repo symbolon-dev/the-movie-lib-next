@@ -28,3 +28,8 @@ export type MovieDiscoverParams = {
     sortBy?: MovieSortOption;
     withGenres?: string;
 };
+
+export type TMDBError = {
+    statusCode: number;
+    message: string;
+};

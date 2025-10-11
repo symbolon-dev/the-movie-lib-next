@@ -3,11 +3,9 @@ import type { Metadata } from 'next';
 import { MovieFilter } from '@/components/movie/movie-filter/movie-filter';
 import { MovieResults } from '@/components/movie/movie-list/movie-results';
 import { ClientErrorBoundary } from '@/components/shared/client-error-boundary';
-import { TMDBApi } from '@/lib/tmdb';
+import { fetchMovieGenres } from '@/lib/tmdb';
 import { GenreResponseSchema } from '@/schemas/movie';
 import type { MovieGenre } from '@/types/movie';
-
-export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
     title: 'Movie Library - Discover Amazing Movies',
@@ -43,8 +41,7 @@ export const metadata: Metadata = {
 
 const getGenres = async (): Promise<{ genres: MovieGenre[] }> => {
     try {
-        const api = TMDBApi();
-        const data = await api.fetchMovieGenres();
+        const data = await fetchMovieGenres();
         const validated = GenreResponseSchema.safeParse(data);
 
         return validated.success ? validated.data : { genres: [] };

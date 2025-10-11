@@ -3,9 +3,8 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
-import { z } from 'zod';
 
-import { MovieResponseSchema, MovieSchema } from '@/schemas/movie';
+import { MovieResponseSchema } from '@/schemas/movie';
 import { Movie, MovieResponse } from '@/types/movie';
 
 const fetcher = async (url: string): Promise<MovieResponse> => {
@@ -30,7 +29,6 @@ export const useMovies = () => {
     const searchParams = useSearchParams();
     const [currentPage, setCurrentPage] = useState(1);
     const [allMovies, setAllMovies] = useState<Movie[]>([]);
-    const [isRestored, setIsRestored] = useState(false);
 
     const query = searchParams.get('q') || '';
     const sortBy = searchParams.get('sort') || 'popularity.desc';
@@ -40,54 +38,19 @@ export const useMovies = () => {
     const previousFilterKey = useRef(filterKey);
 
     useEffect(() => {
-        const cameFromMovieDetail = sessionStorage.getItem('navigated-from-movie-list') === 'true';
-
-        if (cameFromMovieDetail) {
-            const savedMovies = sessionStorage.getItem('movie-list-movies');
-            const savedPage = sessionStorage.getItem('movie-list-current-page');
-            const savedFilterKey = sessionStorage.getItem('movie-list-filter-key');
-
-            if (savedMovies && savedPage && savedFilterKey === filterKey) {
-                try {
-                    const parsedMovies = JSON.parse(savedMovies);
-                    const validated = z.array(MovieSchema).safeParse(parsedMovies);
-
-                    if (validated.success) {
-                        setAllMovies(validated.data);
-                        setCurrentPage(parseInt(savedPage));
-                        previousFilterKey.current = filterKey;
-                        setIsRestored(true);
-                        return;
-                    } else {
-                        console.error('Invalid movie data in sessionStorage');
-                        sessionStorage.removeItem('movie-list-movies');
-                    }
-                } catch (error) {
-                    console.error('Failed to restore movie state:', error);
-                    sessionStorage.removeItem('movie-list-movies');
-                }
-            }
-        }
-
-        setIsRestored(true);
-    }, []);
-
-    useEffect(() => {
-        if (!isRestored) return;
-
         if (previousFilterKey.current !== filterKey) {
             setCurrentPage(1);
             setAllMovies([]);
             previousFilterKey.current = filterKey;
         }
-    }, [filterKey, isRestored]);
+    }, [filterKey]);
 
     const apiUrl = query
         ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${currentPage}`
         : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${currentPage}`;
 
     const { data, error, isLoading, mutate } = useSWR<MovieResponse>(
-        isRestored ? [apiUrl, filterKey] : undefined,
+        [apiUrl, filterKey],
         ([url]) => fetcher(url),
         {
             revalidateOnFocus: false,
@@ -97,7 +60,7 @@ export const useMovies = () => {
     );
 
     useEffect(() => {
-        if (data && isRestored) {
+        if (data) {
             if (currentPage === 1) {
                 setAllMovies(data.results);
             } else if (currentPage > 1) {
@@ -109,21 +72,13 @@ export const useMovies = () => {
                 });
             }
         }
-    }, [data, currentPage, isRestored]);
+    }, [data, currentPage]);
 
     const loadMoreMovies = useCallback(() => {
         if (!isLoading && data && currentPage < data.total_pages) {
             setCurrentPage((prev) => prev + 1);
         }
     }, [isLoading, data, currentPage]);
-
-    useEffect(() => {
-        if (allMovies.length > 0) {
-            sessionStorage.setItem('movie-list-movies', JSON.stringify(allMovies));
-            sessionStorage.setItem('movie-list-current-page', currentPage.toString());
-            sessionStorage.setItem('movie-list-filter-key', filterKey);
-        }
-    }, [allMovies, currentPage, filterKey]);
 
     return {
         movies: allMovies,

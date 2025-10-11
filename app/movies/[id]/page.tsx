@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 import { BackButton } from '@/components/layout/back-button';
-import { ScrollReset } from '@/components/layout/scroll-reset';
 import { MovieDetailContent } from '@/components/movie/movie-detail/movie-detail-content';
 import { MovieDetailSkeleton } from '@/components/movie/movie-detail/movie-detail-skeleton';
 import { getMovie } from '@/lib/movie-detail';
@@ -71,9 +70,8 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     return (
         <>
             <link rel="preconnect" href="https://image.tmdb.org" />
-            <ScrollReset />
             <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
-                <BackButton href="/" label="Back to Movies" className="w-fit" />
+                <BackButton label="Back to Movies" className="w-fit" />
 
                 <Suspense fallback={<MovieDetailSkeleton />}>
                     <MovieDetailContent id={id} />

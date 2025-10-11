@@ -15,13 +15,9 @@ const getImageUrl = (path: string | undefined | null, size: string): string => {
 export const getMoviePosterUrl = (
     path: string | undefined | null,
     size: PosterSize = 'w500',
-): string => {
-    return getImageUrl(path, size);
-};
+): string => getImageUrl(path, size);
 
 export const getMovieBackdropUrl = (
     path: string | undefined | null,
     size: BackdropSize = 'original',
-): string => {
-    return getImageUrl(path, size);
-};
+): string => getImageUrl(path, size);

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { getMoviePosterUrl } from '@/utils/image';
 
 type PosterImageProps = {
-    path: string | null;
+    path: string | null | undefined;
     title: string;
     aspectRatio?: '2/3' | 'auto';
     priority?: boolean;
@@ -54,7 +54,7 @@ export const PosterImage = memo(
                         <Film className="mr-2 h-6 w-6" aria-hidden="true" />
                         <span>{fallbackText}</span>
                     </div>
-                ) : undefined}
+                ) : null}
             </div>
         );
     },

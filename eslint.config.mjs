@@ -22,20 +22,21 @@ const eslintConfig = [
     {
         files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
         rules: {
-            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-explicit-any': 'error',
             '@typescript-eslint/no-invalid-void-type': 'off',
             '@typescript-eslint/no-unused-vars': ['error', {
                 'argsIgnorePattern': '^_',
                 'varsIgnorePattern': '^_',
                 'ignoreRestSiblings': true
             }],
+            '@typescript-eslint/no-shadow': 'error',
             'react/prop-types': 'off',
             'react/no-danger': 'off',
             'prefer-const': 'error',
             'eqeqeq': ['error', 'always'],
             'no-param-reassign': 'error',
             'no-else-return': 'error',
-            'no-shadow': 'error',
+            'no-shadow': 'off',
             'no-restricted-syntax': [
                 'error',
                 {

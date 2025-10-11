@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
-import { TMDBApi } from '@/lib/tmdb';
+import { searchMovies } from '@/lib/tmdb';
 import { SearchMoviesParamsSchema } from '@/schemas/api-params';
 import { createErrorResponse } from '@/utils/next-error-response';
 
@@ -14,8 +14,7 @@ export const GET = async (request: NextRequest) => {
             page: searchParams.get('page'),
         });
 
-        const api = TMDBApi();
-        const movies = await api.searchMovies(validatedParams.query, validatedParams.page);
+        const movies = await searchMovies(validatedParams.query, validatedParams.page);
 
         return NextResponse.json(movies);
     } catch (error) {
