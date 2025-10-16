@@ -1,6 +1,6 @@
 'use client';
 
-import { useDebounce } from '@uidotdev/usehooks';
+import { useDebounce } from 'react-use';
 import { Search, XCircle } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -15,7 +15,9 @@ type SearchBarProps = {
 export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieFilters();
     const [query, setQuery] = useState(searchQuery);
-    const debouncedQuery = useDebounce(query, 300);
+    const [debouncedQuery, setDebouncedQuery] = useState(query);
+
+    useDebounce(() => setDebouncedQuery(query), 300, [query]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -32,10 +34,6 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
             setSearchQuery(debouncedQuery);
         }
     }, [debouncedQuery, searchQuery, setSearchQuery]);
-
-    useEffect(() => {
-        setQuery(searchQuery);
-    }, [searchQuery]);
 
     return (
         <div className={cn('relative flex items-center', className)}>

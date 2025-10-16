@@ -1,6 +1,6 @@
 'use client';
 
-import { useWindowScroll } from '@uidotdev/usehooks';
+import { useWindowScroll } from 'react-use';
 import { ArrowUp } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -9,8 +9,8 @@ import { cn } from '@/lib/utils';
 const SHOW_AFTER_SCROLL = 320; // pixels
 
 export const ToTopFab = () => {
-    const [{ y }] = useWindowScroll();
-    const isVisible = (y ?? 0) > SHOW_AFTER_SCROLL;
+    const { y } = useWindowScroll();
+    const isVisible = y > SHOW_AFTER_SCROLL;
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });

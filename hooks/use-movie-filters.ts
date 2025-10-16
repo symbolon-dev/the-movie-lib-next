@@ -55,6 +55,21 @@ export const useMovieFilters = () => {
     const hasActiveFilters =
         searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
 
+    const setSearchQuery = useCallback(
+        (query: string) => updateFilters({ searchQuery: query }),
+        [updateFilters],
+    );
+
+    const setSortBy = useCallback(
+        (sort: MovieSortOption) => updateFilters({ sortBy: sort }),
+        [updateFilters],
+    );
+
+    const setSelectedGenres = useCallback(
+        (genres: number[]) => updateFilters({ selectedGenres: genres }),
+        [updateFilters],
+    );
+
     return {
         searchQuery,
         sortBy,
@@ -62,8 +77,8 @@ export const useMovieFilters = () => {
         hasActiveFilters,
         updateFilters,
         resetFilters,
-        setSearchQuery: (query: string) => updateFilters({ searchQuery: query }),
-        setSortBy: (sort: MovieSortOption) => updateFilters({ sortBy: sort }),
-        setSelectedGenres: (genres: number[]) => updateFilters({ selectedGenres: genres }),
+        setSearchQuery,
+        setSortBy,
+        setSelectedGenres,
     };
 };
