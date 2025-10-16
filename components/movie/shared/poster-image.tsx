@@ -45,16 +45,18 @@ export const PosterImage = memo(
                         priority={priority}
                         quality={85}
                     />
-                ) : showFallback ? (
-                    <div
-                        className="flex size-full items-center justify-center bg-gray-900 text-center text-gray-500"
-                        role="img"
-                        aria-label={`${fallbackText} for ${title}`}
-                    >
-                        <Film className="mr-2 h-6 w-6" aria-hidden="true" />
-                        <span>{fallbackText}</span>
-                    </div>
-                ) : null}
+                ) : (
+                    showFallback && (
+                        <div
+                            className="flex size-full items-center justify-center bg-gray-900 text-center text-gray-500"
+                            role="img"
+                            aria-label={`${fallbackText} for ${title}`}
+                        >
+                            <Film className="mr-2 h-6 w-6" aria-hidden="true" />
+                            <span>{fallbackText}</span>
+                        </div>
+                    )
+                )}
             </div>
         );
     },

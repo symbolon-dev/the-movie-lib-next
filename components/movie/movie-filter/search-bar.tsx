@@ -1,8 +1,8 @@
 'use client';
 
-import { useDebounce } from 'react-use';
 import { Search, XCircle } from 'lucide-react';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useDebounce } from 'react-use';
 
 import { Input } from '@/components/ui/input';
 import { useMovieFilters } from '@/hooks/use-movie-filters';

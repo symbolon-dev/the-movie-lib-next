@@ -74,6 +74,14 @@ export const useMovies = () => {
         }
     }, [data, currentPage]);
 
+    const filteredMovies =
+        genres && query
+            ? allMovies.filter((movie) => {
+                  const genreIds = genres.split(',').map(Number);
+                  return genreIds.every((genreId) => movie.genre_ids.includes(genreId));
+              })
+            : allMovies;
+
     const loadMoreMovies = useCallback(() => {
         if (!isLoading && data && currentPage < data.total_pages) {
             setCurrentPage((prev) => prev + 1);
@@ -81,7 +89,7 @@ export const useMovies = () => {
     }, [isLoading, data, currentPage]);
 
     return {
-        movies: allMovies,
+        movies: filteredMovies,
         totalPages: data?.total_pages || 0,
         totalResults: data?.total_results || 0,
         currentPage,

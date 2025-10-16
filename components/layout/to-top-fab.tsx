@@ -1,7 +1,7 @@
 'use client';
 
-import { useWindowScroll } from 'react-use';
 import { ArrowUp } from 'lucide-react';
+import { useWindowScroll } from 'react-use';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

@@ -25,6 +25,8 @@ Develop a web application that displays a movie list with search, filter, and so
 - Detailed movie view
 - Responsive design
 
+**Note:** Due to TMDB API limitations, the search endpoint doesn't support genre filtering. The implementation uses client-side filtering when combining search with genres, which means infinite scroll loads search results and filters them locally - you may need to scroll further to see more filtered results.
+
 ## Features
 
 - **Movie Discovery**: Browse popular movies from the TMDB database

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { MovieFilter } from '@/components/movie/movie-filter/movie-filter';
+import { MovieFilterSkeleton } from '@/components/movie/movie-filter/movie-filter-skeleton';
+import { MovieListSkeleton } from '@/components/movie/movie-list/movie-list-skeleton';
 import { MovieResults } from '@/components/movie/movie-list/movie-results';
 import { ClientErrorBoundary } from '@/components/shared/client-error-boundary';
 import { fetchMovieGenres } from '@/lib/tmdb';
@@ -69,12 +72,16 @@ const Home = async () => {
 
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
                     <section id="filters" className="lg:sticky lg:top-28">
-                        <MovieFilter genres={genres} />
+                        <Suspense fallback={<MovieFilterSkeleton />}>
+                            <MovieFilter genres={genres} />
+                        </Suspense>
                     </section>
 
                     <section id="results">
                         <ClientErrorBoundary>
-                            <MovieResults />
+                            <Suspense fallback={<MovieListSkeleton count={12} />}>
+                                <MovieResults />
+                            </Suspense>
                         </ClientErrorBoundary>
                     </section>
                 </div>
