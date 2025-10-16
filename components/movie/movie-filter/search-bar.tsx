@@ -1,7 +1,7 @@
 'use client';
 
 import { Search, XCircle } from 'lucide-react';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useDebounce } from 'react-use';
 
 import { Input } from '@/components/ui/input';
@@ -12,12 +12,23 @@ type SearchBarProps = {
     className?: string;
 };
 
+const DEBOUNCE_DELAY = 300;
+
 export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieFilters();
     const [query, setQuery] = useState(searchQuery);
-    const [debouncedQuery, setDebouncedQuery] = useState(query);
+    const prevSearchQueryRef = useRef(searchQuery);
 
-    useDebounce(() => setDebouncedQuery(query), 300, [query]);
+    useDebounce(
+        () => {
+            if (query !== searchQuery) {
+                prevSearchQueryRef.current = query;
+                setSearchQuery(query);
+            }
+        },
+        DEBOUNCE_DELAY,
+        [query],
+    );
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -26,14 +37,16 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
 
     const handleClear = () => {
         setQuery('');
+        prevSearchQueryRef.current = '';
         setSearchQuery('');
     };
 
     useEffect(() => {
-        if (debouncedQuery !== searchQuery) {
-            setSearchQuery(debouncedQuery);
+        if (searchQuery !== prevSearchQueryRef.current) {
+            setQuery(searchQuery);
+            prevSearchQueryRef.current = searchQuery;
         }
-    }, [debouncedQuery, searchQuery, setSearchQuery]);
+    }, [searchQuery]);
 
     return (
         <div className={cn('relative flex items-center', className)}>
