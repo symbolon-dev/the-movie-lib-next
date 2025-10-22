@@ -1,7 +1,6 @@
 'use client';
 
 import { AlertTriangle, ArrowLeft, Home, RotateCcw } from 'lucide-react';
-import { useEffect } from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -23,10 +22,6 @@ export const ServerErrorBoundary = ({
     showBackButton = false,
     variant = 'page',
 }: ErrorBoundaryProps) => {
-    useEffect(() => {
-        console.error('Error boundary:', error);
-    }, [error]);
-
     const containerClass =
         variant === 'page'
             ? 'flex min-h-screen items-center justify-center bg-gradient-to-b from-black to-gray-900 px-4'

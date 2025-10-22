@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 
 import { ToTopFab } from '@/components/layout/to-top-fab';
 import { ErrorMessage } from '@/components/shared/error-message';
@@ -16,23 +16,25 @@ export const MovieResults = () => {
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasMorePages = currentPage < totalPages;
 
+    const handleIntersection = useEffectEvent((entry: IntersectionObserverEntry) => {
+        if (entry?.isIntersecting && !isLoading && hasMorePages) {
+            loadMoreMovies();
+        }
+    });
+
     useEffect(() => {
-        if (!hasMorePages || !sentinelRef.current) return;
+        if (!sentinelRef.current) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
-                const [entry] = entries;
-                if (entry?.isIntersecting && !isLoading) {
-                    loadMoreMovies();
-                }
+                handleIntersection(entries[0]);
             },
             { rootMargin: '200px 0px' },
         );
 
         observer.observe(sentinelRef.current);
-
         return () => observer.disconnect();
-    }, [hasMorePages, isLoading, loadMoreMovies]);
+    }, []);
 
     return (
         <div className="flex flex-col gap-6">

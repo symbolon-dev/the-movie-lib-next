@@ -60,7 +60,7 @@ const animationConfigs: Record<ButtonAnimation, any> = {
             filter: 'brightness(1.1) saturate(1.2)',
             transition: {
                 duration: 0.6,
-                ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
+                ease: [0.42, 0, 0.58, 1],
                 times: [0, 0.3, 0.6, 1],
             },
         },
@@ -86,18 +86,17 @@ const animationConfigs: Record<ButtonAnimation, any> = {
             scale: 0.98,
             transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
         },
-        initial: { scale: 1 },
     },
     back: {
         whileHover: {
-            transform: 'translateX(-2px)',
-            transition: { ease: [0, 0, 1, 1] as [number, number, number, number], duration: 0.1 },
+            x: -2,
+            transition: { ease: [0, 0, 1, 1], duration: 0.1 },
         },
         whileTap: {
-            transform: 'translateX(-4px)',
-            transition: { ease: [0, 0, 1, 1] as [number, number, number, number], duration: 0.05 },
+            x: -4,
+            transition: { ease: [0, 0, 1, 1], duration: 0.05 },
         },
-        initial: { transform: 'translateX(0px)' },
+        transition: { duration: 0.15 },
     },
     float: {
         initial: {
@@ -110,7 +109,7 @@ const animationConfigs: Record<ButtonAnimation, any> = {
             transition: {
                 duration: 2.2,
                 repeat: Infinity,
-                ease: [0.42, 0, 0.58, 1] as [number, number, number, number],
+                ease: [0.42, 0, 0.58, 1],
             },
         },
         whileHover: {

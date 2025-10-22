@@ -1,6 +1,6 @@
 # The Movie Library
 
-A modern movie library application developed with Next.js 15 and using the TMDB API.
+A modern movie library application developed with Next.js 16 and using the TMDB API.
 
 ## Frontend Developer Coding Challenge
 
@@ -41,8 +41,8 @@ Develop a web application that displays a movie list with search, filter, and so
 
 ## Technologies
 
-- [Next.js 15](https://nextjs.org) with App Router
-- [React 19](https://react.dev)
+- [Next.js 16](https://nextjs.org) with App Router
+- [React 19.2](https://react.dev)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com)
 - [shadcn/ui](https://ui.shadcn.com) (UI Components)
