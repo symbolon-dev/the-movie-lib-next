@@ -1,6 +1,5 @@
 import { Star } from 'lucide-react';
 import Link from 'next/link';
-import { memo } from 'react';
 
 import { PosterImage } from '@/components/movie/shared/poster-image';
 import { Card } from '@/components/ui/card';
@@ -13,7 +12,7 @@ type MovieCardProps = {
     className?: string;
 };
 
-export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
+export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average ?? 0).toFixed(1);
 
@@ -36,7 +35,7 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
                         className="transition-transform duration-500 ease-out group-focus-within:-translate-y-2 group-focus-within:scale-105 group-hover:-translate-y-2 group-hover:scale-105"
                     />
 
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 transition-opacity duration-500 ease-out group-focus-within:opacity-100 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/60 to-transparent opacity-0 transition-opacity duration-500 ease-out group-focus-within:opacity-100 group-hover:opacity-100" />
 
                     <div className="absolute inset-x-0 bottom-0 translate-y-full px-5 pb-6 transition-transform duration-500 ease-out group-focus-within:translate-y-0 group-hover:translate-y-0">
                         <div className="space-y-3">
@@ -61,6 +60,4 @@ export const MovieCard = memo(({ movie, className = '' }: MovieCardProps) => {
             </Link>
         </Card>
     );
-});
-
-MovieCard.displayName = 'MovieCard';
+};

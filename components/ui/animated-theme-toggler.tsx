@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, SunDim } from 'lucide-react';
-import React from 'react';
+
+import type { ComponentProps } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -14,7 +15,7 @@ type AnimatedThemeTogglerProps = {
     className?: string;
     disabled?: boolean;
     isTransitioning?: boolean;
-} & React.ComponentProps<'button'>;
+} & ComponentProps<'button'>;
 
 const iconTransition = {
     duration: 0.28,

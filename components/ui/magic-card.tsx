@@ -1,12 +1,8 @@
 'use client';
 
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import React, {
-    type ComponentProps,
-    type PointerEvent as ReactPointerEvent,
-    useCallback,
-    useEffect,
-} from 'react';
+import type { ComponentProps, PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -28,24 +24,21 @@ export const MagicCard = (props: MagicCardProps) => {
     const mouseX = useMotionValue(-gradientSize);
     const mouseY = useMotionValue(-gradientSize);
 
-    const reset = useCallback(() => {
+    const reset = () => {
         mouseX.set(-gradientSize);
         mouseY.set(-gradientSize);
-    }, [gradientSize, mouseX, mouseY]);
+    };
 
-    const handlePointerMove = useCallback(
-        (event: ReactPointerEvent<HTMLDivElement>) => {
-            const rect = event.currentTarget.getBoundingClientRect();
-            mouseX.set(event.clientX - rect.left);
-            mouseY.set(event.clientY - rect.top);
-            onPointerMove?.(event);
-        },
-        [mouseX, mouseY, onPointerMove],
-    );
+    const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        mouseX.set(event.clientX - rect.left);
+        mouseY.set(event.clientY - rect.top);
+        onPointerMove?.(event);
+    };
 
     useEffect(() => {
         reset();
-    }, [reset]);
+    }, []);
 
     useEffect(() => {
         const handleGlobalPointerOut = (e: PointerEvent) => {
@@ -69,7 +62,7 @@ export const MagicCard = (props: MagicCardProps) => {
             window.removeEventListener('blur', reset);
             window.removeEventListener('visibilitychange', handleVisibility);
         };
-    }, [reset]);
+    }, []);
 
     const maskImage = useMotionTemplate`radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, white, transparent)`;
     const style = {

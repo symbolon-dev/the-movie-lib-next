@@ -1,13 +1,7 @@
 'use client';
 
-import React, {
-    type ComponentProps,
-    type CSSProperties,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
-} from 'react';
+import type { ComponentProps, CSSProperties } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -42,11 +36,11 @@ export const NeonGradientCard = (props: NeonGradientCardProps) => {
     const localRef = useRef<HTMLDivElement | null>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
-    const updateDimensions = useCallback(() => {
+    const updateDimensions = () => {
         const node = localRef.current;
         if (!node) return;
         setDimensions({ width: node.offsetWidth, height: node.offsetHeight });
-    }, []);
+    };
 
     useEffect(() => {
         updateDimensions();
@@ -64,7 +58,7 @@ export const NeonGradientCard = (props: NeonGradientCardProps) => {
         const observer = new ResizeObserver(() => updateDimensions());
         observer.observe(node);
         return () => observer.disconnect();
-    }, [updateDimensions]);
+    }, []);
 
     const { firstColor, secondColor } = neonColors;
     const innerRadius = Math.max(borderRadius - borderSize, 0);

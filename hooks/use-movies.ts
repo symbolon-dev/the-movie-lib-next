@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 
 import { MovieResponseSchema } from '@/schemas/movie';
@@ -82,11 +82,11 @@ export const useMovies = () => {
               })
             : allMovies;
 
-    const loadMoreMovies = useCallback(() => {
+    const loadMoreMovies = () => {
         if (!isLoading && data && currentPage < data.total_pages) {
             setCurrentPage((prev) => prev + 1);
         }
-    }, [isLoading, data, currentPage]);
+    };
 
     return {
         movies: filteredMovies,
