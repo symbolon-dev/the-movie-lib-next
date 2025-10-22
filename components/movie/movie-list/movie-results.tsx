@@ -51,7 +51,7 @@ export const MovieResults = () => {
 
             <div
                 ref={sentinelRef}
-                className="-mt-32 mb-8 flex min-h-[3rem] items-center justify-center"
+                className="-mt-32 mb-8 flex min-h-12 items-center justify-center"
                 aria-live="polite"
             >
                 {hasMorePages && isLoading && currentPage > 1 && (

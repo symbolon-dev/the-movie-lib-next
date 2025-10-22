@@ -48,7 +48,7 @@ export const AnimatedThemeToggler = ({
             data-transitioning={isTransitioning ? 'true' : 'false'}
             {...props}
         >
-            <span className="from-primary/40 to-secondary/40 absolute inset-[-40%] rounded-full bg-gradient-to-br via-transparent opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60" />
+            <span className="from-primary/40 to-secondary/40 absolute inset-[-40%] rounded-full bg-linear-to-br via-transparent opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60" />
 
             <span className="bg-background/80 relative flex h-full w-full items-center justify-center rounded-full backdrop-blur-sm">
                 <AnimatePresence mode="wait" initial={false}>

@@ -78,18 +78,18 @@ export const NeonGradientCard = (props: NeonGradientCardProps) => {
     return (
         <div
             ref={localRef}
-            className={cn('relative z-10 size-full rounded-[var(--border-radius)]', className)}
+            className={cn('relative z-10 size-full rounded-(--border-radius)', className)}
             style={{ ...(cssVariables as CSSProperties), ...style }}
             {...rest}
         >
             <div
                 className={cn(
-                    'relative size-full min-h-[inherit] rounded-[var(--card-content-radius)] bg-gray-100 p-6 break-words',
-                    'before:absolute before:-top-[var(--border-size)] before:-left-[var(--border-size)] before:-z-10 before:block',
-                    "before:h-[var(--pseudo-element-height)] before:w-[var(--pseudo-element-width)] before:rounded-[var(--border-radius)] before:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] before:bg-[length:100%_200%] before:content-['']",
+                    'wrap-break-words relative size-full min-h-[inherit] rounded-(--card-content-radius) bg-gray-100 p-6',
+                    'before:absolute before:-top-(--border-size) before:-left-(--border-size) before:-z-10 before:block',
+                    "before:h-(--pseudo-element-height) before:w-(--pseudo-element-width) before:rounded-(--border-radius) before:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] before:bg-size-[100%_200%] before:content-['']",
                     'before:animate-background-position-spin',
-                    'after:absolute after:-top-[var(--border-size)] after:-left-[var(--border-size)] after:-z-10 after:block',
-                    "after:h-[var(--pseudo-element-height)] after:w-[var(--pseudo-element-width)] after:rounded-[var(--border-radius)] after:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] after:bg-[length:100%_200%] after:opacity-80 after:blur-[var(--after-blur)] after:content-['']",
+                    'after:-top-(--border-size)after:w-(--pseudo-element-width) after:absolute after:-z-10 after:block',
+                    "after:h-(--pseudo-element-height) after:w-(--pseudo-element-width) after:rounded-(--border-radius) after:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] after:bg-size-[100%_200%] after:opacity-80 after:blur-(--after-blur) after:content-['']",
                     'after:animate-background-position-spin',
                     contentClassName,
                 )}
