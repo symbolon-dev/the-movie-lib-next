@@ -4,7 +4,7 @@ export const MovieDetailSkeleton = () => {
     return (
         <div className="border-border/60 bg-card space-y-8 rounded-3xl border p-6 shadow-sm sm:p-8 lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
-                <Skeleton className="aspect-[2/3] w-full max-w-xs rounded-[24px]" />
+                <Skeleton className="aspect-2/3 w-full max-w-xs rounded-3xl" />
 
                 <div className="space-y-6">
                     <div className="space-y-3">

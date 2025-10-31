@@ -8,11 +8,11 @@ export const MovieCardSkeleton = ({ className = '' }: MovieCardSkeletonProps) =>
             {/* Main card skeleton with gradient shimmer */}
             <div className="border-border/60 bg-card relative h-full overflow-hidden rounded-xl border shadow-lg">
                 {/* Poster area with shimmer effect */}
-                <div className="from-muted/40 via-muted/60 to-muted/40 relative aspect-[2/3] w-full bg-gradient-to-br">
-                    <div className="via-muted/20 absolute inset-0 animate-pulse bg-gradient-to-r from-transparent to-transparent" />
+                <div className="from-muted/40 via-muted/60 to-muted/40 relative aspect-2/3 w-full bg-linear-to-br">
+                    <div className="via-muted/20 absolute inset-0 animate-pulse bg-linear-to-r from-transparent to-transparent" />
 
                     {/* Fake poster reflection */}
-                    <div className="from-background/80 absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
+                    <div className="from-background/80 absolute inset-0 bg-linear-to-t via-transparent to-transparent" />
                 </div>
 
                 {/* Hidden content that appears on hover (like real cards) */}

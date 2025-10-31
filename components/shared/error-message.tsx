@@ -47,7 +47,7 @@ export const ErrorMessage = ({
     }
 
     return (
-        <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-gradient-to-br p-4">
+        <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-linear-to-br p-4">
             <MagicCard
                 gradientColor="var(--color-destructive)"
                 className="w-full max-w-lg p-12 text-center"
