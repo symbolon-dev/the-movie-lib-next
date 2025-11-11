@@ -13,7 +13,7 @@ export const MovieDetailContent = async ({ id }: MovieDetailContentProps) => {
     return (
         <NeonGradientCard
             className="rounded-3xl"
-            contentClassName="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10"
+            contentclassname="border border-border/60 bg-card p-6 shadow-sm sm:p-8 lg:p-10"
             neonColors={{
                 firstColor: 'var(--color-chart-1)',
                 secondColor: 'var(--color-card)',

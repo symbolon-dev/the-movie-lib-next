@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 /* Magic UI Theme Toggle */
 /* Prevent animation artifacts during light/dark mode transitions */
 ::view-transition-old(root),
@@ -37,6 +39,14 @@
     --color-chart-4: var(--color-chart-4);
     --color-chart-5: var(--color-chart-5);
     --animate-background-position-spin: background-position-spin 3000ms infinite alternate;
+  @keyframes background-position-spin {
+  0% {
+    background-position: top center;
+        }
+  100% {
+    background-position: bottom center;
+        }
+    }
 }
 
 :root {
@@ -166,5 +176,14 @@
 
     .text-caption {
         @apply font-sans font-medium uppercase text-xs sm:text-sm tracking-[0.15rem];
+    }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
     }
 }
