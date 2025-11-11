@@ -7,17 +7,15 @@ type ErrorProps = {
     reset: () => void;
 };
 
-const MovieError = ({ error, reset }: ErrorProps) => {
-    return (
-        <ServerErrorBoundary
-            error={error}
-            reset={reset}
-            title="Failed to load movie"
-            message="We couldn't load the movie details. This might be due to an invalid movie ID or a temporary server issue."
-            showBackButton
-            variant="section"
-        />
-    );
-};
+const MovieError = ({ error, reset }: ErrorProps) => (
+    <ServerErrorBoundary
+        error={error}
+        reset={reset}
+        title="Failed to load movie"
+        message="We couldn't load the movie details. This might be due to an invalid movie ID or a temporary server issue."
+        showBackButton
+        variant="section"
+    />
+);
 
 export default MovieError;

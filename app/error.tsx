@@ -7,8 +7,8 @@ type ErrorProps = {
     reset: () => void;
 };
 
-const Error = ({ error, reset }: ErrorProps) => {
-    return <ServerErrorBoundary error={error} reset={reset} variant="page" />;
-};
+const Error = ({ error, reset }: ErrorProps) => (
+    <ServerErrorBoundary error={error} reset={reset} variant="page" />
+);
 
 export default Error;

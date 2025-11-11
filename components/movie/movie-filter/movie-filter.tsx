@@ -6,7 +6,7 @@ import { SortSelect } from '@/components/movie/movie-filter/sort-select';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
-import { MovieGenre } from '@/types/movie';
+import type { MovieGenre } from '@/types/movie';
 
 type MovieFilterProps = {
     genres: MovieGenre[];

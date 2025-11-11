@@ -1,18 +1,17 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import useSWR from 'swr';
+import useSWRInfinite from 'swr/infinite';
 
 import { MovieResponseSchema } from '@/schemas/movie';
-import { Movie, MovieResponse } from '@/types/movie';
+import type { Movie, MovieResponse } from '@/types/movie';
 
 const fetcher = async (url: string): Promise<MovieResponse> => {
     const res = await fetch(url);
 
     if (!res.ok) {
         const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
-        throw new Error(errorData.error || `HTTP ${res.status}: ${res.statusText}`);
+        throw new Error(errorData.error ?? `HTTP ${res.status}: ${res.statusText}`);
     }
 
     const json = await res.json();
@@ -27,52 +26,35 @@ const fetcher = async (url: string): Promise<MovieResponse> => {
 
 export const useMovies = () => {
     const searchParams = useSearchParams();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [allMovies, setAllMovies] = useState<Movie[]>([]);
 
-    const query = searchParams.get('q') || '';
-    const sortBy = searchParams.get('sort') || 'popularity.desc';
-    const genres = searchParams.get('genres') || '';
+    const query = searchParams.get('q') ?? '';
+    const sortBy = searchParams.get('sort') ?? 'popularity.desc';
+    const genres = searchParams.get('genres') ?? '';
 
     const filterKey = `${query}-${sortBy}-${genres}`;
-    const previousFilterKey = useRef(filterKey);
 
-    useEffect(() => {
-        if (previousFilterKey.current !== filterKey) {
-            setCurrentPage(1);
-            setAllMovies([]);
-            previousFilterKey.current = filterKey;
+    const getKey = (pageIndex: number, previousPageData: MovieResponse | undefined) => {
+        if (previousPageData && previousPageData.page >= previousPageData.total_pages) {
+            return null;
         }
-    }, [filterKey]);
 
-    const apiUrl = query
-        ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${currentPage}`
-        : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${currentPage}`;
+        const page = pageIndex + 1;
+        const baseUrl = query
+            ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${page}`
+            : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${page}`;
 
-    const { data, error, isLoading, mutate } = useSWR<MovieResponse>(
-        [apiUrl, filterKey],
-        ([url]) => fetcher(url),
-        {
+        return [baseUrl, filterKey];
+    };
+
+    const { data, error, isLoading, isValidating, size, setSize, mutate } =
+        useSWRInfinite<MovieResponse>(getKey, ([url]) => fetcher(url), {
             revalidateOnFocus: false,
             revalidateOnReconnect: false,
-            dedupingInterval: 60000, // 1 minute
-        },
-    );
+            revalidateFirstPage: false,
+            dedupingInterval: 60000,
+        });
 
-    useEffect(() => {
-        if (data) {
-            if (currentPage === 1) {
-                setAllMovies(data.results);
-            } else if (currentPage > 1) {
-                setAllMovies((prev) => {
-                    const newMovies = data.results.filter(
-                        (movie) => !prev.some((existing) => existing.id === movie.id),
-                    );
-                    return [...prev, ...newMovies];
-                });
-            }
-        }
-    }, [data, currentPage]);
+    const allMovies: Movie[] = data ? data.flatMap((page) => page.results) : [];
 
     const filteredMovies =
         genres && query
@@ -82,18 +64,31 @@ export const useMovies = () => {
               })
             : allMovies;
 
-    const loadMoreMovies = () => {
-        if (!isLoading && data && currentPage < data.total_pages) {
-            setCurrentPage((prev) => prev + 1);
+    const uniqueMovies = filteredMovies.filter(
+        (movie, index, self) => index === self.findIndex((m) => m.id === movie.id),
+    );
+
+    const lastPage = data?.[data.length - 1];
+    const totalPages = lastPage?.total_pages ?? 0;
+    const totalResults = lastPage?.total_results ?? 0;
+    const currentPage = size;
+
+    const hasMore = currentPage < totalPages;
+
+    const loadMoreMovies = async () => {
+        if (!isValidating && hasMore) {
+            await setSize(currentPage + 1);
         }
     };
 
     return {
-        movies: filteredMovies,
-        totalPages: data?.total_pages || 0,
-        totalResults: data?.total_results || 0,
+        movies: uniqueMovies,
+        totalPages,
+        totalResults,
         currentPage,
-        isLoading,
+        isLoading: isLoading || (size > 0 && !data),
+        isLoadingMore: isValidating,
+        hasMore,
         error,
         loadMoreMovies,
         mutate,

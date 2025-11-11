@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { PosterImage } from '@/components/movie/shared/poster-image';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Movie } from '@/types/movie';
+import type { Movie } from '@/types/movie';
 import { formatYear } from '@/utils/formatter';
 
 type MovieCardProps = {
@@ -14,7 +14,7 @@ type MovieCardProps = {
 
 export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
-    const rating = (movie.vote_average ?? 0).toFixed(1);
+    const rating = (movie.vote_average || 0).toFixed(1);
 
     return (
         <Card
@@ -44,7 +44,7 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                             </h3>
 
                             <div className="flex items-center justify-between text-sm text-white/80">
-                                <span>{releaseYear ?? '—'}</span>
+                                <span>{releaseYear || '—'}</span>
                                 <span className="flex items-center gap-1 text-white/80">
                                     <Star className="size-3.5" aria-hidden="true" />
                                     <span className="text-sm font-medium">{rating}</span>
@@ -55,7 +55,7 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                 </div>
 
                 <span className="sr-only">
-                    {`${movie.title} - Release ${releaseYear ?? 'unknown'}, Rating ${rating}`}
+                    {`${movie.title} - Release ${releaseYear || 'unknown'}, Rating ${rating}`}
                 </span>
             </Link>
         </Card>

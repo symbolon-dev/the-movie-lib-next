@@ -29,7 +29,7 @@ export const ServerErrorBoundary = ({
 
     return (
         <div className={containerClass}>
-            {showBackButton && variant === 'section' && (
+            {showBackButton && variant === 'section' ? (
                 <div className="mb-8">
                     <Button
                         variant="ghost"
@@ -41,7 +41,7 @@ export const ServerErrorBoundary = ({
                         Back
                     </Button>
                 </div>
-            )}
+            ) : null}
 
             <div className={variant === 'section' ? 'flex flex-1 items-center justify-center' : ''}>
                 <Alert variant="destructive" className="max-w-lg">
@@ -59,7 +59,7 @@ export const ServerErrorBoundary = ({
                                 <RotateCcw className="h-3 w-3" />
                                 Try again
                             </Button>
-                            {showBackButton && (
+                            {showBackButton ? (
                                 <Button
                                     variant="outline"
                                     size="sm"
@@ -69,7 +69,7 @@ export const ServerErrorBoundary = ({
                                     <ArrowLeft className="h-3 w-3" />
                                     Go back
                                 </Button>
-                            )}
+                            ) : null}
                             <Button
                                 variant="outline"
                                 size="sm"
@@ -80,7 +80,7 @@ export const ServerErrorBoundary = ({
                                 {variant === 'page' ? 'Go home' : 'Home'}
                             </Button>
                         </div>
-                        {process.env.NODE_ENV === 'development' && (
+                        {process.env.NODE_ENV === 'development' ? (
                             <details className="mt-4">
                                 <summary className="text-body-sm cursor-pointer font-medium">
                                     Error details (dev only)
@@ -90,7 +90,7 @@ export const ServerErrorBoundary = ({
                                     {error.stack}
                                 </pre>
                             </details>
-                        )}
+                        ) : null}
                     </AlertDescription>
                 </Alert>
             </div>

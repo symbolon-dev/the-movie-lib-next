@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, SunDim } from 'lucide-react';
-
 import type { ComponentProps } from 'react';
 
 import { cn } from '@/lib/utils';

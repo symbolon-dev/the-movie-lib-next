@@ -16,9 +16,9 @@ export const MovieResults = () => {
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasMorePages = currentPage < totalPages;
 
-    const handleIntersection = useEffectEvent((entry: IntersectionObserverEntry) => {
-        if (entry?.isIntersecting && !isLoading && hasMorePages) {
-            loadMoreMovies();
+    const handleIntersection = useEffectEvent(async (entry: IntersectionObserverEntry) => {
+        if (entry.isIntersecting && !isLoading && hasMorePages) {
+            await loadMoreMovies();
         }
     });
 
@@ -26,8 +26,8 @@ export const MovieResults = () => {
         if (!sentinelRef.current) return;
 
         const observer = new IntersectionObserver(
-            (entries) => {
-                handleIntersection(entries[0]);
+            async (entries) => {
+                await handleIntersection(entries[0]);
             },
             { rootMargin: '200px 0px' },
         );
@@ -38,23 +38,23 @@ export const MovieResults = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            {error && (
+            {error ? (
                 <ErrorMessage
                     error={error}
-                    onRetry={() => {
-                        mutate();
+                    onRetry={async () => {
+                        await mutate();
                     }}
                 />
-            )}
+            ) : null}
 
-            <MovieList movies={movies || []} isLoading={isLoading && currentPage === 1} />
+            <MovieList movies={movies} isLoading={isLoading ? currentPage === 1 : undefined} />
 
             <div
                 ref={sentinelRef}
                 className="-mt-32 mb-8 flex min-h-12 items-center justify-center"
                 aria-live="polite"
             >
-                {hasMorePages && isLoading && currentPage > 1 && (
+                {hasMorePages && isLoading && currentPage > 1 ? (
                     <div className="text-muted-foreground flex items-center gap-3 text-sm">
                         <motion.span
                             role="status"
@@ -67,7 +67,7 @@ export const MovieResults = () => {
                         </motion.span>
                         <span>Loading more movies…</span>
                     </div>
-                )}
+                ) : null}
             </div>
 
             <ToTopFab />

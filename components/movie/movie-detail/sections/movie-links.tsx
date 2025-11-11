@@ -21,15 +21,15 @@ export const MovieLinks = ({
             <div
                 className={cn('flex flex-col gap-3 sm:flex-row sm:flex-wrap', buttonGroupClassName)}
             >
-                {homepage && (
+                {homepage ? (
                     <Button asChild variant="outline-primary">
                         <a href={homepage} target="_blank" rel="noopener noreferrer">
                             Official Website
                         </a>
                     </Button>
-                )}
+                ) : null}
 
-                {imdbId && (
+                {imdbId ? (
                     <Button asChild variant="outline-primary">
                         <a
                             href={`https://www.imdb.com/title/${imdbId}`}
@@ -39,7 +39,7 @@ export const MovieLinks = ({
                             IMDb
                         </a>
                     </Button>
-                )}
+                ) : null}
             </div>
         </div>
     );

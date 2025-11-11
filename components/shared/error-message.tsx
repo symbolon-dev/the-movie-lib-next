@@ -35,12 +35,12 @@ export const ErrorMessage = ({
             <Alert variant="destructive" className="my-4">
                 <div className="flex items-center justify-between">
                     <AlertDescription className="flex-1">{errorMessage}</AlertDescription>
-                    {onRetry && showRetry && (
+                    {onRetry && showRetry ? (
                         <Button variant="outline" size="sm" onClick={onRetry} className="ml-4 h-8">
                             <RefreshCw className="mr-1 h-3 w-3" />
                             Retry
                         </Button>
-                    )}
+                    ) : null}
                 </div>
             </Alert>
         );
@@ -67,7 +67,7 @@ export const ErrorMessage = ({
                     </div>
 
                     <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-center">
-                        {onRetry && showRetry && (
+                        {onRetry && showRetry ? (
                             <Button
                                 onClick={onRetry}
                                 className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
@@ -75,7 +75,7 @@ export const ErrorMessage = ({
                                 <RefreshCw className="mr-2 h-4 w-4" />
                                 Try Again
                             </Button>
-                        )}
+                        ) : null}
                         <Button
                             asChild
                             variant={onRetry && showRetry ? 'outline' : 'default'}

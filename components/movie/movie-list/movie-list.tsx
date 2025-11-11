@@ -2,7 +2,7 @@ import { MovieCard } from '@/components/movie/movie-card/movie-card';
 import { MovieListSkeleton } from '@/components/movie/movie-list/movie-list-skeleton';
 import { EmptyState } from '@/components/shared/empty-state';
 import { cn } from '@/lib/utils';
-import { Movie } from '@/types/movie';
+import type { Movie } from '@/types/movie';
 
 type MovieListProps = {
     movies: Movie[];

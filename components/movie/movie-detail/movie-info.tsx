@@ -1,7 +1,7 @@
 import { DollarSign } from 'lucide-react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
+import type { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
 import { formatCurrency } from '@/utils/formatter';
 
 type InfoCardProps = {

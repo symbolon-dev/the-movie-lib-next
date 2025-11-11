@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import type { z } from 'zod';
 
-import { MovieSortOptionSchema } from '@/schemas/api-params';
-import {
+import type { MovieSortOptionSchema } from '@/schemas/api-params';
+import type {
     GenreSchema,
     MovieDetailSchema,
     MovieResponseSchema,

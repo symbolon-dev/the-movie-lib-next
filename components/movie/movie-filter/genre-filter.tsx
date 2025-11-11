@@ -3,7 +3,7 @@
 import { Badge } from '@/components/ui/badge';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
 import { cn } from '@/lib/utils';
-import { MovieGenre } from '@/types/movie';
+import type { MovieGenre } from '@/types/movie';
 
 type GenreFilterProps = {
     genres: MovieGenre[];

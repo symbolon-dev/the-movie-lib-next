@@ -2,16 +2,16 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { MovieSortOption } from '@/types/movie';
+import type { MovieSortOption } from '@/types/movie';
 
 export const useMovieFilters = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const searchQuery = searchParams.get('q') || '';
-    const sortBy = (searchParams.get('sort') as MovieSortOption) || 'popularity.desc';
-    const selectedGenres = searchParams.get('genres')?.split(',').map(Number).filter(Boolean) || [];
+    const searchQuery = searchParams.get('q') ?? '';
+    const sortBy = (searchParams.get('sort') as MovieSortOption | undefined) ?? 'popularity.desc';
+    const selectedGenres = searchParams.get('genres')?.split(',').map(Number).filter(Boolean) ?? [];
 
     const updateFilters = (updates: {
         searchQuery?: string;

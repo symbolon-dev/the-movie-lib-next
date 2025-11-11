@@ -4,7 +4,8 @@ import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import { AnimatedThemeToggler, ThemeMode } from '@/components/ui/animated-theme-toggler';
+import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 type ThemeToggleProps = {
     className?: string;
@@ -17,7 +18,11 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
+        const timer = setTimeout(() => {
+            setMounted(true);
+        }, 0);
+
+        return () => clearTimeout(timer);
     }, []);
 
     if (!mounted) {

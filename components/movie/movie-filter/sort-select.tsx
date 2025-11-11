@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
 import { cn } from '@/lib/utils';
-import { MovieSortOption } from '@/types/movie';
+import type { MovieSortOption } from '@/types/movie';
 
 const SORT_OPTIONS = [
     { value: 'popularity.desc', label: 'Popularity', icon: ArrowDown },

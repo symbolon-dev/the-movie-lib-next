@@ -24,37 +24,35 @@ export const PosterImage = ({
     className = '',
     showFallback = true,
     fallbackText = 'No Image Available',
-}: PosterImageProps) => {
-    return (
-        <div
-            className={cn(
-                'relative overflow-hidden rounded-xl',
-                aspectRatio === '2/3' && 'aspect-2/3',
-                className,
-            )}
-        >
-            {path ? (
-                <Image
-                    src={getMoviePosterUrl(path, 'w342')}
-                    alt={`Movie poster for ${title}`}
-                    fill
-                    sizes={sizes}
-                    className="object-cover"
-                    priority={priority}
-                    quality={85}
-                />
-            ) : (
-                showFallback && (
-                    <div
-                        className="flex size-full items-center justify-center bg-gray-900 text-center text-gray-500"
-                        role="img"
-                        aria-label={`${fallbackText} for ${title}`}
-                    >
-                        <Film className="mr-2 h-6 w-6" aria-hidden="true" />
-                        <span>{fallbackText}</span>
-                    </div>
-                )
-            )}
-        </div>
-    );
-};
+}: PosterImageProps) => (
+    <div
+        className={cn(
+            'relative overflow-hidden rounded-xl',
+            aspectRatio === '2/3' && 'aspect-2/3',
+            className,
+        )}
+    >
+        {path ? (
+            <Image
+                src={getMoviePosterUrl(path, 'w342')}
+                alt={`Movie poster for ${title}`}
+                fill
+                sizes={sizes}
+                className="object-cover"
+                priority={priority}
+                quality={85}
+            />
+        ) : (
+            showFallback && (
+                <div
+                    className="flex size-full items-center justify-center bg-gray-900 text-center text-gray-500"
+                    role="img"
+                    aria-label={`${fallbackText} for ${title}`}
+                >
+                    <Film className="mr-2 h-6 w-6" aria-hidden="true" />
+                    <span>{fallbackText}</span>
+                </div>
+            )
+        )}
+    </div>
+);

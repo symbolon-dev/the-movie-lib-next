@@ -10,21 +10,19 @@ type Props = {
     fallback?: ReactNode;
 };
 
-export const ClientErrorBoundary = ({ children, fallback }: Props) => {
-    return (
-        <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) => {
-                if (fallback) {
-                    return <>{fallback}</>;
-                }
+export const ClientErrorBoundary = ({ children, fallback }: Props) => (
+    <ErrorBoundary
+        fallbackRender={({ error, resetErrorBoundary }) => {
+            if (fallback) {
+                return <>{fallback}</>;
+            }
 
-                return <ErrorMessage error={error} onRetry={resetErrorBoundary} />;
-            }}
-            onError={(error) => {
-                console.error('ClientErrorBoundary caught error:', error);
-            }}
-        >
-            {children}
-        </ErrorBoundary>
-    );
-};
+            return <ErrorMessage error={error} onRetry={resetErrorBoundary} />;
+        }}
+        onError={(error) => {
+            console.error('ClientErrorBoundary caught error:', error);
+        }}
+    >
+        {children}
+    </ErrorBoundary>
+);

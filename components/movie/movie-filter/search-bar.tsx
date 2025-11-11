@@ -1,7 +1,8 @@
 'use client';
 
 import { Search, XCircle } from 'lucide-react';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useRef, useState } from 'react';
 import { useDebounce } from 'react-use';
 
 import { Input } from '@/components/ui/input';
@@ -41,13 +42,6 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
         setSearchQuery('');
     };
 
-    useEffect(() => {
-        if (searchQuery !== prevSearchQueryRef.current) {
-            setQuery(searchQuery);
-            prevSearchQueryRef.current = searchQuery;
-        }
-    }, [searchQuery]);
-
     return (
         <div className={cn('relative flex items-center', className)}>
             <div className="text-muted-foreground pointer-events-none absolute left-3">
@@ -56,13 +50,13 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
 
             <Input
                 type="text"
-                placeholder={'Search movies...'}
+                placeholder="Search movies..."
                 value={query}
                 onChange={handleChange}
                 className="w-full pr-10 pl-10"
             />
 
-            {query && (
+            {query ? (
                 <button
                     type="button"
                     onClick={handleClear}
@@ -71,7 +65,7 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
                 >
                     <XCircle size={20} />
                 </button>
-            )}
+            ) : null}
         </div>
     );
 };

@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import NextTopLoader from 'nextjs-toploader';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { Header } from '@/components/layout/header';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';

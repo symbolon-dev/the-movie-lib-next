@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import type { z } from 'zod';
 
 import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/schemas/movie';
-import { MovieDiscoverParams } from '@/types/movie';
+import type { MovieDiscoverParams } from '@/types/movie';
 
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = process.env.TMDB_BASE_URL;
@@ -75,6 +75,4 @@ export const fetchMovieDetails = async (id: string) => {
     return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
 };
 
-export const fetchMovieGenres = async () => {
-    return fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
-};
+export const fetchMovieGenres = async () => fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
