@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowDown, ArrowUp } from 'lucide-react';
 
 import {
