@@ -1,7 +1,7 @@
 'use client';
 
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import useSWRInfinite from 'swr/infinite';
 
 import { MovieResponseSchema } from '@/schemas/movie';
 import type { Movie, MovieResponse } from '@/types/movie';
@@ -31,30 +31,29 @@ export const useMovies = () => {
     const sortBy = searchParams.get('sort') ?? 'popularity.desc';
     const genres = searchParams.get('genres') ?? '';
 
-    const filterKey = `${query}-${sortBy}-${genres}`;
+    const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } =
+        useInfiniteQuery({
+            queryKey: ['movies', query, sortBy, genres],
+            queryFn: async ({ pageParam = 1 }) => {
+                const baseUrl = query
+                    ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${pageParam}`
+                    : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${pageParam}`;
 
-    const getKey = (pageIndex: number, previousPageData: MovieResponse | undefined) => {
-        if (previousPageData && previousPageData.page >= previousPageData.total_pages) {
-            return null;
-        }
-
-        const page = pageIndex + 1;
-        const baseUrl = query
-            ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${page}`
-            : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${page}`;
-
-        return [baseUrl, filterKey];
-    };
-
-    const { data, error, isLoading, isValidating, size, setSize, mutate } =
-        useSWRInfinite<MovieResponse>(getKey, ([url]) => fetcher(url), {
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-            revalidateFirstPage: false,
-            dedupingInterval: 60000,
+                return fetcher(baseUrl);
+            },
+            initialPageParam: 1,
+            getNextPageParam: (lastPage) => {
+                if (lastPage.page < lastPage.total_pages) {
+                    return lastPage.page + 1;
+                }
+                return undefined;
+            },
+            staleTime: 60000, // 1 minute
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
         });
 
-    const allMovies: Movie[] = data ? data.flatMap((page) => page.results) : [];
+    const allMovies: Movie[] = data?.pages.flatMap((page) => page.results) ?? [];
 
     const filteredMovies =
         genres && query
@@ -68,16 +67,14 @@ export const useMovies = () => {
         (movie, index, self) => index === self.findIndex((m) => m.id === movie.id),
     );
 
-    const lastPage = data?.[data.length - 1];
+    const lastPage = data?.pages[data.pages.length - 1];
     const totalPages = lastPage?.total_pages ?? 0;
     const totalResults = lastPage?.total_results ?? 0;
-    const currentPage = size;
-
-    const hasMore = currentPage < totalPages;
+    const currentPage = data?.pages.length ?? 0;
 
     const loadMoreMovies = async () => {
-        if (!isValidating && hasMore) {
-            await setSize(currentPage + 1);
+        if (!isFetchingNextPage && hasNextPage) {
+            await fetchNextPage();
         }
     };
 
@@ -86,11 +83,11 @@ export const useMovies = () => {
         totalPages,
         totalResults,
         currentPage,
-        isLoading: isLoading || (size > 0 && !data),
-        isLoadingMore: isValidating,
-        hasMore,
+        isLoading,
+        isLoadingMore: isFetchingNextPage,
+        hasMore: hasNextPage,
         error,
         loadMoreMovies,
-        mutate,
+        mutate: refetch,
     };
 };

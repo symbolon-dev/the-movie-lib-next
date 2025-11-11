@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 
 import { Header } from '@/components/layout/header';
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
+import { QueryProvider } from '@/components/providers/query-provider';
 
 const geist = Geist({
     subsets: ['latin'],
@@ -26,11 +27,13 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
             className={`${geist.variable} bg-background text-foreground min-h-screen font-sans antialiased`}
         >
             <NextTopLoader color="#2563eb" height={3} showSpinner={false} />
-            <ThemeProvider attribute="class">
-                <ScrollToTop />
-                <Header />
-                <main className="container mx-auto px-4 md:px-8">{children}</main>
-            </ThemeProvider>
+            <QueryProvider>
+                <ThemeProvider attribute="class">
+                    <ScrollToTop />
+                    <Header />
+                    <main className="container mx-auto px-4 md:px-8">{children}</main>
+                </ThemeProvider>
+            </QueryProvider>
         </body>
     </html>
 );
