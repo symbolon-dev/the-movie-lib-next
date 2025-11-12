@@ -1,8 +1,9 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { useMount } from 'react-use';
 
 import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
@@ -17,13 +18,9 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setMounted(true);
-        }, 0);
-
-        return () => clearTimeout(timer);
-    }, []);
+    useMount(() => {
+        setMounted(true);
+    });
 
     if (!mounted) {
         return null;
