@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue } from 'motion/react';
 import type { ComponentProps, PointerEvent as ReactPointerEvent } from 'react';
 import { useEffect } from 'react';
 

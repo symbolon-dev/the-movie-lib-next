@@ -102,6 +102,12 @@ const eslintConfig = [
         },
     },
     {
+        files: ['app/**/page.tsx', 'app/**/layout.tsx', 'app/**/route.ts', 'app/**/default.tsx', 'app/**/loading.tsx', 'app/**/error.tsx', 'app/**/not-found.tsx'],
+        rules: {
+            'import/no-default-export': 'off',
+        },
+    },
+    {
         files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
         rules: {
             'unicorn/filename-case': ['error', { cases: { kebabCase: true } }],

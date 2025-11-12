@@ -1,7 +1,7 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, SunDim } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import type { ComponentProps } from 'react';
 
 import { cn } from '@/lib/utils';
