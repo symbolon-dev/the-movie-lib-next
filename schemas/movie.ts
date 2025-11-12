@@ -3,18 +3,18 @@ import { z } from 'zod';
 export const MovieSchema = z.object({
     adult: z.boolean(),
     backdrop_path: z.string().nullish(),
-    genre_ids: z.array(z.number()),
+    genre_ids: z.array(z.number()).default([]),
     id: z.number(),
     original_language: z.string(),
     original_title: z.string(),
-    overview: z.string(),
-    popularity: z.number(),
+    overview: z.string().default(''),
+    popularity: z.number().default(0),
     poster_path: z.string().nullish(),
-    release_date: z.string(),
+    release_date: z.string().default('unknown'),
     title: z.string(),
-    video: z.boolean(),
-    vote_average: z.number(),
-    vote_count: z.number(),
+    video: z.boolean().default(false),
+    vote_average: z.number().default(0),
+    vote_count: z.number().default(0),
 });
 
 export const GenreSchema = z.object({
