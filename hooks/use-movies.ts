@@ -72,9 +72,9 @@ export const useMovies = () => {
     const totalResults = lastPage?.total_results ?? 0;
     const currentPage = data?.pages.length ?? 0;
 
-    const loadMoreMovies = async () => {
+    const loadMoreMovies = () => {
         if (!isFetchingNextPage && hasNextPage) {
-            await fetchNextPage();
+            void fetchNextPage();
         }
     };
 

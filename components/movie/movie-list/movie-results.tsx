@@ -16,9 +16,9 @@ export const MovieResults = () => {
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasMorePages = currentPage < totalPages;
 
-    const handleIntersection = useEffectEvent(async (entry: IntersectionObserverEntry) => {
+    const handleIntersection = useEffectEvent((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting && !isLoading && hasMorePages) {
-            await loadMoreMovies();
+            loadMoreMovies();
         }
     });
 
@@ -26,8 +26,8 @@ export const MovieResults = () => {
         if (!sentinelRef.current) return;
 
         const observer = new IntersectionObserver(
-            async (entries) => {
-                await handleIntersection(entries[0]);
+            (entries) => {
+                handleIntersection(entries[0]);
             },
             { rootMargin: '200px 0px' },
         );
@@ -41,8 +41,8 @@ export const MovieResults = () => {
             {error ? (
                 <ErrorMessage
                     error={error}
-                    onRetry={async () => {
-                        await mutate();
+                    onRetry={() => {
+                        void mutate();
                     }}
                 />
             ) : null}

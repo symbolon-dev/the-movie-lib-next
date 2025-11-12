@@ -1,20 +1,18 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useEffectEvent } from 'react';
 
 export const ScrollToTop = () => {
     const pathname = usePathname();
 
-    useEffect(() => {
+    const scrollToTop = useEffectEvent(() => {
         if (!pathname.startsWith('/movies')) return;
-
         window.history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+    });
 
-        requestAnimationFrame(() => {
-            window.scrollTo(0, 0);
-        });
-    }, [pathname]);
+    useEffect(() => scrollToTop(), [pathname]);
 
     return null;
 };

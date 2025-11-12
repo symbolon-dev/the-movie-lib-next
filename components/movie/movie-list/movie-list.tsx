@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useEffectEvent, useRef } from 'react';
 
 import { MovieCard } from '@/components/movie/movie-card/movie-card';
 import { MovieListSkeleton } from '@/components/movie/movie-list/movie-list-skeleton';
@@ -17,16 +17,17 @@ type MovieListProps = {
 export const MovieList = ({ movies, className = '', isLoading = false }: MovieListProps) => {
     const scrollRef = useRef(0);
 
+    const handleScroll = useEffectEvent(() => {
+        scrollRef.current = window.scrollY;
+    });
+
     useEffect(() => {
-        const handleScroll = () => {
-            scrollRef.current = window.scrollY;
-        };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     useEffect(() => {
-        window.scrollTo(0, scrollRef.current);
+        requestAnimationFrame(() => window.scrollTo(0, scrollRef.current));
     }, []);
 
     if (isLoading) {
