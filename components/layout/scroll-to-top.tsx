@@ -7,6 +7,8 @@ export const ScrollToTop = () => {
     const pathname = usePathname();
 
     useEffect(() => {
+        if (!pathname.startsWith('/movies')) return;
+
         window.history.scrollRestoration = 'manual';
 
         requestAnimationFrame(() => {
