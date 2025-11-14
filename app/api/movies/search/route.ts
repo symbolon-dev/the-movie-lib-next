@@ -21,7 +21,7 @@ export const GET = async (request: NextRequest) => {
     } catch (error) {
         if (error instanceof ZodError) {
             return NextResponse.json(
-                { error: 'Invalid request parameters', details: error.errors },
+                { error: 'Invalid request parameters', details: error.issues },
                 { status: 400 },
             );
         }

@@ -1,35 +1,59 @@
 import next from 'eslint-config-next';
 import prettier from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
+import tseslint from 'typescript-eslint';
+import pluginQuery from '@tanstack/eslint-plugin-query';
+import { defineConfig } from 'eslint/config';
 
-const eslintConfig = [
+const config = defineConfig([
     ...next,
-    {
-        plugins: { 
-            'simple-import-sort': simpleImportSort,
-            'unicorn': unicorn
-        },
-        rules: {
-            'simple-import-sort/imports': 'error',
-            'simple-import-sort/exports': 'error',
-        },
-    },
+
+    ...tseslint.configs.recommended,
+    
+    ...pluginQuery.configs['flat/recommended'],
+
     {
         files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
         plugins: {
-            'import': importPlugin 
+            'unicorn': unicorn,
+            'simple-import-sort': simpleImportSort,
         },
         languageOptions: {
+            parser: tseslint.parser,
             parserOptions: {
-                projectService: true,
+                project: ['./tsconfig.json'],
                 tsconfigRootDir: import.meta.dirname,
+                ecmaFeatures: { jsx: true },
             },
         },
+        
         rules: {
+            'prefer-const': 'error',
+            'no-param-reassign': 'error',
+            'no-else-return': 'error',
+            'no-return-await': 'error',
+            'object-shorthand': ['error', 'always'],
+            'prefer-template': 'error',
+            'prefer-arrow-callback': 'error',
+            'arrow-body-style': ['error', 'as-needed'],
+            'no-restricted-syntax': [
+                'error',
+                {
+                    selector: 'ForStatement',
+                    message: 'For loops are not allowed. Use iterable methods or for..of loops instead.',
+                },
+            ],
+            'unicorn/no-array-for-each': 'error',
+            'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
+            'no-unsafe-optional-chaining': 'error',
+            'no-console': ['warn', { allow: ['warn', 'error'] }],
+            'no-var': 'error',
+            'no-nested-ternary': 'error',
+            'no-unneeded-ternary': 'error',
+            'yoda': 'error',
+            'curly': ['error', 'all'],
             '@typescript-eslint/no-explicit-any': 'error',
-            '@typescript-eslint/no-invalid-void-type': 'off',
             '@typescript-eslint/no-unused-vars': ['error', {
                 'argsIgnorePattern': '^_',
                 'varsIgnorePattern': '^_',
@@ -44,47 +68,19 @@ const eslintConfig = [
             '@typescript-eslint/prefer-optional-chain': 'error',
             '@typescript-eslint/switch-exhaustiveness-check': 'error',
             '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
-            
-            'react-hooks/rules-of-hooks': 'error',
-            'react-hooks/exhaustive-deps': 'error',
-            'react/prop-types': 'off',
-            'react/no-danger': 'off',
+            '@typescript-eslint/no-invalid-void-type': 'off',
             'react/jsx-no-leaked-render': ['error', { validStrategies: ['ternary'] }],
             'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
             'react/self-closing-comp': 'error',
             'react/jsx-boolean-value': ['error', 'never'],
-
-            'prefer-const': 'error',
-            'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
-            'no-param-reassign': 'error',
-            'no-else-return': 'error',
-            'no-shadow': 'off',
-            'no-unsafe-optional-chaining': 'error',
-            'no-return-await': 'error',
-            'no-restricted-syntax': [
-                'error',
-                {
-                    selector: 'ForStatement',
-                    message: 'For loops are not allowed. Use iterable methods or for..of loops instead.',
-                },
-            ],
-            'no-unused-vars': 'off',
-            'no-console': ['warn', { allow: ['warn', 'error'] }],
-            'no-var': 'error',
-            'object-shorthand': ['error', 'always'],
-            'prefer-template': 'error',
-            'prefer-arrow-callback': 'error',
-            'arrow-body-style': ['error', 'as-needed'],
-            'no-nested-ternary': 'error',
-            'no-unneeded-ternary': 'error',
-            'yoda': 'error',
-            'curly': ['error', 'all'],
-
-            'import/no-cycle': ['error', { maxDepth: Infinity }],
-            'import/no-duplicates': 'error',
-            'import/no-default-export': 'off',
+            'react-hooks/rules-of-hooks': 'error',
+            'react-hooks/exhaustive-deps': 'error',
+            'simple-import-sort/imports': 'error',
+            'simple-import-sort/exports': 'error',
+            'unicorn/filename-case': ['error', { cases: { kebabCase: true, pascalCase: true } }],
         },
     },
+
     {
         files: ['**/*.jsx', '**/*.tsx'],
         rules: {
@@ -101,19 +97,16 @@ const eslintConfig = [
             'jsx-a11y/aria-unsupported-elements': 'error',
         },
     },
+
     {
         files: ['app/**/page.tsx', 'app/**/layout.tsx', 'app/**/route.ts', 'app/**/default.tsx', 'app/**/loading.tsx', 'app/**/error.tsx', 'app/**/not-found.tsx'],
         rules: {
             'import/no-default-export': 'off',
         },
     },
-    {
-        files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
-        rules: {
-            'unicorn/filename-case': ['error', { cases: { kebabCase: true } }],
-        },
-    },
+    
+    // Prettier muss ZULETZT stehen
     prettier,
-];
+]);
 
-export default eslintConfig;
+export default config;
