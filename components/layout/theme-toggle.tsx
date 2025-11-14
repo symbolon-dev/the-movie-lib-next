@@ -1,8 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { startTransition, useRef, useState } from 'react';
 import { useMount } from 'react-use';
 
 import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
@@ -45,7 +44,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
 
         try {
             await startViewTransition(() => {
-                flushSync(() => {
+                startTransition(() => {
                     toggleMode();
                 });
             }).ready;
