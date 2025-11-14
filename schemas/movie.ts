@@ -11,6 +11,7 @@ export const MovieSchema = z.object({
     popularity: z.number().default(0),
     poster_path: z.string().nullish(),
     release_date: z.string().default('unknown'),
+    primary_release_date: z.string().default('unknown'),
     title: z.string(),
     video: z.boolean().default(false),
     vote_average: z.number().default(0),

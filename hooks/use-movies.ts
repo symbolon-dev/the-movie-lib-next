@@ -3,6 +3,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
+import { sortMovies } from '@/lib/movie-filters';
 import { MovieResponseSchema } from '@/schemas/movie';
 import type { Movie, MovieResponse } from '@/types/movie';
 
@@ -22,34 +23,6 @@ const fetcher = async (url: string): Promise<MovieResponse> => {
     }
 
     return validated.data;
-};
-
-type SortFunctions = {
-    [key: string]: (a: Movie, b: Movie) => number;
-};
-
-const SORT_FUNCTIONS: SortFunctions = {
-    'popularity.desc': (a, b) => b.popularity - a.popularity,
-    'popularity.asc': (a, b) => a.popularity - b.popularity,
-    'primary_release_date.desc': (a, b) =>
-        new Date(b.release_date || '1900-01-01').getTime() -
-        new Date(a.release_date || '1900-01-01').getTime(),
-    'primary_release_date.asc': (a, b) =>
-        new Date(a.release_date || '1900-01-01').getTime() -
-        new Date(b.release_date || '1900-01-01').getTime(),
-    'title.asc': (a, b) => a.title.localeCompare(b.title),
-    'title.desc': (a, b) => b.title.localeCompare(a.title),
-    'vote_average.desc': (a, b) => b.vote_average - a.vote_average,
-    'vote_average.asc': (a, b) => a.vote_average - b.vote_average,
-    'original_title.asc': (a, b) => a.original_title.localeCompare(b.original_title),
-    'original_title.desc': (a, b) => b.original_title.localeCompare(a.original_title),
-    'vote_count.asc': (a, b) => a.vote_count - b.vote_count,
-    'vote_count.desc': (a, b) => b.vote_count - a.vote_count,
-};
-
-const sortMovies = (movies: Movie[], sortBy: string): Movie[] => {
-    const sortFn = SORT_FUNCTIONS[sortBy];
-    return sortFn ? [...movies].sort(sortFn) : movies;
 };
 
 export const useMovies = () => {
