@@ -15,6 +15,7 @@ export const BackButton = ({ label = 'Back', className = '' }: BackButtonProps) 
 
     return (
         <Button
+            role="link"
             variant="outline-primary"
             animationType="back"
             className={className}

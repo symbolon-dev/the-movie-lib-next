@@ -31,7 +31,7 @@ export const MovieList = ({ movies, className = '', isLoading = false }: MovieLi
     }, []);
 
     if (isLoading) {
-        return <MovieListSkeleton className={className} />;
+        return <MovieListSkeleton count={12} className={className} />;
     }
 
     if (movies.length === 0) {
