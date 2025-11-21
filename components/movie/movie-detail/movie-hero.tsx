@@ -7,15 +7,15 @@ import type { MovieGenre } from '@/types/movie';
 
 type MovieHeroProps = {
     title: string;
-    tagline: string | null | undefined;
-    posterPath: string | null | undefined;
+    tagline: string | null;
+    posterPath: string | null;
     voteAverage: number;
     voteCount: number;
     releaseDate: string;
     runtime: number;
     genres: MovieGenre[];
-    homepage: string | null | undefined;
-    imdbId: string | null | undefined;
+    homepage: string | null;
+    imdbId: string | null;
 };
 
 export const MovieHero = ({

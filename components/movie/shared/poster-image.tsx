@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { getMoviePosterUrl } from '@/utils/image';
 
 type PosterImageProps = {
-    path: string | null | undefined;
+    path: string | null;
     title: string;
     aspectRatio?: '2/3' | 'auto';
     priority?: boolean;
