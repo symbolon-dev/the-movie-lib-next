@@ -19,7 +19,6 @@
         "noUnusedParameters": true,
         "allowUnusedLabels": false,
         "allowUnreachableCode": false,
-        "noPropertyAccessFromIndexSignature": true,
         "skipLibCheck": true,
         "noEmit": true,
         "incremental": true,
@@ -33,6 +32,12 @@
             }
         ]
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        ".next/dev/types/**/*.ts"
+    ],
     "exclude": ["node_modules"]
 }
