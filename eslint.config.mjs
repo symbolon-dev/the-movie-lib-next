@@ -75,6 +75,8 @@ const config = defineConfig([
             '@typescript-eslint/prefer-optional-chain': 'error',
             '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
             '@typescript-eslint/no-invalid-void-type': 'off',
+            '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+            '@typescript-eslint/prefer-reduce-type-parameter': 'error',
             '@typescript-eslint/no-floating-promises': 'error',
             '@typescript-eslint/no-misused-promises': 'error',
             '@typescript-eslint/await-thenable': 'error',
