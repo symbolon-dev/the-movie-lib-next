@@ -33,7 +33,10 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
         if (!buttonRef.current || isTransitioning) return;
 
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const startViewTransition = document.startViewTransition?.bind(document);
+        const startViewTransition =
+            'startViewTransition' in document
+                ? document.startViewTransition.bind(document)
+                : undefined;
 
         if (!startViewTransition || prefersReducedMotion) {
             toggleMode();
@@ -52,7 +55,6 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
             console.error('Theme view transition failed', error);
             setIsTransitioning(false);
             toggleMode();
-            return;
         }
 
         const { top, left, width, height } = buttonRef.current.getBoundingClientRect();
@@ -85,7 +87,9 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     return (
         <AnimatedThemeToggler
             ref={buttonRef}
-            onToggle={changeTheme}
+            onToggle={() => {
+                void changeTheme();
+            }}
             mode={resolvedTheme as ThemeMode}
             className={className}
             disabled={!resolvedTheme}

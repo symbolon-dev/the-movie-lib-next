@@ -27,7 +27,10 @@ export const MovieResults = () => {
 
         const observer = new IntersectionObserver(
             (entries) => {
-                handleIntersection(entries[0]);
+                const entry = entries[0];
+                if (entry) {
+                    handleIntersection(entry);
+                }
             },
             { rootMargin: '200px 0px' },
         );

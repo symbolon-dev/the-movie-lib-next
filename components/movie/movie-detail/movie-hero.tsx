@@ -44,11 +44,11 @@ export const MovieHero = ({
         <div className="flex flex-col gap-6">
             <div className="space-y-3 text-center lg:text-left">
                 <h1 className="heading-1 text-foreground">{title}</h1>
-                {tagline ? (
+                {tagline ?? (
                     <p className="text-lead text-muted-foreground italic">
                         &ldquo;{tagline}&rdquo;
                     </p>
-                ) : null}
+                )}
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-center lg:justify-start lg:text-left">
@@ -66,14 +66,14 @@ export const MovieHero = ({
                 />
             ) : null}
 
-            {homepage || imdbId ? (
+            {homepage ?? imdbId ?? (
                 <MovieLinks
                     homepage={homepage}
                     imdbId={imdbId}
                     className="mt-4"
                     buttonGroupClassName="justify-center sm:justify-start"
                 />
-            ) : null}
+            )}
         </div>
     </div>
 );

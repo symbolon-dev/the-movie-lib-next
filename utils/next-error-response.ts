@@ -18,9 +18,9 @@ const extractStatusCode = (error: unknown): number => {
         }
 
         // Parse status code from error message as fallback
-        const statusMatch = httpError.message.match(/\b(4\d{2}|5\d{2})\b/);
+        const statusMatch = httpError.message.match(/\b(4\d{2}|5\d{2})\b/)?.[1];
         if (statusMatch) {
-            return parseInt(statusMatch[1], 10);
+            return parseInt(statusMatch, 10);
         }
     }
 

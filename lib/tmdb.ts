@@ -3,8 +3,11 @@ import type { z } from 'zod';
 import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/schemas/movie';
 import type { MovieDiscoverParams } from '@/types/movie';
 
-const API_KEY = process.env.TMDB_API_KEY;
-const BASE_URL = process.env.TMDB_BASE_URL;
+const API_KEY = process.env['TMDB_API_KEY'];
+if (!API_KEY) throw new Error('TMDB_API_KEY is not defined');
+
+const BASE_URL = process.env['TMDB_BASE_URL'];
+if (!BASE_URL) throw new Error('TMDB_BASE_URL is not defined');
 
 const fetchFromTMDB = async <T>(endpoint: string, schema: z.ZodSchema<T>): Promise<T> => {
     if (!API_KEY || !BASE_URL) {

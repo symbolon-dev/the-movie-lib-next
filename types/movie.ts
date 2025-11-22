@@ -24,5 +24,5 @@ export type MovieSortOption = z.infer<typeof MovieSortOptionSchema>;
 export type MovieDiscoverParams = {
     page?: number;
     sortBy?: MovieSortOption;
-    withGenres?: string;
+    withGenres?: string | undefined;
 };
