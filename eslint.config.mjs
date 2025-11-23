@@ -1,14 +1,14 @@
-import next from 'eslint-config-next';
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
-import tseslint from 'typescript-eslint';
 import pluginQuery from '@tanstack/eslint-plugin-query';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 const config = defineConfig([
-    ...next,
-    ...tseslint.configs.recommended,
+    ...nextVitals,
+    ...nextTs,
     ...pluginQuery.configs['flat/recommended'],
     {
         files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
@@ -17,7 +17,6 @@ const config = defineConfig([
             'simple-import-sort': simpleImportSort,
         },
         languageOptions: {
-            parser: tseslint.parser,
             parserOptions: {
                 project: ['./tsconfig.json'],
                 tsconfigRootDir: import.meta.dirname,
@@ -133,6 +132,12 @@ const config = defineConfig([
             'import/no-default-export': 'off',
         },
     },
+    globalIgnores([
+        ".next/**",
+        "out/**",
+        "build/**",
+        "next-env.d.ts",
+    ]),
     prettier,
 ]);
 
