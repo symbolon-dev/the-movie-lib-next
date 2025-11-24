@@ -1,5 +1,5 @@
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unicorn from 'eslint-plugin-unicorn';
@@ -132,12 +132,7 @@ const config = defineConfig([
             'import/no-default-export': 'off',
         },
     },
-    globalIgnores([
-        ".next/**",
-        "out/**",
-        "build/**",
-        "next-env.d.ts",
-    ]),
+    globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
     prettier,
 ]);
 
