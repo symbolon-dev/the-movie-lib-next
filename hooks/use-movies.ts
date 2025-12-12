@@ -11,8 +11,12 @@ const fetcher = async (url: string): Promise<MovieResponse> => {
     const res = await fetch(url);
 
     if (!res.ok) {
-        const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
-        throw new Error(errorData.error ?? `HTTP ${res.status}: ${res.statusText}`);
+        const errorData = await res
+            .json()
+            .catch(() => ({ error: 'Unknown error' }));
+        throw new Error(
+            errorData.error ?? `HTTP ${res.status}: ${res.statusText}`,
+        );
     }
 
     const json = await res.json();
@@ -32,42 +36,55 @@ export const useMovies = () => {
     const sortBy = searchParams.get('sort') ?? 'popularity.desc';
     const genres = searchParams.get('genres') ?? '';
 
-    const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } =
-        useInfiniteQuery({
-            queryKey: ['movies', query, sortBy, genres],
-            queryFn: async ({ pageParam = 1 }) => {
-                const baseUrl = query
-                    ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${pageParam}`
-                    : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${pageParam}`;
+    const {
+        data,
+        error,
+        isLoading,
+        isFetchingNextPage,
+        hasNextPage,
+        fetchNextPage,
+        refetch,
+    } = useInfiniteQuery({
+        queryKey: ['movies', query, sortBy, genres],
+        queryFn: async ({ pageParam = 1 }) => {
+            const baseUrl = query
+                ? `/api/movies/search?query=${encodeURIComponent(query)}&page=${pageParam}`
+                : `/api/movies/discover?sort_by=${sortBy}&with_genres=${genres}&page=${pageParam}`;
 
-                return fetcher(baseUrl);
-            },
-            initialPageParam: 1,
-            getNextPageParam: (lastPage) => {
-                if (lastPage.page < lastPage.total_pages) {
-                    return lastPage.page + 1;
-                }
-                return undefined;
-            },
-            staleTime: 60000, // 1 minute
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-        });
+            return fetcher(baseUrl);
+        },
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => {
+            if (lastPage.page < lastPage.total_pages) {
+                return lastPage.page + 1;
+            }
+            return undefined;
+        },
+        staleTime: 60000, // 1 minute
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+    });
 
-    const allMovies: Movie[] = data?.pages.flatMap((page) => page.results) ?? [];
+    const allMovies: Movie[] =
+        data?.pages.flatMap((page) => page.results) ?? [];
 
     const filteredMovies =
         genres && query
             ? allMovies.filter((movie) => {
                   const genreIds = genres.split(',').map(Number);
-                  return genreIds.every((genreId) => movie.genre_ids.includes(genreId));
+                  return genreIds.every((genreId) =>
+                      movie.genre_ids.includes(genreId),
+                  );
               })
             : allMovies;
 
-    const sortedMovies = query ? sortMovies(filteredMovies, sortBy) : filteredMovies;
+    const sortedMovies = query
+        ? sortMovies(filteredMovies, sortBy)
+        : filteredMovies;
 
     const uniqueMovies = sortedMovies.filter(
-        (movie, index, self) => index === self.findIndex((m) => m.id === movie.id),
+        (movie, index, self) =>
+            index === self.findIndex((m) => m.id === movie.id),
     );
 
     const lastPage = data?.pages[data.pages.length - 1];

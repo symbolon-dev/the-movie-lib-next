@@ -30,7 +30,8 @@ const extractStatusCode = (error: unknown): number => {
 export const createErrorResponse = (error: unknown, endpoint: string) => {
     console.error(`Error in ${endpoint}:`, error);
 
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
     const statusCode = extractStatusCode(error);
 
     return NextResponse.json(

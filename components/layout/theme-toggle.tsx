@@ -32,7 +32,9 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const changeTheme = async () => {
         if (!buttonRef.current || isTransitioning) return;
 
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const prefersReducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
         const startViewTransition =
             'startViewTransition' in document
                 ? document.startViewTransition.bind(document)
@@ -57,7 +59,8 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
             toggleMode();
         }
 
-        const { top, left, width, height } = buttonRef.current.getBoundingClientRect();
+        const { top, left, width, height } =
+            buttonRef.current.getBoundingClientRect();
         const y = top + height / 2;
         const x = left + width / 2;
 
@@ -67,7 +70,10 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
 
         const animation = document.documentElement.animate(
             {
-                clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRad}px at ${x}px ${y}px)`],
+                clipPath: [
+                    `circle(0px at ${x}px ${y}px)`,
+                    `circle(${maxRad}px at ${x}px ${y}px)`,
+                ],
             },
             {
                 duration: 700,
@@ -80,8 +86,12 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
             setIsTransitioning(false);
         };
 
-        animation.addEventListener('finish', handleTransitionComplete, { once: true });
-        animation.addEventListener('cancel', handleTransitionComplete, { once: true });
+        animation.addEventListener('finish', handleTransitionComplete, {
+            once: true,
+        });
+        animation.addEventListener('cancel', handleTransitionComplete, {
+            once: true,
+        });
     };
 
     return (

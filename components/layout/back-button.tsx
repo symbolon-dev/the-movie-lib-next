@@ -10,7 +10,10 @@ type BackButtonProps = {
     className?: string;
 };
 
-export const BackButton = ({ label = 'Back', className = '' }: BackButtonProps) => {
+export const BackButton = ({
+    label = 'Back',
+    className = '',
+}: BackButtonProps) => {
     const router = useRouter();
 
     return (

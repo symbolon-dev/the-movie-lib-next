@@ -34,9 +34,16 @@ export const ErrorMessage = ({
         return (
             <Alert variant="destructive" className="my-4">
                 <div className="flex items-center justify-between">
-                    <AlertDescription className="flex-1">{errorMessage}</AlertDescription>
+                    <AlertDescription className="flex-1">
+                        {errorMessage}
+                    </AlertDescription>
                     {onRetry && showRetry ? (
-                        <Button variant="outline" size="sm" onClick={onRetry} className="ml-4 h-8">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={onRetry}
+                            className="ml-4 h-8"
+                        >
                             <RefreshCw className="mr-1 h-3 w-3" />
                             Retry
                         </Button>
@@ -60,9 +67,12 @@ export const ErrorMessage = ({
                     </div>
 
                     <div className="space-y-3">
-                        <h2 className="heading-2 text-foreground font-serif">{title}</h2>
+                        <h2 className="heading-2 text-foreground font-serif">
+                            {title}
+                        </h2>
                         <p className="text-lead text-muted-foreground">
-                            {errorMessage || 'There was an error loading the data.'}
+                            {errorMessage ||
+                                'There was an error loading the data.'}
                         </p>
                     </div>
 
@@ -78,7 +88,9 @@ export const ErrorMessage = ({
                         ) : null}
                         <Button
                             asChild
-                            variant={onRetry && showRetry ? 'outline' : 'default'}
+                            variant={
+                                onRetry && showRetry ? 'outline' : 'default'
+                            }
                             className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
                         >
                             <Link href={actionLink}>{actionText}</Link>

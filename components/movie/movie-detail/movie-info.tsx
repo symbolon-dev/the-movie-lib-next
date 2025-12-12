@@ -1,7 +1,11 @@
 import { DollarSign } from 'lucide-react';
 import type { ReactNode } from 'react';
 
-import type { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
+import type {
+    ProductionCompany,
+    ProductionCountry,
+    SpokenLanguage,
+} from '@/types/movie';
 import { formatCurrency } from '@/utils/formatter';
 
 type InfoCardProps = {
@@ -42,8 +46,12 @@ export const MovieInfo = ({
     budget,
     revenue,
 }: MovieInfoProps) => {
-    const companies = productionCompanies.map((company) => company.name).join(', ');
-    const countries = productionCountries.map((country) => country.name).join(', ');
+    const companies = productionCompanies
+        .map((company) => company.name)
+        .join(', ');
+    const countries = productionCountries
+        .map((country) => country.name)
+        .join(', ');
     const languages = spokenLanguages.map((lang) => lang.name).join(', ');
 
     return (

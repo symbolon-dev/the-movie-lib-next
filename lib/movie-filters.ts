@@ -11,7 +11,8 @@ type DateField = (typeof DATE_FIELDS)[number];
 type NumericField = (typeof NUMERIC_FIELDS)[number];
 type MovieField = keyof Movie;
 
-const isDateField = (field: string): field is DateField => DATE_FIELDS.includes(field as DateField);
+const isDateField = (field: string): field is DateField =>
+    DATE_FIELDS.includes(field as DateField);
 
 const isNumericField = (field: string): field is NumericField =>
     NUMERIC_FIELDS.includes(field as NumericField);
@@ -19,7 +20,8 @@ const isNumericField = (field: string): field is NumericField =>
 const getSortValue = (movie: Movie, field: string): SortableValue => {
     if (isDateField(field)) {
         const rawValue = movie[field];
-        const dateValue = typeof rawValue === 'string' ? rawValue : movie.release_date;
+        const dateValue =
+            typeof rawValue === 'string' ? rawValue : movie.release_date;
         if (!dateValue) return undefined;
         const parsed = new Date(dateValue);
         return isNaN(parsed.getTime()) ? undefined : parsed.getTime();
@@ -60,7 +62,10 @@ const compareValues = (
 };
 
 export const sortMovies = (movies: Movie[], sortBy: string): Movie[] => {
-    const [field, direction] = sortBy.split('.') as [string, 'asc' | 'desc' | undefined];
+    const [field, direction] = sortBy.split('.') as [
+        string,
+        'asc' | 'desc' | undefined,
+    ];
 
     if (direction !== 'asc' && direction !== 'desc') return movies;
 

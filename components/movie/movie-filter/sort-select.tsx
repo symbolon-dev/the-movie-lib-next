@@ -16,7 +16,11 @@ import type { MovieSortOption } from '@/types/movie';
 const SORT_OPTIONS = [
     { value: 'popularity.desc', label: 'Popularity', icon: ArrowDown },
     { value: 'popularity.asc', label: 'Popularity', icon: ArrowUp },
-    { value: 'primary_release_date.desc', label: 'Release Date', icon: ArrowDown },
+    {
+        value: 'primary_release_date.desc',
+        label: 'Release Date',
+        icon: ArrowDown,
+    },
     { value: 'primary_release_date.asc', label: 'Release Date', icon: ArrowUp },
     { value: 'title.asc', label: 'Title', icon: ArrowUp },
     { value: 'title.desc', label: 'Title', icon: ArrowDown },

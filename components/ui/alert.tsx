@@ -32,15 +32,24 @@ export const Alert = ({
     />
 );
 
-export const AlertTitle = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const AlertTitle = ({
+    className,
+    ...props
+}: React.ComponentProps<'div'>) => (
     <div
         data-slot="alert-title"
-        className={cn('col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight', className)}
+        className={cn(
+            'col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight',
+            className,
+        )}
         {...props}
     />
 );
 
-export const AlertDescription = ({ className, ...props }: React.ComponentProps<'div'>) => (
+export const AlertDescription = ({
+    className,
+    ...props
+}: React.ComponentProps<'div'>) => (
     <div
         data-slot="alert-description"
         className={cn(
@@ -51,6 +60,7 @@ export const AlertDescription = ({ className, ...props }: React.ComponentProps<'
     />
 );
 
-export type AlertProps = React.ComponentProps<'div'> & VariantProps<typeof alertVariants>;
+export type AlertProps = React.ComponentProps<'div'> &
+    VariantProps<typeof alertVariants>;
 export type AlertTitleProps = React.ComponentProps<'div'>;
 export type AlertDescriptionProps = React.ComponentProps<'div'>;

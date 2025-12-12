@@ -15,7 +15,10 @@ export const GET = async (request: NextRequest) => {
             page: searchParams.get('page'),
         });
 
-        const movies = await searchMovies(validatedParams.query, validatedParams.page);
+        const movies = await searchMovies(
+            validatedParams.query,
+            validatedParams.page,
+        );
 
         return NextResponse.json(movies);
     } catch (error) {

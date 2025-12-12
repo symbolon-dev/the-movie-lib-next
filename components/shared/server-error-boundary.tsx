@@ -43,7 +43,13 @@ export const ServerErrorBoundary = ({
                 </div>
             ) : null}
 
-            <div className={variant === 'section' ? 'flex flex-1 items-center justify-center' : ''}>
+            <div
+                className={
+                    variant === 'section'
+                        ? 'flex flex-1 items-center justify-center'
+                        : ''
+                }
+            >
                 <Alert variant="destructive" className="max-w-lg">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertTitle>{title}</AlertTitle>

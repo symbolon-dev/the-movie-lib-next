@@ -72,7 +72,10 @@ const config = defineConfig([
             ],
             '@typescript-eslint/prefer-nullish-coalescing': 'error',
             '@typescript-eslint/prefer-optional-chain': 'error',
-            '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+            '@typescript-eslint/array-type': [
+                'error',
+                { default: 'array-simple' },
+            ],
             '@typescript-eslint/no-invalid-void-type': 'off',
             '@typescript-eslint/no-unnecessary-type-assertion': 'error',
             '@typescript-eslint/prefer-reduce-type-parameter': 'error',
@@ -83,8 +86,14 @@ const config = defineConfig([
             '@typescript-eslint/promise-function-async': 'error',
             'no-async-promise-executor': 'error',
             '@typescript-eslint/return-await': ['error', 'in-try-catch'],
-            'react/jsx-no-leaked-render': ['error', { validStrategies: ['ternary'] }],
-            'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+            'react/jsx-no-leaked-render': [
+                'error',
+                { validStrategies: ['ternary'] },
+            ],
+            'react/jsx-curly-brace-presence': [
+                'error',
+                { props: 'never', children: 'never' },
+            ],
             'react/self-closing-comp': 'error',
             'react/jsx-boolean-value': ['error', 'never'],
             'react-hooks/rules-of-hooks': 'error',

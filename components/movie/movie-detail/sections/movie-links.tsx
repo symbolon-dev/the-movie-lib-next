@@ -19,11 +19,18 @@ export const MovieLinks = ({
     return (
         <div className={cn('mt-8', className)}>
             <div
-                className={cn('flex flex-col gap-3 sm:flex-row sm:flex-wrap', buttonGroupClassName)}
+                className={cn(
+                    'flex flex-col gap-3 sm:flex-row sm:flex-wrap',
+                    buttonGroupClassName,
+                )}
             >
                 {homepage ? (
                     <Button asChild variant="outline-primary">
-                        <a href={homepage} target="_blank" rel="noopener noreferrer">
+                        <a
+                            href={homepage}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             Official Website
                         </a>
                     </Button>

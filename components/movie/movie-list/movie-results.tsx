@@ -10,17 +10,26 @@ import { useMovies } from '@/hooks/use-movies';
 import { MovieList } from './movie-list';
 
 export const MovieResults = () => {
-    const { movies, isLoading, error, currentPage, totalPages, loadMoreMovies, mutate } =
-        useMovies();
+    const {
+        movies,
+        isLoading,
+        error,
+        currentPage,
+        totalPages,
+        loadMoreMovies,
+        mutate,
+    } = useMovies();
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
     const hasMorePages = currentPage < totalPages;
 
-    const handleIntersection = useEffectEvent((entry: IntersectionObserverEntry) => {
-        if (entry.isIntersecting && !isLoading && hasMorePages) {
-            loadMoreMovies();
-        }
-    });
+    const handleIntersection = useEffectEvent(
+        (entry: IntersectionObserverEntry) => {
+            if (entry.isIntersecting && !isLoading && hasMorePages) {
+                loadMoreMovies();
+            }
+        },
+    );
 
     useEffect(() => {
         if (!sentinelRef.current) return;
@@ -50,7 +59,10 @@ export const MovieResults = () => {
                 />
             ) : null}
 
-            <MovieList movies={movies} isLoading={isLoading ? currentPage === 1 : undefined} />
+            <MovieList
+                movies={movies}
+                isLoading={isLoading ? currentPage === 1 : undefined}
+            />
 
             <div
                 ref={sentinelRef}
@@ -64,7 +76,11 @@ export const MovieResults = () => {
                             aria-label="Loading"
                             className="border-muted border-t-primary inline-block size-7 rounded-full border-2"
                             animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, ease: 'linear', duration: 0.8 }}
+                            transition={{
+                                repeat: Infinity,
+                                ease: 'linear',
+                                duration: 0.8,
+                            }}
                         >
                             <span className="sr-only">Loading</span>
                         </motion.span>

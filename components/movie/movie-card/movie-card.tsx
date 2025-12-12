@@ -46,8 +46,13 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                             <div className="flex items-center justify-between text-sm text-white/80">
                                 <span>{releaseYear || '—'}</span>
                                 <span className="flex items-center gap-1 text-white/80">
-                                    <Star className="size-3.5" aria-hidden="true" />
-                                    <span className="text-sm font-medium">{rating}</span>
+                                    <Star
+                                        className="size-3.5"
+                                        aria-hidden="true"
+                                    />
+                                    <span className="text-sm font-medium">
+                                        {rating}
+                                    </span>
                                 </span>
                             </div>
                         </div>

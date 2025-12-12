@@ -12,14 +12,16 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+                default:
+                    'bg-primary text-primary-foreground hover:bg-primary/90',
                 destructive:
                     'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
                 outline:
                     'border bg-background shadow-xs hover:bg-accent dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
                 'outline-primary':
                     'border border-primary text-primary bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
-                secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+                secondary:
+                    'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
                 link: 'text-primary underline-offset-4 hover:underline',
                 fab: 'rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30',
@@ -80,11 +82,19 @@ const animationConfigs: Record<ButtonAnimation, any> = {
     subtle: {
         whileHover: {
             scale: 1.02,
-            transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
+            transition: {
+                type: 'spring' as const,
+                stiffness: 400,
+                damping: 25,
+            },
         },
         whileTap: {
             scale: 0.98,
-            transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
+            transition: {
+                type: 'spring' as const,
+                stiffness: 400,
+                damping: 25,
+            },
         },
     },
     back: {
@@ -115,7 +125,11 @@ const animationConfigs: Record<ButtonAnimation, any> = {
         whileHover: {
             scale: 1.08,
             y: -6,
-            transition: { type: 'spring' as const, stiffness: 300, damping: 20 },
+            transition: {
+                type: 'spring' as const,
+                stiffness: 300,
+                damping: 20,
+            },
         },
         whileTap: {
             scale: 0.95,
@@ -125,7 +139,11 @@ const animationConfigs: Record<ButtonAnimation, any> = {
     none: {},
 };
 
-type MotionConflicts = 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart';
+type MotionConflicts =
+    | 'onAnimationStart'
+    | 'onDrag'
+    | 'onDragEnd'
+    | 'onDragStart';
 
 type ButtonProps = Omit<React.ComponentProps<'button'>, MotionConflicts> &
     VariantProps<typeof buttonVariants> & {
@@ -143,13 +161,23 @@ export const Button = ({
     ...props
 }: ButtonProps) => {
     const mergedClassName = cn(buttonVariants({ variant, size, className }));
-    const resolvedAnimation: ButtonAnimation = disabled ? 'none' : animationType;
+    const resolvedAnimation: ButtonAnimation = disabled
+        ? 'none'
+        : animationType;
     const animationProps = animationConfigs[resolvedAnimation];
 
     if (asChild) {
         return resolvedAnimation !== 'none' ? (
-            <motion.div className="inline-block" tabIndex={-1} {...animationProps}>
-                <Slot data-slot="button" className={mergedClassName} {...props} />
+            <motion.div
+                className="inline-block"
+                tabIndex={-1}
+                {...animationProps}
+            >
+                <Slot
+                    data-slot="button"
+                    className={mergedClassName}
+                    {...props}
+                />
             </motion.div>
         ) : (
             <Slot data-slot="button" className={mergedClassName} {...props} />
@@ -158,7 +186,12 @@ export const Button = ({
 
     if (resolvedAnimation === 'none') {
         return (
-            <button data-slot="button" className={mergedClassName} disabled={disabled} {...props} />
+            <button
+                data-slot="button"
+                className={mergedClassName}
+                disabled={disabled}
+                {...props}
+            />
         );
     }
 

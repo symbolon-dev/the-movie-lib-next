@@ -31,7 +31,8 @@ export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
                     variant={isSelected(genre.id) ? 'default' : 'secondary'}
                     className={cn(
                         'cursor-pointer transition-colors focus:outline-none',
-                        !isSelected(genre.id) && 'hover:border-primary hover:bg-primary/10',
+                        !isSelected(genre.id) &&
+                            'hover:border-primary hover:bg-primary/10',
                     )}
                     onClick={() => handleGenreToggle(genre.id)}
                     onMouseDown={(e) => e.preventDefault()}

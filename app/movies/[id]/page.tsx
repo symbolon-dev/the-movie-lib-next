@@ -11,7 +11,9 @@ type DetailProps = {
     params: Promise<{ id: string }>;
 };
 
-export const generateMetadata = async ({ params }: DetailProps): Promise<Metadata> => {
+export const generateMetadata = async ({
+    params,
+}: DetailProps): Promise<Metadata> => {
     const { id } = await params;
 
     try {
@@ -19,12 +21,20 @@ export const generateMetadata = async ({ params }: DetailProps): Promise<Metadat
 
         const title = `${movie.title} - Movie Library`;
         const description =
-            movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
+            movie.overview ||
+            `Watch ${movie.title} and discover more amazing movies.`;
         const backdropUrl = movie.backdrop_path
             ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
             : undefined;
         const openGraphImages = backdropUrl
-            ? [{ url: backdropUrl, width: 1280, height: 720, alt: `${movie.title} backdrop` }]
+            ? [
+                  {
+                      url: backdropUrl,
+                      width: 1280,
+                      height: 720,
+                      alt: `${movie.title} backdrop`,
+                  },
+              ]
             : [];
 
         return {

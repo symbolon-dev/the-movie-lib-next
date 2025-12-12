@@ -10,8 +10,12 @@ export const useMovieFilters = () => {
     const searchParams = useSearchParams();
 
     const searchQuery = searchParams.get('q') ?? '';
-    const sortBy = (searchParams.get('sort') as MovieSortOption | undefined) ?? 'popularity.desc';
-    const selectedGenres = searchParams.get('genres')?.split(',').map(Number).filter(Boolean) ?? [];
+    const sortBy =
+        (searchParams.get('sort') as MovieSortOption | undefined) ??
+        'popularity.desc';
+    const selectedGenres =
+        searchParams.get('genres')?.split(',').map(Number).filter(Boolean) ??
+        [];
 
     const updateFilters = (updates: {
         searchQuery?: string;
@@ -40,7 +44,9 @@ export const useMovieFilters = () => {
             }
         }
 
-        const url = newParams.toString() ? `${pathname}?${newParams.toString()}` : pathname;
+        const url = newParams.toString()
+            ? `${pathname}?${newParams.toString()}`
+            : pathname;
         router.replace(url, { scroll: false });
     };
 
@@ -49,13 +55,18 @@ export const useMovieFilters = () => {
     };
 
     const hasActiveFilters =
-        searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
+        searchQuery.trim() !== '' ||
+        selectedGenres.length > 0 ||
+        sortBy !== 'popularity.desc';
 
-    const setSearchQuery = (query: string) => updateFilters({ searchQuery: query });
+    const setSearchQuery = (query: string) =>
+        updateFilters({ searchQuery: query });
 
-    const setSortBy = (sort: MovieSortOption) => updateFilters({ sortBy: sort });
+    const setSortBy = (sort: MovieSortOption) =>
+        updateFilters({ sortBy: sort });
 
-    const setSelectedGenres = (genres: number[]) => updateFilters({ selectedGenres: genres });
+    const setSelectedGenres = (genres: number[]) =>
+        updateFilters({ selectedGenres: genres });
 
     return {
         searchQuery,

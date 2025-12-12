@@ -1,6 +1,9 @@
 import { format, getYear } from 'date-fns';
 
-export const formatDate = (date: string | undefined, formatStr: string = 'MMM d, yyyy'): string => {
+export const formatDate = (
+    date: string | undefined,
+    formatStr: string = 'MMM d, yyyy',
+): string => {
     if (!date) return 'Unknown';
     return format(new Date(date), formatStr);
 };
