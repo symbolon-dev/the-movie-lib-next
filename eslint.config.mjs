@@ -41,14 +41,6 @@ const config = defineConfig([
             'no-eval': 'error',
             'no-implied-eval': 'error',
             'no-new-func': 'error',
-            'no-restricted-syntax': [
-                'error',
-                {
-                    selector: 'ForStatement',
-                    message:
-                        'For loops are not allowed. Use iterable methods or for..of loops instead.',
-                },
-            ],
             'unicorn/no-array-for-each': 'error',
             'no-console': ['warn', { allow: ['warn', 'error'] }],
             '@typescript-eslint/no-explicit-any': 'error',
