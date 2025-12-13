@@ -35,6 +35,7 @@ export const MovieHero = ({
             <PosterImage
                 path={posterPath}
                 title={title}
+                priority
                 className="rounded-3xl shadow-lg"
                 sizes="(max-width: 1024px) 240px, 280px"
                 fallbackText="No poster available"

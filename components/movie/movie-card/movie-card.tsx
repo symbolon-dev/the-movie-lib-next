@@ -10,9 +10,14 @@ import { formatYear } from '@/utils/formatter';
 type MovieCardProps = {
     movie: Movie;
     className?: string;
+    priority?: boolean;
 };
 
-export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
+export const MovieCard = ({
+    movie,
+    className = '',
+    priority = false,
+}: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average || 0).toFixed(1);
 
@@ -32,6 +37,7 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                     <PosterImage
                         path={movie.poster_path}
                         title={movie.title}
+                        priority={priority}
                         className="transition-transform duration-500 ease-out group-focus-within:-translate-y-2 group-focus-within:scale-105 group-hover:-translate-y-2 group-hover:scale-105"
                     />
 
