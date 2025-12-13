@@ -5,7 +5,7 @@ type HTTPError = Error & {
     status?: number;
 };
 
-const extractStatusCode = (error: unknown): number => {
+function extractStatusCode(error: unknown): number {
     if (error instanceof Error) {
         const httpError = error as HTTPError;
 
@@ -25,13 +25,13 @@ const extractStatusCode = (error: unknown): number => {
     }
 
     return 500;
-};
+}
 
-export const createErrorResponse = (error: unknown, endpoint: string) => {
+export function createErrorResponse(error: unknown, endpoint: string) {
     console.error(`Error in ${endpoint}:`, error);
 
-    const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage
+        = error instanceof Error ? error.message : 'Unknown error';
     const statusCode = extractStatusCode(error);
 
     return NextResponse.json(
@@ -41,4 +41,4 @@ export const createErrorResponse = (error: unknown, endpoint: string) => {
         },
         { status: statusCode },
     );
-};
+}

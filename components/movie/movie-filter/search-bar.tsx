@@ -15,7 +15,7 @@ type SearchBarProps = {
 
 const DEBOUNCE_DELAY = 300;
 
-export const SearchBar = ({ className = '' }: SearchBarProps) => {
+export function SearchBar({ className = '' }: SearchBarProps) {
     const { searchQuery, setSearchQuery } = useMovieFilters();
     const [query, setQuery] = useState(searchQuery);
     const prevSearchQueryRef = useRef(searchQuery);
@@ -56,16 +56,18 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
                 className="w-full pr-10 pl-10"
             />
 
-            {query ? (
-                <button
-                    type="button"
-                    onClick={handleClear}
-                    className="text-muted-foreground hover:text-foreground absolute right-3"
-                    aria-label="Clear search"
-                >
-                    <XCircle size={20} />
-                </button>
-            ) : null}
+            {query
+                ? (
+                        <button
+                            type="button"
+                            onClick={handleClear}
+                            className="text-muted-foreground hover:text-foreground absolute right-3"
+                            aria-label="Clear search"
+                        >
+                            <XCircle size={20} />
+                        </button>
+                    )
+                : null}
         </div>
     );
-};
+}

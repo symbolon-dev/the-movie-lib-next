@@ -7,7 +7,7 @@ type MovieDetailContentProps = {
     id: string;
 };
 
-export const MovieDetailContent = async ({ id }: MovieDetailContentProps) => {
+export async function MovieDetailContent({ id }: MovieDetailContentProps) {
     const movie = await getMovie(id);
 
     return (
@@ -46,4 +46,4 @@ export const MovieDetailContent = async ({ id }: MovieDetailContentProps) => {
             </div>
         </NeonGradientCard>
     );
-};
+}

@@ -1,6 +1,5 @@
 import antfu from '@antfu/eslint-config';
 import pluginQuery from '@tanstack/eslint-plugin-query';
-import prettier from 'eslint-config-prettier';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default antfu(
@@ -10,7 +9,11 @@ export default antfu(
         typescript: {
             tsconfigPath: './tsconfig.json',
         },
-        stylistic: false,
+        stylistic: {
+            indent: 4,
+            quotes: 'single',
+            semi: true,
+        },
         ignores: ['.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
     },
     ...pluginQuery.configs['flat/recommended'],
@@ -28,5 +31,4 @@ export default antfu(
             '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
         },
     },
-    prettier,
 );

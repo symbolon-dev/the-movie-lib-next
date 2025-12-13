@@ -6,7 +6,7 @@ import { discoverMovies } from '@/lib/tmdb';
 import { DiscoverMoviesParamsSchema } from '@/schemas/api-params';
 import { createErrorResponse } from '@/utils/next-error-response';
 
-export const GET = async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
     try {
         const searchParams = request.nextUrl.searchParams;
 
@@ -23,7 +23,8 @@ export const GET = async (request: NextRequest) => {
         });
 
         return NextResponse.json(movies);
-    } catch (error) {
+    }
+    catch (error) {
         if (error instanceof ZodError) {
             return NextResponse.json(
                 { error: 'Invalid request parameters', details: error.issues },
@@ -32,4 +33,4 @@ export const GET = async (request: NextRequest) => {
         }
         return createErrorResponse(error, 'GET /api/movies/discover');
     }
-};
+}

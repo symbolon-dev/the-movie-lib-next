@@ -10,7 +10,7 @@ type GenreFilterProps = {
     className?: string;
 };
 
-export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
+export function GenreFilter({ genres, className = '' }: GenreFilterProps) {
     const { selectedGenres, setSelectedGenres } = useMovieFilters();
 
     const isSelected = (genreId: number) => selectedGenres.includes(genreId);
@@ -18,24 +18,24 @@ export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
     const handleGenreToggle = (genreId: number) => {
         setSelectedGenres(
             selectedGenres.includes(genreId)
-                ? selectedGenres.filter((id) => id !== genreId)
+                ? selectedGenres.filter(id => id !== genreId)
                 : [...selectedGenres, genreId],
         );
     };
 
     return (
         <div className={cn('flex flex-wrap gap-2', className)}>
-            {genres.map((genre) => (
+            {genres.map(genre => (
                 <Badge
                     key={genre.id}
                     variant={isSelected(genre.id) ? 'default' : 'secondary'}
                     className={cn(
                         'cursor-pointer transition-colors focus:outline-none',
-                        !isSelected(genre.id) &&
-                            'hover:border-primary hover:bg-primary/10',
+                        !isSelected(genre.id)
+                        && 'hover:border-primary hover:bg-primary/10',
                     )}
                     onClick={() => handleGenreToggle(genre.id)}
-                    onMouseDown={(e) => e.preventDefault()}
+                    onMouseDown={e => e.preventDefault()}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
@@ -52,4 +52,4 @@ export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
             ))}
         </div>
     );
-};
+}

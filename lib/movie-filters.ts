@@ -11,18 +11,21 @@ type DateField = (typeof DATE_FIELDS)[number];
 type NumericField = (typeof NUMERIC_FIELDS)[number];
 type MovieField = keyof Movie;
 
-const isDateField = (field: string): field is DateField =>
-    DATE_FIELDS.includes(field as DateField);
+function isDateField(field: string): field is DateField {
+    return DATE_FIELDS.includes(field as DateField);
+}
 
-const isNumericField = (field: string): field is NumericField =>
-    NUMERIC_FIELDS.includes(field as NumericField);
+function isNumericField(field: string): field is NumericField {
+    return NUMERIC_FIELDS.includes(field as NumericField);
+}
 
-const getSortValue = (movie: Movie, field: string): SortableValue => {
+function getSortValue(movie: Movie, field: string): SortableValue {
     if (isDateField(field)) {
         const rawValue = movie[field];
-        const dateValue =
-            typeof rawValue === 'string' ? rawValue : movie.release_date;
-        if (!dateValue) return undefined;
+        const dateValue
+            = typeof rawValue === 'string' ? rawValue : movie.release_date;
+        if (!dateValue)
+            return undefined;
         const parsed = new Date(dateValue);
         return Number.isNaN(parsed.getTime()) ? undefined : parsed.getTime();
     }
@@ -38,16 +41,15 @@ const getSortValue = (movie: Movie, field: string): SortableValue => {
     }
 
     return undefined;
-};
+}
 
-const compareValues = (
-    aValue: SortableValue,
-    bValue: SortableValue,
-    direction: 'asc' | 'desc',
-): number => {
-    if (aValue === undefined && bValue === undefined) return 0;
-    if (aValue === undefined) return direction === 'asc' ? 1 : -1;
-    if (bValue === undefined) return direction === 'asc' ? -1 : 1;
+function compareValues(aValue: SortableValue, bValue: SortableValue, direction: 'asc' | 'desc'): number {
+    if (aValue === undefined && bValue === undefined)
+        return 0;
+    if (aValue === undefined)
+        return direction === 'asc' ? 1 : -1;
+    if (bValue === undefined)
+        return direction === 'asc' ? -1 : 1;
 
     if (typeof aValue === 'number' && typeof bValue === 'number') {
         return direction === 'asc' ? aValue - bValue : bValue - aValue;
@@ -59,19 +61,20 @@ const compareValues = (
     }
 
     return 0;
-};
+}
 
-export const sortMovies = (movies: Movie[], sortBy: string): Movie[] => {
+export function sortMovies(movies: Movie[], sortBy: string): Movie[] {
     const [field, direction] = sortBy.split('.') as [
         string,
         'asc' | 'desc' | undefined,
     ];
 
-    if (direction !== 'asc' && direction !== 'desc') return movies;
+    if (direction !== 'asc' && direction !== 'desc')
+        return movies;
 
     return [...movies].sort((a, b) => {
         const aValue = getSortValue(a, field);
         const bValue = getSortValue(b, field);
         return compareValues(aValue, bValue, direction);
     });
-};
+}

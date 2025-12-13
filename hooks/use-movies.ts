@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { sortMovies } from '@/lib/movie-filters';
 import { MovieResponseSchema } from '@/schemas/movie';
 
-const fetcher = async (url: string): Promise<MovieResponse> => {
+async function fetcher(url: string): Promise<MovieResponse> {
     const res = await fetch(url);
 
     if (!res.ok) {
@@ -27,9 +27,9 @@ const fetcher = async (url: string): Promise<MovieResponse> => {
     }
 
     return validated.data;
-};
+}
 
-export const useMovies = () => {
+export function useMovies() {
     const searchParams = useSearchParams();
 
     const query = searchParams.get('q') ?? '';
@@ -65,17 +65,17 @@ export const useMovies = () => {
         refetchOnReconnect: false,
     });
 
-    const allMovies: Movie[] =
-        data?.pages.flatMap((page) => page.results) ?? [];
+    const allMovies: Movie[]
+        = data?.pages.flatMap(page => page.results) ?? [];
 
-    const filteredMovies =
-        genres && query
+    const filteredMovies
+        = genres && query
             ? allMovies.filter((movie) => {
-                  const genreIds = genres.split(',').map(Number);
-                  return genreIds.every((genreId) =>
-                      movie.genre_ids.includes(genreId),
-                  );
-              })
+                    const genreIds = genres.split(',').map(Number);
+                    return genreIds.every(genreId =>
+                        movie.genre_ids.includes(genreId),
+                    );
+                })
             : allMovies;
 
     const sortedMovies = query
@@ -84,7 +84,7 @@ export const useMovies = () => {
 
     const uniqueMovies = sortedMovies.filter(
         (movie, index, self) =>
-            index === self.findIndex((m) => m.id === movie.id),
+            index === self.findIndex(m => m.id === movie.id),
     );
 
     const lastPage = data?.pages[data.pages.length - 1];
@@ -110,4 +110,4 @@ export const useMovies = () => {
         loadMoreMovies,
         mutate: refetch,
     };
-};
+}

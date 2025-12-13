@@ -12,7 +12,7 @@ type MovieFilterProps = {
     genres: MovieGenre[];
 };
 
-export const MovieFilter = ({ genres }: MovieFilterProps) => {
+export function MovieFilter({ genres }: MovieFilterProps) {
     const { resetFilters, hasActiveFilters } = useMovieFilters();
 
     return (
@@ -51,4 +51,4 @@ export const MovieFilter = ({ genres }: MovieFilterProps) => {
             </div>
         </MagicCard>
     );
-};
+}

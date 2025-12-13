@@ -41,19 +41,20 @@ export const metadata: Metadata = {
     },
 };
 
-const getGenres = async (): Promise<{ genres: MovieGenre[] }> => {
+async function getGenres(): Promise<{ genres: MovieGenre[] }> {
     try {
         const data = await fetchMovieGenres();
         const validated = GenreResponseSchema.safeParse(data);
 
         return validated.success ? validated.data : { genres: [] };
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Failed to fetch genres:', error);
         return { genres: [] };
     }
-};
+}
 
-const Home = async () => {
+async function Home() {
     const { genres } = await getGenres();
 
     return (
@@ -89,6 +90,6 @@ const Home = async () => {
             </div>
         </>
     );
-};
+}
 
 export default Home;

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 const SHOW_AFTER_SCROLL = 320; // pixels
 
-export const ToTopFab = () => {
+export function ToTopFab() {
     const { y } = useWindowScroll();
     const isVisible = y > SHOW_AFTER_SCROLL;
 
@@ -34,4 +34,4 @@ export const ToTopFab = () => {
             <ArrowUp className="size-5" />
         </Button>
     );
-};
+}

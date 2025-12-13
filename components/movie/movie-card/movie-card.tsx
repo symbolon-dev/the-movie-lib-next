@@ -13,11 +13,11 @@ type MovieCardProps = {
     priority?: boolean;
 };
 
-export const MovieCard = ({
+export function MovieCard({
     movie,
     className = '',
     priority = false,
-}: MovieCardProps) => {
+}: MovieCardProps) {
     const releaseYear = formatYear(movie.release_date);
     const rating = (movie.vote_average || 0).toFixed(1);
 
@@ -71,4 +71,4 @@ export const MovieCard = ({
             </Link>
         </Card>
     );
-};
+}

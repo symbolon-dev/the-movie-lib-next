@@ -11,32 +11,32 @@ type DetailProps = {
     params: Promise<{ id: string }>;
 };
 
-export const generateMetadata = async ({
+export async function generateMetadata({
     params,
-}: DetailProps): Promise<Metadata> => {
+}: DetailProps): Promise<Metadata> {
     const { id } = await params;
 
     try {
         const movie = await getMovie(id);
 
         const title = `${movie.title} - Movie Library`;
-        const description =
-            movie.overview ||
-            `Watch ${movie.title} and discover more amazing movies.`;
-        const backdropUrl =
-            movie.backdrop_path != null
+        const description
+            = movie.overview
+                || `Watch ${movie.title} and discover more amazing movies.`;
+        const backdropUrl
+            = movie.backdrop_path != null
                 ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
                 : undefined;
-        const openGraphImages =
-            backdropUrl != null
+        const openGraphImages
+            = backdropUrl != null
                 ? [
-                      {
-                          url: backdropUrl,
-                          width: 1280,
-                          height: 720,
-                          alt: `${movie.title} backdrop`,
-                      },
-                  ]
+                        {
+                            url: backdropUrl,
+                            width: 1280,
+                            height: 720,
+                            alt: `${movie.title} backdrop`,
+                        },
+                    ]
                 : [];
 
         return {
@@ -67,16 +67,17 @@ export const generateMetadata = async ({
                 ...movie.genres.map((g: { name: string }) => g.name),
             ],
         };
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Failed to generate movie metadata', error);
         return {
             title: 'Movie Not Found - Movie Library',
             description: 'The requested movie could not be found.',
         };
     }
-};
+}
 
-const MovieDetailPage = async ({ params }: DetailProps) => {
+async function MovieDetailPage({ params }: DetailProps) {
     const { id } = await params;
 
     return (
@@ -91,6 +92,6 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
             </div>
         </>
     );
-};
+}
 
 export default MovieDetailPage;

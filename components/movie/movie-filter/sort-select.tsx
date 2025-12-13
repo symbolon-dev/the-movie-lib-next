@@ -38,7 +38,7 @@ type SortSelectProps = {
     className?: string;
 };
 
-export const SortSelect = ({ className = '' }: SortSelectProps) => {
+export function SortSelect({ className = '' }: SortSelectProps) {
     const { sortBy, setSortBy } = useMovieFilters();
 
     const handleValueChange = (value: string) => {
@@ -52,7 +52,7 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
                     <SelectValue placeholder="Please select" />
                 </SelectTrigger>
                 <SelectContent>
-                    {SORT_OPTIONS.map((option) => (
+                    {SORT_OPTIONS.map(option => (
                         <SelectItem key={option.value} value={option.value}>
                             <div className="flex items-center gap-2">
                                 <span>{option.label}</span>
@@ -64,4 +64,4 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
             </Select>
         </div>
     );
-};
+}

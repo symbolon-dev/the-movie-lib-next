@@ -21,14 +21,14 @@ const iconTransition = {
     ease: [0.2, 0.8, 0.2, 1] as [number, number, number, number],
 };
 
-export const AnimatedThemeToggler = ({
+export function AnimatedThemeToggler({
     mode,
     onToggle,
     className,
     disabled = false,
     isTransitioning = false,
     ...props
-}: AnimatedThemeTogglerProps) => {
+}: AnimatedThemeTogglerProps) {
     const isDark = mode === 'dark';
 
     return (
@@ -53,29 +53,31 @@ export const AnimatedThemeToggler = ({
 
             <span className="bg-background/80 relative flex h-full w-full items-center justify-center rounded-full backdrop-blur-sm">
                 <AnimatePresence mode="wait" initial={false}>
-                    {isDark ? (
-                        <motion.span
-                            key="sun"
-                            initial={{ opacity: 0, rotate: -45, scale: 0.6 }}
-                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                            exit={{ opacity: 0, rotate: 45, scale: 0.6 }}
-                            transition={iconTransition}
-                            className="text-foreground"
-                        >
-                            <SunDim className="h-5 w-5" aria-hidden="true" />
-                        </motion.span>
-                    ) : (
-                        <motion.span
-                            key="moon"
-                            initial={{ opacity: 0, rotate: 45, scale: 0.6 }}
-                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                            exit={{ opacity: 0, rotate: -45, scale: 0.6 }}
-                            transition={iconTransition}
-                            className="text-foreground"
-                        >
-                            <Moon className="h-5 w-5" aria-hidden="true" />
-                        </motion.span>
-                    )}
+                    {isDark
+                        ? (
+                                <motion.span
+                                    key="sun"
+                                    initial={{ opacity: 0, rotate: -45, scale: 0.6 }}
+                                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                    exit={{ opacity: 0, rotate: 45, scale: 0.6 }}
+                                    transition={iconTransition}
+                                    className="text-foreground"
+                                >
+                                    <SunDim className="h-5 w-5" aria-hidden="true" />
+                                </motion.span>
+                            )
+                        : (
+                                <motion.span
+                                    key="moon"
+                                    initial={{ opacity: 0, rotate: 45, scale: 0.6 }}
+                                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                    exit={{ opacity: 0, rotate: -45, scale: 0.6 }}
+                                    transition={iconTransition}
+                                    className="text-foreground"
+                                >
+                                    <Moon className="h-5 w-5" aria-hidden="true" />
+                                </motion.span>
+                            )}
                 </AnimatePresence>
             </span>
 
@@ -84,6 +86,6 @@ export const AnimatedThemeToggler = ({
             </span>
         </button>
     );
-};
+}
 
 AnimatedThemeToggler.displayName = 'AnimatedThemeToggler';

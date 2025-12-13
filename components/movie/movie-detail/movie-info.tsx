@@ -15,8 +15,9 @@ type InfoCardProps = {
     visible?: boolean;
 };
 
-const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
-    if (!visible || content == null) return null;
+function InfoCard({ title, content, icon, visible = true }: InfoCardProps) {
+    if (!visible || content == null)
+        return null;
 
     return (
         <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
@@ -27,7 +28,7 @@ const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
             <div className="text-body-sm text-muted-foreground">{content}</div>
         </div>
     );
-};
+}
 
 type MovieInfoProps = {
     overview: string;
@@ -38,21 +39,21 @@ type MovieInfoProps = {
     revenue: number;
 };
 
-export const MovieInfo = ({
+export function MovieInfo({
     overview,
     productionCompanies,
     productionCountries,
     spokenLanguages,
     budget,
     revenue,
-}: MovieInfoProps) => {
+}: MovieInfoProps) {
     const companies = productionCompanies
-        .map((company) => company.name)
+        .map(company => company.name)
         .join(', ');
     const countries = productionCountries
-        .map((country) => country.name)
+        .map(country => country.name)
         .join(', ');
-    const languages = spokenLanguages.map((lang) => lang.name).join(', ');
+    const languages = spokenLanguages.map(lang => lang.name).join(', ');
 
     return (
         <>
@@ -96,4 +97,4 @@ export const MovieInfo = ({
             </div>
         </>
     );
-};
+}

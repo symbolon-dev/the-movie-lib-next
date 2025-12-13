@@ -35,7 +35,8 @@ export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
 
     useEffect(() => {
         const container = containerRef.current;
-        if (container == null) return;
+        if (container == null)
+            return;
 
         const updateDimensions = () => {
             const { offsetWidth, offsetHeight } = container;
@@ -80,11 +81,11 @@ export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
                 className={cn(
                     'relative size-full min-h-[inherit] rounded-[var(--card-content-radius)] bg-gray-100 p-6',
                     'before:absolute before:-top-[var(--border-size)] before:-left-[var(--border-size)] before:-z-10 before:block',
-                    "before:h-[var(--pseudo-element-height)] before:w-[var(--pseudo-element-width)] before:rounded-[var(--border-radius)] before:content-['']",
+                    'before:h-[var(--pseudo-element-height)] before:w-[var(--pseudo-element-width)] before:rounded-[var(--border-radius)] before:content-[\'\']',
                     'before:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] before:bg-[length:100%_200%]',
                     'before:animate-background-position-spin',
                     'after:absolute after:-top-[var(--border-size)] after:-left-[var(--border-size)] after:-z-10 after:block',
-                    "after:h-[var(--pseudo-element-height)] after:w-[var(--pseudo-element-width)] after:rounded-[var(--border-radius)] after:blur-[var(--after-blur)] after:content-['']",
+                    'after:h-[var(--pseudo-element-height)] after:w-[var(--pseudo-element-width)] after:rounded-[var(--border-radius)] after:blur-[var(--after-blur)] after:content-[\'\']',
                     'after:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] after:bg-[length:100%_200%] after:opacity-80',
                     'after:animate-background-position-spin',
                     'dark:bg-neutral-900',

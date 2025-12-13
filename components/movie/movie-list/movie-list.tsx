@@ -14,11 +14,11 @@ type MovieListProps = {
     isLoading?: boolean;
 };
 
-export const MovieList = ({
+export function MovieList({
     movies,
     className = '',
     isLoading = false,
-}: MovieListProps) => {
+}: MovieListProps) {
     const scrollRef = useRef(0);
 
     const handleScroll = useEffectEvent(() => {
@@ -61,4 +61,4 @@ export const MovieList = ({
             ))}
         </div>
     );
-};
+}

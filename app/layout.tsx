@@ -21,23 +21,25 @@ export const metadata: Metadata = {
     description: 'Discover and explore movies with The Movie Lib',
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => (
-    <html lang="en" suppressHydrationWarning>
-        <body
-            className={`${geist.variable} bg-background text-foreground min-h-screen font-sans antialiased`}
-        >
-            <NextTopLoader color="#2563eb" height={3} showSpinner={false} />
-            <QueryProvider>
-                <ThemeProvider attribute="class">
-                    <ScrollToTop />
-                    <Header />
-                    <main className="container mx-auto px-4 md:px-8">
-                        {children}
-                    </main>
-                </ThemeProvider>
-            </QueryProvider>
-        </body>
-    </html>
-);
+function RootLayout({ children }: { children: ReactNode }) {
+    return (
+        <html lang="en" suppressHydrationWarning>
+            <body
+                className={`${geist.variable} bg-background text-foreground min-h-screen font-sans antialiased`}
+            >
+                <NextTopLoader color="#2563eb" height={3} showSpinner={false} />
+                <QueryProvider>
+                    <ThemeProvider attribute="class">
+                        <ScrollToTop />
+                        <Header />
+                        <main className="container mx-auto px-4 md:px-8">
+                            {children}
+                        </main>
+                    </ThemeProvider>
+                </QueryProvider>
+            </body>
+        </html>
+    );
+}
 
 export default RootLayout;

@@ -20,48 +20,54 @@ const alertVariants = cva(
     },
 );
 
-export const Alert = ({
+export function Alert({
     className,
     variant,
     ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) => (
-    <div
-        data-slot="alert"
-        role="alert"
-        className={cn(alertVariants({ variant }), className)}
-        {...props}
-    />
-);
+}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
+    return (
+        <div
+            data-slot="alert"
+            role="alert"
+            className={cn(alertVariants({ variant }), className)}
+            {...props}
+        />
+    );
+}
 
-export const AlertTitle = ({
+export function AlertTitle({
     className,
     ...props
-}: React.ComponentProps<'div'>) => (
-    <div
-        data-slot="alert-title"
-        className={cn(
-            'col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight',
-            className,
-        )}
-        {...props}
-    />
-);
+}: React.ComponentProps<'div'>) {
+    return (
+        <div
+            data-slot="alert-title"
+            className={cn(
+                'col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight',
+                className,
+            )}
+            {...props}
+        />
+    );
+}
 
-export const AlertDescription = ({
+export function AlertDescription({
     className,
     ...props
-}: React.ComponentProps<'div'>) => (
-    <div
-        data-slot="alert-description"
-        className={cn(
-            'text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed',
-            className,
-        )}
-        {...props}
-    />
-);
+}: React.ComponentProps<'div'>) {
+    return (
+        <div
+            data-slot="alert-description"
+            className={cn(
+                'text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed',
+                className,
+            )}
+            {...props}
+        />
+    );
+}
 
-export type AlertProps = React.ComponentProps<'div'> &
-    VariantProps<typeof alertVariants>;
+export type AlertProps = React.ComponentProps<'div'>
+    & VariantProps<typeof alertVariants>;
 export type AlertTitleProps = React.ComponentProps<'div'>;
 export type AlertDescriptionProps = React.ComponentProps<'div'>;

@@ -17,7 +17,7 @@ type ErrorMessageProps = {
     showRetry?: boolean;
 };
 
-export const ErrorMessage = ({
+export function ErrorMessage({
     error,
     fullPage = false,
     title = 'Error',
@@ -25,8 +25,9 @@ export const ErrorMessage = ({
     actionText = 'Back to Home',
     onRetry,
     showRetry = true,
-}: ErrorMessageProps) => {
-    if (error == null) return undefined;
+}: ErrorMessageProps) {
+    if (error == null)
+        return undefined;
 
     const errorMessage = error instanceof Error ? error.message : error;
 
@@ -37,17 +38,19 @@ export const ErrorMessage = ({
                     <AlertDescription className="flex-1">
                         {errorMessage}
                     </AlertDescription>
-                    {onRetry && showRetry ? (
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={onRetry}
-                            className="ml-4 h-8"
-                        >
-                            <RefreshCw className="mr-1 h-3 w-3" />
-                            Retry
-                        </Button>
-                    ) : null}
+                    {onRetry && showRetry
+                        ? (
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={onRetry}
+                                    className="ml-4 h-8"
+                                >
+                                    <RefreshCw className="mr-1 h-3 w-3" />
+                                    Retry
+                                </Button>
+                            )
+                        : null}
                 </div>
             </Alert>
         );
@@ -71,21 +74,23 @@ export const ErrorMessage = ({
                             {title}
                         </h2>
                         <p className="text-lead text-muted-foreground">
-                            {errorMessage ||
-                                'There was an error loading the data.'}
+                            {errorMessage
+                                || 'There was an error loading the data.'}
                         </p>
                     </div>
 
                     <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-center">
-                        {onRetry && showRetry ? (
-                            <Button
-                                onClick={onRetry}
-                                className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
-                            >
-                                <RefreshCw className="mr-2 h-4 w-4" />
-                                Try Again
-                            </Button>
-                        ) : null}
+                        {onRetry && showRetry
+                            ? (
+                                    <Button
+                                        onClick={onRetry}
+                                        className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
+                                    >
+                                        <RefreshCw className="mr-2 h-4 w-4" />
+                                        Try Again
+                                    </Button>
+                                )
+                            : null}
                         <Button
                             asChild
                             variant={
@@ -100,4 +105,4 @@ export const ErrorMessage = ({
             </MagicCard>
         </div>
     );
-};
+}

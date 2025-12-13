@@ -11,10 +11,7 @@ import {
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = process.env.TMDB_BASE_URL;
 
-const fetchFromTMDB = async <T>(
-    endpoint: string,
-    schema: z.ZodSchema<T>,
-): Promise<T> => {
+async function fetchFromTMDB<T>(endpoint: string, schema: z.ZodSchema<T>): Promise<T> {
     if (API_KEY == null || BASE_URL == null) {
         throw new Error('TMDB API key or TMDB base URL is not defined');
     }
@@ -40,20 +37,22 @@ const fetchFromTMDB = async <T>(
 
         try {
             return schema.parse(data);
-        } catch (validationError) {
+        }
+        catch (validationError) {
             console.error('Schema validation error:', validationError);
             throw new Error(
                 `Schema validation error: API response does not match the expected schema. ${validationError instanceof Error ? validationError.message : 'Unknown error'}`,
             );
         }
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(
             `Failed to fetch data from TMDB: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );
     }
-};
+}
 
-export const discoverMovies = async (options?: MovieDiscoverParams) => {
+export async function discoverMovies(options?: MovieDiscoverParams) {
     const page = options?.page?.toString() ?? '1';
     const sortBy = options?.sortBy ?? 'popularity.desc';
     const withGenres = options?.withGenres ?? '';
@@ -62,9 +61,9 @@ export const discoverMovies = async (options?: MovieDiscoverParams) => {
         `/discover/movie?page=${page}&sort_by=${sortBy}&with_genres=${withGenres}&include_adult=false`,
         MovieResponseSchema,
     );
-};
+}
 
-export const searchMovies = async (query: string, page: number = 1) => {
+export async function searchMovies(query: string, page: number = 1) {
     if (!query) {
         throw new Error('Search query cannot be empty');
     }
@@ -73,15 +72,16 @@ export const searchMovies = async (query: string, page: number = 1) => {
         `/search/movie?query=${encodeURIComponent(query)}&page=${page}&include_adult=false`,
         MovieResponseSchema,
     );
-};
+}
 
-export const fetchMovieDetails = async (id: string) => {
+export async function fetchMovieDetails(id: string) {
     if (!id) {
         throw new Error('Movie ID cannot be empty');
     }
 
     return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
-};
+}
 
-export const fetchMovieGenres = async () =>
-    fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
+export async function fetchMovieGenres() {
+    return fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
+}
