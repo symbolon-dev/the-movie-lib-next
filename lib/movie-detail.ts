@@ -1,8 +1,8 @@
-import { cache } from 'react';
+import type { MovieDetail } from '@/types/movie';
 
+import { cache } from 'react';
 import { fetchMovieDetails } from '@/lib/tmdb';
 import { MovieDetailSchema } from '@/schemas/movie';
-import type { MovieDetail } from '@/types/movie';
 
 export const getMovie = cache(async (id: string): Promise<MovieDetail> => {
     const data = await fetchMovieDetails(id);

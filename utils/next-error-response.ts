@@ -9,18 +9,18 @@ const extractStatusCode = (error: unknown): number => {
     if (error instanceof Error) {
         const httpError = error as HTTPError;
 
-        if (httpError.statusCode) {
+        if (httpError.statusCode != null) {
             return httpError.statusCode;
         }
 
-        if (httpError.status) {
+        if (httpError.status != null) {
             return httpError.status;
         }
 
         // Parse status code from error message as fallback
         const statusMatch = httpError.message.match(/\b(4\d{2}|5\d{2})\b/)?.[1];
-        if (statusMatch) {
-            return parseInt(statusMatch, 10);
+        if (statusMatch != null) {
+            return Number.parseInt(statusMatch, 10);
         }
     }
 

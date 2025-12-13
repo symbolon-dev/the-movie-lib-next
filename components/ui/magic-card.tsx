@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue } from 'motion/react';
 import type { ComponentProps, PointerEvent as ReactPointerEvent } from 'react';
+import { motion, useMotionTemplate, useMotionValue } from 'motion/react';
 import { useEffect } from 'react';
 
 import { cn } from '@/lib/utils';

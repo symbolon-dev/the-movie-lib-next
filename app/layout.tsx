@@ -1,14 +1,14 @@
-import './globals.css';
-
 import type { Metadata } from 'next';
-import { Geist } from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
-import NextTopLoader from 'nextjs-toploader';
-import type { ReactNode } from 'react';
 
+import type { ReactNode } from 'react';
+import { ThemeProvider } from 'next-themes';
+import { Geist } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import { Header } from '@/components/layout/header';
+
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
 import { QueryProvider } from '@/components/providers/query-provider';
+import './globals.css';
 
 const geist = Geist({
     subsets: ['latin'],

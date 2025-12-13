@@ -5,7 +5,7 @@ import { getMovie } from '@/lib/movie-detail';
 
 type MovieDetailContentProps = {
     id: string;
-};
+}
 
 export const MovieDetailContent = async ({ id }: MovieDetailContentProps) => {
     const movie = await getMovie(id);

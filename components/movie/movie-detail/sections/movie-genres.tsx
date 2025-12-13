@@ -1,13 +1,14 @@
-import { Badge, type BadgeProps } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import type { BadgeProps } from '@/components/ui/badge';
 import type { MovieGenre } from '@/types/movie';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 type MovieGenresProps = {
     genres: MovieGenre[];
     className?: string;
     badgeClassName?: string;
     badgeVariant?: BadgeProps['variant'];
-};
+}
 
 export const MovieGenres = ({
     genres,

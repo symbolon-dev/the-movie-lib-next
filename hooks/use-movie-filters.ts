@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
 import type { MovieSortOption } from '@/types/movie';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const useMovieFilters = () => {
     const router = useRouter();

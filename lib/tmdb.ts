@@ -1,11 +1,12 @@
 import type { z } from 'zod';
 
+import type { MovieDiscoverParams } from '@/types/movie';
+import process from 'node:process';
 import {
     GenreResponseSchema,
     MovieDetailSchema,
     MovieResponseSchema,
 } from '@/schemas/movie';
-import type { MovieDiscoverParams } from '@/types/movie';
 
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = process.env.TMDB_BASE_URL;
@@ -14,7 +15,7 @@ const fetchFromTMDB = async <T>(
     endpoint: string,
     schema: z.ZodSchema<T>,
 ): Promise<T> => {
-    if (!API_KEY || !BASE_URL) {
+    if (API_KEY == null || BASE_URL == null) {
         throw new Error('TMDB API key or TMDB base URL is not defined');
     }
 
@@ -35,7 +36,7 @@ const fetchFromTMDB = async <T>(
             );
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as unknown;
 
         try {
             return schema.parse(data);

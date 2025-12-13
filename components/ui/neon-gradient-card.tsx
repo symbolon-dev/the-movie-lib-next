@@ -8,6 +8,11 @@ import { cn } from '@/lib/utils';
 type NeonColorPair = {
     firstColor: string;
     secondColor: string;
+}
+
+const DEFAULT_NEON_COLORS: NeonColorPair = {
+    firstColor: '#ff00aa',
+    secondColor: '#00FFF1',
 };
 
 type NeonGradientCardProps = ComponentProps<'div'> & {
@@ -22,37 +27,30 @@ export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
     children,
     borderSize = 2,
     borderRadius = 20,
-    neonColors = {
-        firstColor: '#ff00aa',
-        secondColor: '#00FFF1',
-    },
+    neonColors = DEFAULT_NEON_COLORS,
     ...props
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
     useEffect(() => {
+        const container = containerRef.current;
+        if (container == null) return;
+
         const updateDimensions = () => {
-            if (containerRef.current) {
-                const { offsetWidth, offsetHeight } = containerRef.current;
-                setDimensions({ width: offsetWidth, height: offsetHeight });
-            }
+            const { offsetWidth, offsetHeight } = container;
+            setDimensions({ width: offsetWidth, height: offsetHeight });
         };
 
         updateDimensions();
-        window.addEventListener('resize', updateDimensions);
+
+        const resizeObserver = new ResizeObserver(updateDimensions);
+        resizeObserver.observe(container);
 
         return () => {
-            window.removeEventListener('resize', updateDimensions);
+            resizeObserver.disconnect();
         };
     }, []);
-
-    useEffect(() => {
-        if (containerRef.current) {
-            const { offsetWidth, offsetHeight } = containerRef.current;
-            setDimensions({ width: offsetWidth, height: offsetHeight });
-        }
-    }, [children]);
 
     return (
         <div

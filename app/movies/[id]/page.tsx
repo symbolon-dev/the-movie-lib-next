@@ -9,7 +9,7 @@ import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
-};
+}
 
 export const generateMetadata = async ({
     params,
@@ -23,19 +23,21 @@ export const generateMetadata = async ({
         const description =
             movie.overview ||
             `Watch ${movie.title} and discover more amazing movies.`;
-        const backdropUrl = movie.backdrop_path
-            ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
-            : undefined;
-        const openGraphImages = backdropUrl
-            ? [
-                  {
-                      url: backdropUrl,
-                      width: 1280,
-                      height: 720,
-                      alt: `${movie.title} backdrop`,
-                  },
-              ]
-            : [];
+        const backdropUrl =
+            movie.backdrop_path != null
+                ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
+                : undefined;
+        const openGraphImages =
+            backdropUrl != null
+                ? [
+                      {
+                          url: backdropUrl,
+                          width: 1280,
+                          height: 720,
+                          alt: `${movie.title} backdrop`,
+                      },
+                  ]
+                : [];
 
         return {
             title,
@@ -55,7 +57,7 @@ export const generateMetadata = async ({
                 card: 'summary_large_image',
                 title: movie.title,
                 description,
-                images: backdropUrl ? [backdropUrl] : [],
+                images: backdropUrl != null ? [backdropUrl] : [],
             },
             keywords: [
                 movie.title,

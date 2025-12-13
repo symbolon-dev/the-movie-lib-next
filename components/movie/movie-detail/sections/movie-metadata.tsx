@@ -9,7 +9,7 @@ type MovieMetadataProps = {
     className?: string;
     iconClassName?: string;
     valueClassName?: string;
-};
+}
 
 export const MovieMetadata = ({
     releaseDate,
@@ -33,7 +33,7 @@ export const MovieMetadata = ({
             </span>
         </div>
 
-        {runtime && runtime > 0 ? (
+        {runtime != null && runtime > 0 ? (
             <div className="flex items-center gap-1">
                 <Clock
                     className={cn(

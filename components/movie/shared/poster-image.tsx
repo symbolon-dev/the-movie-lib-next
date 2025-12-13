@@ -13,7 +13,7 @@ type PosterImageProps = {
     className?: string;
     showFallback?: boolean;
     fallbackText?: string;
-};
+}
 
 export const PosterImage = ({
     path,
@@ -32,7 +32,7 @@ export const PosterImage = ({
             className,
         )}
     >
-        {path ? (
+        {path != null ? (
             <Image
                 src={getMoviePosterUrl(path, 'w342')}
                 alt={`Movie poster for ${title}`}

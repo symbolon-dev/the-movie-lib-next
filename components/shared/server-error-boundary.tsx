@@ -1,5 +1,6 @@
 'use client';
 
+import process from 'node:process';
 import { AlertTriangle, ArrowLeft, Home, RotateCcw } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -12,7 +13,7 @@ type ErrorBoundaryProps = {
     message?: string;
     showBackButton?: boolean;
     variant?: 'page' | 'section';
-};
+}
 
 export const ServerErrorBoundary = ({
     error,

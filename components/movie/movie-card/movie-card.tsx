@@ -1,16 +1,16 @@
+import type { Movie } from '@/types/movie';
 import { Star } from 'lucide-react';
-import Link from 'next/link';
 
+import Link from 'next/link';
 import { PosterImage } from '@/components/movie/shared/poster-image';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import type { Movie } from '@/types/movie';
 import { formatYear } from '@/utils/formatter';
 
 type MovieCardProps = {
     movie: Movie;
     className?: string;
-};
+}
 
 export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
     const releaseYear = formatYear(movie.release_date);
@@ -44,7 +44,7 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                             </h3>
 
                             <div className="flex items-center justify-between text-sm text-white/80">
-                                <span>{releaseYear || '—'}</span>
+                                <span>{releaseYear ?? '—'}</span>
                                 <span className="flex items-center gap-1 text-white/80">
                                     <Star
                                         className="size-3.5"
@@ -60,7 +60,7 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                 </div>
 
                 <span className="sr-only">
-                    {`${movie.title} - Release ${releaseYear || 'unknown'}, Rating ${rating}`}
+                    {`${movie.title} - Release ${releaseYear ?? 'unknown'}, Rating ${rating}`}
                 </span>
             </Link>
         </Card>

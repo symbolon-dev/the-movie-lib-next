@@ -1,25 +1,25 @@
 'use client';
 
+import type { Movie, MovieResponse } from '@/types/movie';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
 
+import { useSearchParams } from 'next/navigation';
 import { sortMovies } from '@/lib/movie-filters';
 import { MovieResponseSchema } from '@/schemas/movie';
-import type { Movie, MovieResponse } from '@/types/movie';
 
 const fetcher = async (url: string): Promise<MovieResponse> => {
     const res = await fetch(url);
 
     if (!res.ok) {
-        const errorData = await res
+        const errorData = (await res
             .json()
-            .catch(() => ({ error: 'Unknown error' }));
+            .catch(() => ({ error: 'Unknown error' }))) as { error?: string };
         throw new Error(
             errorData.error ?? `HTTP ${res.status}: ${res.statusText}`,
         );
     }
 
-    const json = await res.json();
+    const json = (await res.json()) as unknown;
     const validated = MovieResponseSchema.safeParse(json);
 
     if (!validated.success) {

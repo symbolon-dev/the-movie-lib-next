@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 type BackButtonProps = {
     label?: string;
     className?: string;
-};
+}
 
 export const BackButton = ({
     label = 'Back',

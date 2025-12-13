@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -38,16 +38,17 @@
     --color-chart-3: var(--color-chart-3);
     --color-chart-4: var(--color-chart-4);
     --color-chart-5: var(--color-chart-5);
-    
-    --animate-background-position-spin: background-position-spin 3000ms infinite alternate;
+
+    --animate-background-position-spin: background-position-spin 3000ms infinite
+        alternate;
     @keyframes background-position-spin {
-    0% {
-        background-position: top center;
-            }
-    100% {
-        background-position: bottom center;
-            }
+        0% {
+            background-position: top center;
         }
+        100% {
+            background-position: bottom center;
+        }
+    }
 }
 
 :root {
@@ -140,51 +141,51 @@
 
 @layer utilities {
     .heading-1 {
-        @apply font-sans font-bold tracking-tight leading-tight text-4xl sm:text-5xl lg:text-6xl;
+        @apply font-sans text-4xl leading-tight font-bold tracking-tight sm:text-5xl lg:text-6xl;
     }
 
     .heading-2 {
-        @apply font-sans font-bold tracking-tight leading-tight text-3xl sm:text-4xl;
+        @apply font-sans text-3xl leading-tight font-bold tracking-tight sm:text-4xl;
     }
 
     .heading-3 {
-        @apply font-sans font-semibold tracking-tight leading-snug text-2xl sm:text-3xl;
+        @apply font-sans text-2xl leading-snug font-semibold tracking-tight sm:text-3xl;
     }
 
     .heading-4 {
-        @apply font-sans font-semibold tracking-tight leading-snug text-xl sm:text-2xl text-foreground;
+        @apply text-foreground font-sans text-xl leading-snug font-semibold tracking-tight sm:text-2xl;
     }
 
     .heading-5 {
-        @apply font-sans font-semibold leading-snug text-lg sm:text-xl;
+        @apply font-sans text-lg leading-snug font-semibold sm:text-xl;
     }
 
     .heading-6 {
-        @apply font-sans font-semibold leading-snug text-base sm:text-lg;
+        @apply font-sans text-base leading-snug font-semibold sm:text-lg;
     }
 
     .text-lead {
-        @apply font-sans font-normal tracking-tight leading-relaxed text-lg sm:text-xl;
+        @apply font-sans text-lg leading-relaxed font-normal tracking-tight sm:text-xl;
     }
 
     .text-body {
-        @apply font-sans font-normal leading-relaxed text-base sm:text-lg;
+        @apply font-sans text-base leading-relaxed font-normal sm:text-lg;
     }
 
     .text-body-sm {
-        @apply font-sans font-normal leading-relaxed text-sm sm:text-base;
+        @apply font-sans text-sm leading-relaxed font-normal sm:text-base;
     }
 
     .text-caption {
-        @apply font-sans font-medium uppercase text-xs sm:text-sm tracking-[0.15rem];
+        @apply font-sans text-xs font-medium tracking-[0.15rem] uppercase sm:text-sm;
     }
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }

@@ -1,8 +1,8 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Moon, SunDim } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import type { ComponentProps } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -36,13 +36,15 @@ export const AnimatedThemeToggler = ({
             type="button"
             onClick={onToggle}
             className={cn(
-                'group border-border/70 bg-background/90 text-foreground shadow-primary/10 hover:border-primary/70 hover:text-primary focus-visible:ring-ring focus-visible:ring-offset-background relative inline-flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-0.5 shadow-lg transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60',
+                'group bg-background/90 shadow-primary/10 border-border/70 hover:border-primary/70 focus-visible:ring-ring focus-visible:ring-offset-background text-foreground hover:text-primary relative inline-flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border p-0.5 shadow-lg transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60',
                 isTransitioning && 'cursor-wait',
                 className,
             )}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             aria-live="polite"
-            aria-pressed={isDark}
+            {...(isDark
+                ? { 'aria-checked': 'true' }
+                : { 'aria-checked': 'false' })}
             disabled={disabled || isTransitioning}
             data-transitioning={isTransitioning ? 'true' : 'false'}
             {...props}

@@ -1,7 +1,9 @@
 'use client';
 
+import type { VariantProps } from 'class-variance-authority';
+import type { MotionProps } from 'motion/react';
 import { Slot } from '@radix-ui/react-slot';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { motion } from 'motion/react';
 import * as React from 'react';
 
@@ -45,10 +47,7 @@ const buttonVariants = cva(
 
 type ButtonAnimation = 'default' | 'subtle' | 'back' | 'float' | 'none';
 
-// Framer Motion animation configs require complex types that are difficult to model precisely.
-// Using `any` here is acceptable for this specific use case.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const animationConfigs: Record<ButtonAnimation, any> = {
+const animationConfigs: Record<ButtonAnimation, Partial<MotionProps>> = {
     default: {
         whileHover: {
             scale: [1, 1.05, 1.02, 1.05],
@@ -187,6 +186,7 @@ export const Button = ({
     if (resolvedAnimation === 'none') {
         return (
             <button
+                type="button"
                 data-slot="button"
                 className={mergedClassName}
                 disabled={disabled}

@@ -5,7 +5,7 @@ import { ServerErrorBoundary } from '@/components/shared/server-error-boundary';
 type ErrorProps = {
     error: Error & { digest?: string };
     reset: () => void;
-};
+}
 
 const MovieError = ({ error, reset }: ErrorProps) => (
     <ServerErrorBoundary

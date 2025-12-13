@@ -1,15 +1,15 @@
 'use client';
 
+import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
 import { useTheme } from 'next-themes';
 import { startTransition, useRef, useState } from 'react';
-import { useMount } from 'react-use';
 
-import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
+import { useMount } from 'react-use';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 type ThemeToggleProps = {
     className?: string;
-};
+}
 
 export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const { setTheme, resolvedTheme } = useTheme();
@@ -102,7 +102,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
             }}
             mode={resolvedTheme as ThemeMode}
             className={className}
-            disabled={!resolvedTheme}
+            disabled={resolvedTheme == null}
             isTransitioning={isTransitioning}
         />
     );

@@ -6,7 +6,7 @@ type MovieLinksProps = {
     imdbId: string | null;
     className?: string;
     buttonGroupClassName?: string;
-};
+}
 
 export const MovieLinks = ({
     homepage,
@@ -14,7 +14,7 @@ export const MovieLinks = ({
     className,
     buttonGroupClassName,
 }: MovieLinksProps) => {
-    if (!homepage && !imdbId) return null;
+    if (homepage == null && imdbId == null) return null;
 
     return (
         <div className={cn('mt-8', className)}>
@@ -24,7 +24,7 @@ export const MovieLinks = ({
                     buttonGroupClassName,
                 )}
             >
-                {homepage ? (
+                {homepage != null ? (
                     <Button asChild variant="outline-primary">
                         <a
                             href={homepage}
@@ -36,7 +36,7 @@ export const MovieLinks = ({
                     </Button>
                 ) : null}
 
-                {imdbId ? (
+                {imdbId != null ? (
                     <Button asChild variant="outline-primary">
                         <a
                             href={`https://www.imdb.com/title/${imdbId}`}

@@ -24,7 +24,7 @@ const getSortValue = (movie: Movie, field: string): SortableValue => {
             typeof rawValue === 'string' ? rawValue : movie.release_date;
         if (!dateValue) return undefined;
         const parsed = new Date(dateValue);
-        return isNaN(parsed.getTime()) ? undefined : parsed.getTime();
+        return Number.isNaN(parsed.getTime()) ? undefined : parsed.getTime();
     }
 
     if (isNumericField(field)) {

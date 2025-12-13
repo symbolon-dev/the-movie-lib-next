@@ -1,14 +1,14 @@
 'use client';
 
+import type { MovieGenre } from '@/types/movie';
 import { Badge } from '@/components/ui/badge';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
 import { cn } from '@/lib/utils';
-import type { MovieGenre } from '@/types/movie';
 
 type GenreFilterProps = {
     genres: MovieGenre[];
     className?: string;
-};
+}
 
 export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
     const { selectedGenres, setSelectedGenres } = useMovieFilters();

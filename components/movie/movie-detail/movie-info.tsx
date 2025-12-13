@@ -1,11 +1,11 @@
-import { DollarSign } from 'lucide-react';
 import type { ReactNode } from 'react';
-
 import type {
     ProductionCompany,
     ProductionCountry,
     SpokenLanguage,
 } from '@/types/movie';
+
+import { DollarSign } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatter';
 
 type InfoCardProps = {
@@ -13,10 +13,10 @@ type InfoCardProps = {
     content: string | undefined;
     icon?: ReactNode;
     visible?: boolean;
-};
+}
 
 const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
-    if (!visible || !content) return null;
+    if (!visible || content == null) return null;
 
     return (
         <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
@@ -36,7 +36,7 @@ type MovieInfoProps = {
     spokenLanguages: SpokenLanguage[];
     budget: number;
     revenue: number;
-};
+}
 
 export const MovieInfo = ({
     overview,

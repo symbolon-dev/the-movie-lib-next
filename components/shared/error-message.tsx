@@ -15,7 +15,7 @@ type ErrorMessageProps = {
     actionText?: string;
     onRetry?: () => void;
     showRetry?: boolean;
-};
+}
 
 export const ErrorMessage = ({
     error,
@@ -26,7 +26,7 @@ export const ErrorMessage = ({
     onRetry,
     showRetry = true,
 }: ErrorMessageProps) => {
-    if (!error) return undefined;
+    if (error == null) return undefined;
 
     const errorMessage = error instanceof Error ? error.message : error;
 

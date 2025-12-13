@@ -1,7 +1,8 @@
 'use client';
 
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import type { MovieSortOption } from '@/types/movie';
 
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/select';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
 import { cn } from '@/lib/utils';
-import type { MovieSortOption } from '@/types/movie';
 
 const SORT_OPTIONS = [
     { value: 'popularity.desc', label: 'Popularity', icon: ArrowDown },
@@ -36,7 +36,7 @@ const SORT_OPTIONS = [
 
 type SortSelectProps = {
     className?: string;
-};
+}
 
 export const SortSelect = ({ className = '' }: SortSelectProps) => {
     const { sortBy, setSortBy } = useMovieFilters();

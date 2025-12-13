@@ -8,7 +8,7 @@ type MovieRatingProps = {
     className?: string;
     iconClassName?: string;
     voteCountClassName?: string;
-};
+}
 
 export const MovieRating = ({
     voteAverage,

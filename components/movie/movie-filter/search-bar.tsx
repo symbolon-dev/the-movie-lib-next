@@ -1,7 +1,7 @@
 'use client';
 
-import { Search, XCircle } from 'lucide-react';
 import type { ChangeEvent } from 'react';
+import { Search, XCircle } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useDebounce } from 'react-use';
 
@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 type SearchBarProps = {
     className?: string;
-};
+}
 
 const DEBOUNCE_DELAY = 300;
 
