@@ -13,7 +13,7 @@ type ErrorBoundaryProps = {
     message?: string;
     showBackButton?: boolean;
     variant?: 'page' | 'section';
-}
+};
 
 export const ServerErrorBoundary = ({
     error,

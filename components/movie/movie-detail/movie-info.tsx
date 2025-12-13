@@ -13,7 +13,7 @@ type InfoCardProps = {
     content: string | undefined;
     icon?: ReactNode;
     visible?: boolean;
-}
+};
 
 const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
     if (!visible || content == null) return null;
@@ -36,7 +36,7 @@ type MovieInfoProps = {
     spokenLanguages: SpokenLanguage[];
     budget: number;
     revenue: number;
-}
+};
 
 export const MovieInfo = ({
     overview,

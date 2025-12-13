@@ -9,7 +9,7 @@ import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 type ThemeToggleProps = {
     className?: string;
-}
+};
 
 export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const { setTheme, resolvedTheme } = useTheme();

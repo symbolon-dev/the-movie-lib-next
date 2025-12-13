@@ -9,7 +9,7 @@ import { getMovieBackdropUrl } from '@/utils/image';
 
 type DetailProps = {
     params: Promise<{ id: string }>;
-}
+};
 
 export const generateMetadata = async ({
     params,

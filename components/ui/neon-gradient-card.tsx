@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 type NeonColorPair = {
     firstColor: string;
     secondColor: string;
-}
+};
 
 const DEFAULT_NEON_COLORS: NeonColorPair = {
     firstColor: '#ff00aa',

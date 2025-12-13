@@ -8,7 +8,7 @@ import { ErrorMessage } from './error-message';
 type Props = {
     children: ReactNode;
     fallback?: ReactNode;
-}
+};
 
 export const ClientErrorBoundary = ({ children, fallback }: Props) => (
     <ErrorBoundary

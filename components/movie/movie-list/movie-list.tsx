@@ -12,7 +12,7 @@ type MovieListProps = {
     movies: Movie[];
     className?: string;
     isLoading?: boolean;
-}
+};
 
 export const MovieList = ({
     movies,
@@ -56,8 +56,8 @@ export const MovieList = ({
                 className,
             )}
         >
-            {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
+            {movies.map((movie, index) => (
+                <MovieCard key={movie.id} movie={movie} priority={index < 4} />
             ))}
         </div>
     );

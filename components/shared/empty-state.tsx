@@ -5,7 +5,7 @@ type EmptyStateProps = {
     title: string;
     message: string;
     className?: string;
-}
+};
 
 export const EmptyState = ({
     title,

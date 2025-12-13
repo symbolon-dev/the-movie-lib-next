@@ -10,7 +10,7 @@ import { useMovieFilters } from '@/hooks/use-movie-filters';
 
 type MovieFilterProps = {
     genres: MovieGenre[];
-}
+};
 
 export const MovieFilter = ({ genres }: MovieFilterProps) => {
     const { resetFilters, hasActiveFilters } = useMovieFilters();

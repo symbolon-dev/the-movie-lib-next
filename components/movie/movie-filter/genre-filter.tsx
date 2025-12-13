@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 type GenreFilterProps = {
     genres: MovieGenre[];
     className?: string;
-}
+};
 
 export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
     const { selectedGenres, setSelectedGenres } = useMovieFilters();

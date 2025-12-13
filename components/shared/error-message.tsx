@@ -15,7 +15,7 @@ type ErrorMessageProps = {
     actionText?: string;
     onRetry?: () => void;
     showRetry?: boolean;
-}
+};
 
 export const ErrorMessage = ({
     error,

@@ -6,7 +6,7 @@ type MovieLinksProps = {
     imdbId: string | null;
     className?: string;
     buttonGroupClassName?: string;
-}
+};
 
 export const MovieLinks = ({
     homepage,

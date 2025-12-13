@@ -36,7 +36,7 @@ const SORT_OPTIONS = [
 
 type SortSelectProps = {
     className?: string;
-}
+};
 
 export const SortSelect = ({ className = '' }: SortSelectProps) => {
     const { sortBy, setSortBy } = useMovieFilters();

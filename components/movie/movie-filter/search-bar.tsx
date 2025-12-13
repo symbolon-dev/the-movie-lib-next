@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 type SearchBarProps = {
     className?: string;
-}
+};
 
 const DEBOUNCE_DELAY = 300;
 

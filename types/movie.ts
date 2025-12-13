@@ -25,4 +25,4 @@ export type MovieDiscoverParams = {
     page?: number;
     sortBy?: MovieSortOption;
     withGenres?: string | undefined;
-}
+};

@@ -13,7 +13,7 @@ type PosterImageProps = {
     className?: string;
     showFallback?: boolean;
     fallbackText?: string;
-}
+};
 
 export const PosterImage = ({
     path,

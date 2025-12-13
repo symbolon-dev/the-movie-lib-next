@@ -9,7 +9,7 @@ type MovieMetadataProps = {
     className?: string;
     iconClassName?: string;
     valueClassName?: string;
-}
+};
 
 export const MovieMetadata = ({
     releaseDate,

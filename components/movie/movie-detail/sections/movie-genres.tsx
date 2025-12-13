@@ -8,7 +8,7 @@ type MovieGenresProps = {
     className?: string;
     badgeClassName?: string;
     badgeVariant?: BadgeProps['variant'];
-}
+};
 
 export const MovieGenres = ({
     genres,

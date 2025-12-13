@@ -1,6 +1,6 @@
 type MovieCardSkeletonProps = {
     className?: string;
-}
+};
 
 export const MovieCardSkeleton = ({
     className = '',

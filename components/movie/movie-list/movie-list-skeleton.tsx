@@ -3,7 +3,7 @@ import { MovieCardSkeleton } from '@/components/movie/movie-card/movie-card-skel
 type MovieListSkeletonProps = {
     count?: number;
     className?: string;
-}
+};
 
 export const MovieListSkeleton = ({
     count = 20,
