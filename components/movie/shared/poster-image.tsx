@@ -47,7 +47,10 @@ export const PosterImage = ({
             : (
                     showFallback && (
                         <div
-                            className="flex size-full items-center justify-center bg-gray-900 text-center text-gray-500"
+                            className={`
+                                flex size-full items-center justify-center
+                                bg-gray-900 text-center text-gray-500
+                            `}
                         >
                             <Film className="mr-2 h-6 w-6" />
                             <span>{fallbackText}</span>

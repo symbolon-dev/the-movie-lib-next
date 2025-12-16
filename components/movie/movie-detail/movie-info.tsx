@@ -20,8 +20,15 @@ const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
         return null;
 
     return (
-        <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
-            <h3 className="heading-6 text-foreground mb-2 flex items-center gap-2">
+        <div className={`
+            border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm
+            backdrop-blur-sm
+        `}
+        >
+            <h3 className={`
+                heading-6 text-foreground mb-2 flex items-center gap-2
+            `}
+            >
                 {icon}
                 {title}
             </h3>
@@ -64,7 +71,12 @@ export const MovieInfo = ({
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={`
+                grid grid-cols-1 gap-x-8 gap-y-4
+                sm:grid-cols-2
+                lg:grid-cols-3
+            `}
+            >
                 <InfoCard
                     title="Production"
                     content={companies}

@@ -81,7 +81,10 @@ const MovieDetailPage = async ({ params }: DetailProps) => {
     return (
         <>
             <link rel="preconnect" href="https://image.tmdb.org" />
-            <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
+            <div className={`
+                flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12
+            `}
+            >
                 <BackButton label="Back to Movies" className="w-fit" />
 
                 <Suspense fallback={<MovieDetailSkeleton />}>

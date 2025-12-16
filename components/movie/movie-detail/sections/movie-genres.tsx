@@ -17,7 +17,11 @@ export const MovieGenres = ({
     badgeVariant,
 }: MovieGenresProps) => (
     <div className={cn('mb-6', className)}>
-        <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+        <div className={`
+            flex flex-wrap justify-center gap-2
+            md:justify-start
+        `}
+        >
             {genres.map(genre => (
                 <Badge
                     key={genre.id}

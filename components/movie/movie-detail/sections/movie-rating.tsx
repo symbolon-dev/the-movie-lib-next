@@ -19,7 +19,10 @@ export const MovieRating = ({
 }: MovieRatingProps) => (
     <div
         className={cn(
-            'flex flex-wrap items-center gap-2 text-base sm:text-lg',
+            `
+                flex flex-wrap items-center gap-2 text-base
+                sm:text-lg
+            `,
             className,
         )}
     >
@@ -32,7 +35,10 @@ export const MovieRating = ({
             ? (
                     <span
                         className={cn(
-                            'text-muted-foreground text-sm sm:text-base',
+                            `
+                                text-muted-foreground text-sm
+                                sm:text-base
+                            `,
                             voteCountClassName,
                         )}
                     >

@@ -57,15 +57,26 @@ export const ErrorMessage = ({
     }
 
     return (
-        <div className="from-background to-muted/50 flex min-h-screen items-center justify-center bg-linear-to-br p-4">
+        <div className={`
+            from-background to-muted/50 flex min-h-screen items-center
+            justify-center bg-linear-to-br p-4
+        `}
+        >
             <MagicCard
                 gradientColor="var(--color-destructive)"
                 className="w-full max-w-lg p-12 text-center"
             >
                 <div className="space-y-6">
                     <div className="relative">
-                        <div className="bg-destructive/10 mx-auto flex h-24 w-24 items-center justify-center rounded-full p-6">
-                            <AlertTriangle className="text-destructive h-12 w-12" />
+                        <div className={`
+                            bg-destructive/10 mx-auto flex h-24 w-24
+                            items-center justify-center rounded-full p-6
+                        `}
+                        >
+                            <AlertTriangle className={`
+                                text-destructive h-12 w-12
+                            `}
+                            />
                         </div>
                     </div>
 
@@ -79,12 +90,20 @@ export const ErrorMessage = ({
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-center">
+                    <div className={`
+                        flex flex-col gap-3 pt-4
+                        sm:flex-row sm:justify-center
+                    `}
+                    >
                         {onRetry && showRetry
                             ? (
                                     <Button
                                         onClick={onRetry}
-                                        className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
+                                        className={`
+                                            px-8 py-3 text-lg transition-all
+                                            duration-300
+                                            hover:scale-105
+                                        `}
                                     >
                                         <RefreshCw className="mr-2 h-4 w-4" />
                                         Try Again
@@ -96,7 +115,10 @@ export const ErrorMessage = ({
                             variant={
                                 onRetry && showRetry ? 'outline' : 'default'
                             }
-                            className="px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
+                            className={`
+                                px-8 py-3 text-lg transition-all duration-300
+                                hover:scale-105
+                            `}
                         >
                             <Link href={actionLink}>{actionText}</Link>
                         </Button>

@@ -44,7 +44,10 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
 
     return (
         <div className={cn('relative flex items-center', className)}>
-            <div className="text-muted-foreground pointer-events-none absolute left-3">
+            <div className={`
+                text-muted-foreground pointer-events-none absolute left-3
+            `}
+            >
                 <Search size={20} />
             </div>
 
@@ -61,7 +64,10 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
                         <button
                             type="button"
                             onClick={handleClear}
-                            className="text-muted-foreground hover:text-foreground absolute right-3"
+                            className={`
+                                text-muted-foreground absolute right-3
+                                hover:text-foreground
+                            `}
                         >
                             <XCircle size={20} />
                         </button>

@@ -21,7 +21,10 @@ export const MovieLinks = ({
         <div className={cn('mt-8', className)}>
             <div
                 className={cn(
-                    'flex flex-col gap-3 sm:flex-row sm:flex-wrap',
+                    `
+                        flex flex-col gap-3
+                        sm:flex-row sm:flex-wrap
+                    `,
                     buttonGroupClassName,
                 )}
             >

@@ -94,10 +94,19 @@ export const ServerErrorBoundary = ({
                         {process.env.NODE_ENV === 'development'
                             ? (
                                     <details className="mt-4">
-                                        <summary className="text-body-sm cursor-pointer font-medium">
+                                        <summary className={`
+                                            text-body-sm cursor-pointer
+                                            font-medium
+                                        `}
+                                        >
                                             Error details (dev only)
                                         </summary>
-                                        <pre className="mt-2 overflow-auto rounded bg-gray-100 p-2 text-xs dark:bg-gray-800">
+                                        <pre className={`
+                                            mt-2 overflow-auto rounded
+                                            bg-gray-100 p-2 text-xs
+                                            dark:bg-gray-800
+                                        `}
+                                        >
                                             {error.message}
                                             {error.stack}
                                         </pre>

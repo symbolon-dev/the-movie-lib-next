@@ -69,13 +69,23 @@ export const MovieResults = () => {
 
             <div
                 ref={sentinelRef}
-                className="-mt-32 mb-8 flex min-h-12 items-center justify-center"
+                className={`
+                    -mt-32 mb-8 flex min-h-12 items-center justify-center
+                `}
             >
                 {hasMorePages && isLoading && currentPage > 1
                     ? (
-                            <div className="text-muted-foreground flex items-center gap-3 text-sm">
+                            <div className={`
+                                text-muted-foreground flex items-center gap-3
+                                text-sm
+                            `}
+                            >
                                 <motion.span
-                                    className="border-muted border-t-primary inline-block size-7 rounded-full border-2"
+                                    className={`
+                                        border-muted border-t-primary
+                                        inline-block size-7 rounded-full
+                                        border-2
+                                    `}
                                     animate={{ rotate: 360 }}
                                     transition={{
                                         repeat: Infinity,

@@ -24,14 +24,20 @@ export const MovieFilter = ({ genres }: MovieFilterProps) => {
                 </div>
 
                 <div className="border-border border-t pt-4">
-                    <h3 className="text-body-sm text-muted-foreground mb-3 font-medium">
+                    <h3 className={`
+                        text-body-sm text-muted-foreground mb-3 font-medium
+                    `}
+                    >
                         Genres
                     </h3>
                     <GenreFilter genres={genres} />
                 </div>
 
                 <div className="border-border border-t pt-4">
-                    <h3 className="text-body-sm text-muted-foreground mb-3 font-medium">
+                    <h3 className={`
+                        text-body-sm text-muted-foreground mb-3 font-medium
+                    `}
+                    >
                         Sort By
                     </h3>
                     <SortSelect />

@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+import tailwind from 'eslint-plugin-better-tailwindcss';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default antfu(
@@ -43,6 +44,24 @@ export default antfu(
         },
         rules: {
             ...jsxA11y.configs.recommended.rules,
+        },
+    },
+    {
+        name: 'tailwind-config',
+        files: ['**/*.jsx', '**/*.tsx'],
+        plugins: {
+            'better-tailwindcss': tailwind,
+        },
+        settings: {
+            'better-tailwindcss': {
+                entryPoint: 'app/assets/css/tailwind.css',
+            },
+        },
+        rules: {
+            ...tailwind.configs.stylistic.rules,
+            'better-tailwindcss/enforce-consistent-line-wrapping': ['warn', {
+                indent: 4,
+            }],
         },
     },
 );
