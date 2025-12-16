@@ -7,7 +7,8 @@ export const ScrollToTop = () => {
     const pathname = usePathname();
 
     const scrollToTop = useEffectEvent(() => {
-        if (!pathname.startsWith('/movies')) return;
+        if (!pathname.startsWith('/movies'))
+            return;
         window.history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
     });

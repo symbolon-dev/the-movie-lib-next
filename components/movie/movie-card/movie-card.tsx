@@ -1,10 +1,10 @@
+import type { Movie } from '@/types/movie';
 import { Star } from 'lucide-react';
-import Link from 'next/link';
 
+import Link from 'next/link';
 import { PosterImage } from '@/components/movie/shared/poster-image';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import type { Movie } from '@/types/movie';
 import { formatYear } from '@/utils/formatter';
 
 type MovieCardProps = {
@@ -31,7 +31,6 @@ export const MovieCard = ({
             <Link
                 href={`/movies/${movie.id}`}
                 className="group relative block h-full rounded-xl focus:outline-none"
-                aria-label={`View details for ${movie.title}`}
             >
                 <div className="round relative h-full overflow-hidden rounded-xl">
                     <PosterImage
@@ -50,11 +49,10 @@ export const MovieCard = ({
                             </h3>
 
                             <div className="flex items-center justify-between text-sm text-white/80">
-                                <span>{releaseYear || '—'}</span>
+                                <span>{releaseYear != null ? releaseYear : '—'}</span>
                                 <span className="flex items-center gap-1 text-white/80">
                                     <Star
                                         className="size-3.5"
-                                        aria-hidden="true"
                                     />
                                     <span className="text-sm font-medium">
                                         {rating}
@@ -66,7 +64,7 @@ export const MovieCard = ({
                 </div>
 
                 <span className="sr-only">
-                    {`${movie.title} - Release ${releaseYear || 'unknown'}, Rating ${rating}`}
+                    {`${movie.title} - Release ${releaseYear != null ? releaseYear : 'unknown'}, Rating ${rating}`}
                 </span>
             </Link>
         </Card>

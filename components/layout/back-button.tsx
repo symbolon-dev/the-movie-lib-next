@@ -18,7 +18,6 @@ export const BackButton = ({
 
     return (
         <Button
-            role="link"
             variant="outline-primary"
             animationType="back"
             className={className}

@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
 import type { MovieSortOption } from '@/types/movie';
+
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const useMovieFilters = () => {
     const router = useRouter();
@@ -10,12 +10,12 @@ export const useMovieFilters = () => {
     const searchParams = useSearchParams();
 
     const searchQuery = searchParams.get('q') ?? '';
-    const sortBy =
-        (searchParams.get('sort') as MovieSortOption | undefined) ??
-        'popularity.desc';
-    const selectedGenres =
-        searchParams.get('genres')?.split(',').map(Number).filter(Boolean) ??
-        [];
+    const sortBy
+        = (searchParams.get('sort') as MovieSortOption | undefined)
+            ?? 'popularity.desc';
+    const selectedGenres
+        = searchParams.get('genres')?.split(',').map(Number).filter(Boolean)
+            ?? [];
 
     const updateFilters = (updates: {
         searchQuery?: string;
@@ -27,7 +27,8 @@ export const useMovieFilters = () => {
         if (updates.searchQuery !== undefined) {
             if (updates.searchQuery.trim()) {
                 newParams.set('q', updates.searchQuery.trim());
-            } else {
+            }
+            else {
                 newParams.delete('q');
             }
         }
@@ -39,7 +40,8 @@ export const useMovieFilters = () => {
         if (updates.selectedGenres !== undefined) {
             if (updates.selectedGenres.length > 0) {
                 newParams.set('genres', updates.selectedGenres.join(','));
-            } else {
+            }
+            else {
                 newParams.delete('genres');
             }
         }
@@ -54,10 +56,10 @@ export const useMovieFilters = () => {
         router.replace(pathname, { scroll: false });
     };
 
-    const hasActiveFilters =
-        searchQuery.trim() !== '' ||
-        selectedGenres.length > 0 ||
-        sortBy !== 'popularity.desc';
+    const hasActiveFilters
+        = searchQuery.trim() !== ''
+            || selectedGenres.length > 0
+            || sortBy !== 'popularity.desc';
 
     const setSearchQuery = (query: string) =>
         updateFilters({ searchQuery: query });

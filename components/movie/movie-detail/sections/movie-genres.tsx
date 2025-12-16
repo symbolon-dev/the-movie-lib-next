@@ -1,6 +1,7 @@
-import { Badge, type BadgeProps } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import type { BadgeProps } from '@/components/ui/badge';
 import type { MovieGenre } from '@/types/movie';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 type MovieGenresProps = {
     genres: MovieGenre[];
@@ -17,7 +18,7 @@ export const MovieGenres = ({
 }: MovieGenresProps) => (
     <div className={cn('mb-6', className)}>
         <div className="flex flex-wrap justify-center gap-2 md:justify-start">
-            {genres.map((genre) => (
+            {genres.map(genre => (
                 <Badge
                     key={genre.id}
                     className={badgeClassName}

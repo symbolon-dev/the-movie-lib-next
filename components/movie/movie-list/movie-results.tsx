@@ -32,7 +32,8 @@ export const MovieResults = () => {
     );
 
     useEffect(() => {
-        if (!sentinelRef.current) return;
+        if (!sentinelRef.current)
+            return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -50,14 +51,16 @@ export const MovieResults = () => {
 
     return (
         <div className="flex flex-col gap-6">
-            {error ? (
-                <ErrorMessage
-                    error={error}
-                    onRetry={() => {
-                        void mutate();
-                    }}
-                />
-            ) : null}
+            {error
+                ? (
+                        <ErrorMessage
+                            error={error}
+                            onRetry={() => {
+                                void mutate();
+                            }}
+                        />
+                    )
+                : null}
 
             <MovieList
                 movies={movies}
@@ -67,26 +70,25 @@ export const MovieResults = () => {
             <div
                 ref={sentinelRef}
                 className="-mt-32 mb-8 flex min-h-12 items-center justify-center"
-                aria-live="polite"
             >
-                {hasMorePages && isLoading && currentPage > 1 ? (
-                    <div className="text-muted-foreground flex items-center gap-3 text-sm">
-                        <motion.span
-                            role="status"
-                            aria-label="Loading"
-                            className="border-muted border-t-primary inline-block size-7 rounded-full border-2"
-                            animate={{ rotate: 360 }}
-                            transition={{
-                                repeat: Infinity,
-                                ease: 'linear',
-                                duration: 0.8,
-                            }}
-                        >
-                            <span className="sr-only">Loading</span>
-                        </motion.span>
-                        <span>Loading more movies…</span>
-                    </div>
-                ) : null}
+                {hasMorePages && isLoading && currentPage > 1
+                    ? (
+                            <div className="text-muted-foreground flex items-center gap-3 text-sm">
+                                <motion.span
+                                    className="border-muted border-t-primary inline-block size-7 rounded-full border-2"
+                                    animate={{ rotate: 360 }}
+                                    transition={{
+                                        repeat: Infinity,
+                                        ease: 'linear',
+                                        duration: 0.8,
+                                    }}
+                                >
+                                    <span className="sr-only">Loading</span>
+                                </motion.span>
+                                <span>Loading more movies…</span>
+                            </div>
+                        )
+                    : null}
             </div>
 
             <ToTopFab />

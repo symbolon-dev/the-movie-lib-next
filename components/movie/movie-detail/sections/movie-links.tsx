@@ -14,7 +14,8 @@ export const MovieLinks = ({
     className,
     buttonGroupClassName,
 }: MovieLinksProps) => {
-    if (!homepage && !imdbId) return null;
+    if (homepage == null && imdbId == null)
+        return null;
 
     return (
         <div className={cn('mt-8', className)}>
@@ -24,29 +25,33 @@ export const MovieLinks = ({
                     buttonGroupClassName,
                 )}
             >
-                {homepage ? (
-                    <Button asChild variant="outline-primary">
-                        <a
-                            href={homepage}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Official Website
-                        </a>
-                    </Button>
-                ) : null}
+                {homepage != null
+                    ? (
+                            <Button asChild variant="outline-primary">
+                                <a
+                                    href={homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Official Website
+                                </a>
+                            </Button>
+                        )
+                    : null}
 
-                {imdbId ? (
-                    <Button asChild variant="outline-primary">
-                        <a
-                            href={`https://www.imdb.com/title/${imdbId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            IMDb
-                        </a>
-                    </Button>
-                ) : null}
+                {imdbId != null
+                    ? (
+                            <Button asChild variant="outline-primary">
+                                <a
+                                    href={`https://www.imdb.com/title/${imdbId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    IMDb
+                                </a>
+                            </Button>
+                        )
+                    : null}
             </div>
         </div>
     );

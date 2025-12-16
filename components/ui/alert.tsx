@@ -1,4 +1,5 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -60,7 +61,7 @@ export const AlertDescription = ({
     />
 );
 
-export type AlertProps = React.ComponentProps<'div'> &
-    VariantProps<typeof alertVariants>;
+export type AlertProps = React.ComponentProps<'div'>
+    & VariantProps<typeof alertVariants>;
 export type AlertTitleProps = React.ComponentProps<'div'>;
 export type AlertDescriptionProps = React.ComponentProps<'div'>;

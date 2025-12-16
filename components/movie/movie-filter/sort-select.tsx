@@ -1,7 +1,8 @@
 'use client';
 
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import type { MovieSortOption } from '@/types/movie';
 
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/select';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
 import { cn } from '@/lib/utils';
-import type { MovieSortOption } from '@/types/movie';
 
 const SORT_OPTIONS = [
     { value: 'popularity.desc', label: 'Popularity', icon: ArrowDown },
@@ -48,11 +48,11 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
     return (
         <div className={cn('w-full', className)}>
             <Select value={sortBy} onValueChange={handleValueChange}>
-                <SelectTrigger className="w-full" aria-label="Sort movies by">
+                <SelectTrigger className="w-full">
                     <SelectValue placeholder="Please select" />
                 </SelectTrigger>
                 <SelectContent>
-                    {SORT_OPTIONS.map((option) => (
+                    {SORT_OPTIONS.map(option => (
                         <SelectItem key={option.value} value={option.value}>
                             <div className="flex items-center gap-2">
                                 <span>{option.label}</span>

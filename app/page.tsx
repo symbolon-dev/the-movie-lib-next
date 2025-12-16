@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
+import type { MovieGenre } from '@/types/movie';
 
+import { Suspense } from 'react';
 import { MovieFilter } from '@/components/movie/movie-filter/movie-filter';
 import { MovieFilterSkeleton } from '@/components/movie/movie-filter/movie-filter-skeleton';
 import { MovieResults } from '@/components/movie/movie-list/movie-results';
 import { ClientErrorBoundary } from '@/components/shared/client-error-boundary';
 import { fetchMovieGenres } from '@/lib/tmdb';
 import { GenreResponseSchema } from '@/schemas/movie';
-import type { MovieGenre } from '@/types/movie';
 
 export const metadata: Metadata = {
     title: 'Movie Library - Discover Amazing Movies',
@@ -47,7 +47,8 @@ const getGenres = async (): Promise<{ genres: MovieGenre[] }> => {
         const validated = GenreResponseSchema.safeParse(data);
 
         return validated.success ? validated.data : { genres: [] };
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Failed to fetch genres:', error);
         return { genres: [] };
     }

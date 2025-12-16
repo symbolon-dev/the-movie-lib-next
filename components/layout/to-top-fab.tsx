@@ -23,7 +23,6 @@ export const ToTopFab = () => {
             variant="fab"
             animationType="float"
             onClick={scrollToTop}
-            aria-label="Back to top"
             className={cn(
                 'fixed right-6 bottom-6 z-50 transition-all duration-200 ease-out',
                 isVisible

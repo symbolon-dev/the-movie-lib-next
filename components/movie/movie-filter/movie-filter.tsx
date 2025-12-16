@@ -1,12 +1,12 @@
 'use client';
 
+import type { MovieGenre } from '@/types/movie';
 import { GenreFilter } from '@/components/movie/movie-filter/genre-filter';
 import { SearchBar } from '@/components/movie/movie-filter/search-bar';
 import { SortSelect } from '@/components/movie/movie-filter/sort-select';
 import { Button } from '@/components/ui/button';
 import { MagicCard } from '@/components/ui/magic-card';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
-import type { MovieGenre } from '@/types/movie';
 
 type MovieFilterProps = {
     genres: MovieGenre[];

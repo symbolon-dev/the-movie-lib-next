@@ -1,10 +1,10 @@
 'use client';
 
+import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
 import { useTheme } from 'next-themes';
 import { startTransition, useRef, useState } from 'react';
-import { useMount } from 'react-use';
 
-import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
+import { useMount } from 'react-use';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 type ThemeToggleProps = {
@@ -30,13 +30,14 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     };
 
     const changeTheme = async () => {
-        if (!buttonRef.current || isTransitioning) return;
+        if (!buttonRef.current || isTransitioning)
+            return;
 
         const prefersReducedMotion = window.matchMedia(
             '(prefers-reduced-motion: reduce)',
         ).matches;
-        const startViewTransition =
-            'startViewTransition' in document
+        const startViewTransition
+            = 'startViewTransition' in document
                 ? document.startViewTransition.bind(document)
                 : undefined;
 
@@ -53,14 +54,15 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
                     toggleMode();
                 });
             }).ready;
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Theme view transition failed', error);
             setIsTransitioning(false);
             toggleMode();
         }
 
-        const { top, left, width, height } =
-            buttonRef.current.getBoundingClientRect();
+        const { top, left, width, height }
+            = buttonRef.current.getBoundingClientRect();
         const y = top + height / 2;
         const x = left + width / 2;
 
@@ -102,7 +104,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
             }}
             mode={resolvedTheme as ThemeMode}
             className={className}
-            disabled={!resolvedTheme}
+            disabled={resolvedTheme == null}
             isTransitioning={isTransitioning}
         />
     );

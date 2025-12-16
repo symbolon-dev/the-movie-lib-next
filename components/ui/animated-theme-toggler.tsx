@@ -1,8 +1,8 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Moon, SunDim } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import type { ComponentProps } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -40,9 +40,6 @@ export const AnimatedThemeToggler = ({
                 isTransitioning && 'cursor-wait',
                 className,
             )}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            aria-live="polite"
-            aria-pressed={isDark}
             disabled={disabled || isTransitioning}
             data-transitioning={isTransitioning ? 'true' : 'false'}
             {...props}
@@ -51,29 +48,31 @@ export const AnimatedThemeToggler = ({
 
             <span className="bg-background/80 relative flex h-full w-full items-center justify-center rounded-full backdrop-blur-sm">
                 <AnimatePresence mode="wait" initial={false}>
-                    {isDark ? (
-                        <motion.span
-                            key="sun"
-                            initial={{ opacity: 0, rotate: -45, scale: 0.6 }}
-                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                            exit={{ opacity: 0, rotate: 45, scale: 0.6 }}
-                            transition={iconTransition}
-                            className="text-foreground"
-                        >
-                            <SunDim className="h-5 w-5" aria-hidden="true" />
-                        </motion.span>
-                    ) : (
-                        <motion.span
-                            key="moon"
-                            initial={{ opacity: 0, rotate: 45, scale: 0.6 }}
-                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                            exit={{ opacity: 0, rotate: -45, scale: 0.6 }}
-                            transition={iconTransition}
-                            className="text-foreground"
-                        >
-                            <Moon className="h-5 w-5" aria-hidden="true" />
-                        </motion.span>
-                    )}
+                    {isDark
+                        ? (
+                                <motion.span
+                                    key="sun"
+                                    initial={{ opacity: 0, rotate: -45, scale: 0.6 }}
+                                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                    exit={{ opacity: 0, rotate: 45, scale: 0.6 }}
+                                    transition={iconTransition}
+                                    className="text-foreground"
+                                >
+                                    <SunDim className="h-5 w-5" />
+                                </motion.span>
+                            )
+                        : (
+                                <motion.span
+                                    key="moon"
+                                    initial={{ opacity: 0, rotate: 45, scale: 0.6 }}
+                                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                    exit={{ opacity: 0, rotate: -45, scale: 0.6 }}
+                                    transition={iconTransition}
+                                    className="text-foreground"
+                                >
+                                    <Moon className="h-5 w-5" />
+                                </motion.span>
+                            )}
                 </AnimatePresence>
             </span>
 

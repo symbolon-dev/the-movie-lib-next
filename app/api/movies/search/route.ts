@@ -21,7 +21,8 @@ export const GET = async (request: NextRequest) => {
         );
 
         return NextResponse.json(movies);
-    } catch (error) {
+    }
+    catch (error) {
         if (error instanceof ZodError) {
             return NextResponse.json(
                 { error: 'Invalid request parameters', details: error.issues },

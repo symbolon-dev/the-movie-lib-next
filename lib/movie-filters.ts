@@ -20,11 +20,12 @@ const isNumericField = (field: string): field is NumericField =>
 const getSortValue = (movie: Movie, field: string): SortableValue => {
     if (isDateField(field)) {
         const rawValue = movie[field];
-        const dateValue =
-            typeof rawValue === 'string' ? rawValue : movie.release_date;
-        if (!dateValue) return undefined;
+        const dateValue
+            = typeof rawValue === 'string' ? rawValue : movie.release_date;
+        if (dateValue == null || dateValue === '')
+            return undefined;
         const parsed = new Date(dateValue);
-        return isNaN(parsed.getTime()) ? undefined : parsed.getTime();
+        return Number.isNaN(parsed.getTime()) ? undefined : parsed.getTime();
     }
 
     if (isNumericField(field)) {
@@ -45,9 +46,12 @@ const compareValues = (
     bValue: SortableValue,
     direction: 'asc' | 'desc',
 ): number => {
-    if (aValue === undefined && bValue === undefined) return 0;
-    if (aValue === undefined) return direction === 'asc' ? 1 : -1;
-    if (bValue === undefined) return direction === 'asc' ? -1 : 1;
+    if (aValue === undefined && bValue === undefined)
+        return 0;
+    if (aValue === undefined)
+        return direction === 'asc' ? 1 : -1;
+    if (bValue === undefined)
+        return direction === 'asc' ? -1 : 1;
 
     if (typeof aValue === 'number' && typeof bValue === 'number') {
         return direction === 'asc' ? aValue - bValue : bValue - aValue;
@@ -67,7 +71,8 @@ export const sortMovies = (movies: Movie[], sortBy: string): Movie[] => {
         'asc' | 'desc' | undefined,
     ];
 
-    if (direction !== 'asc' && direction !== 'desc') return movies;
+    if (direction !== 'asc' && direction !== 'desc')
+        return movies;
 
     return [...movies].sort((a, b) => {
         const aValue = getSortValue(a, field);

@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useEffectEvent, useRef } from 'react';
+import type { Movie } from '@/types/movie';
 
+import { useEffect, useEffectEvent, useRef } from 'react';
 import { MovieCard } from '@/components/movie/movie-card/movie-card';
 import { MovieListSkeleton } from '@/components/movie/movie-list/movie-list-skeleton';
 import { EmptyState } from '@/components/shared/empty-state';
 import { cn } from '@/lib/utils';
-import type { Movie } from '@/types/movie';
 
 type MovieListProps = {
     movies: Movie[];

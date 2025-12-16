@@ -1,9 +1,9 @@
+import type { MovieGenre } from '@/types/movie';
 import { MovieGenres } from '@/components/movie/movie-detail/sections/movie-genres';
 import { MovieLinks } from '@/components/movie/movie-detail/sections/movie-links';
 import { MovieMetadata } from '@/components/movie/movie-detail/sections/movie-metadata';
 import { MovieRating } from '@/components/movie/movie-detail/sections/movie-rating';
 import { PosterImage } from '@/components/movie/shared/poster-image';
-import type { MovieGenre } from '@/types/movie';
 
 type MovieHeroProps = {
     title: string;
@@ -47,7 +47,9 @@ export const MovieHero = ({
                 <h1 className="heading-1 text-foreground">{title}</h1>
                 {tagline ?? (
                     <p className="text-lead text-muted-foreground italic">
-                        &ldquo;{tagline}&rdquo;
+                        &ldquo;
+                        {tagline}
+                        &rdquo;
                     </p>
                 )}
             </div>
@@ -58,14 +60,16 @@ export const MovieHero = ({
                 <MovieMetadata releaseDate={releaseDate} runtime={runtime} />
             </div>
 
-            {genres.length > 0 ? (
-                <MovieGenres
-                    genres={genres}
-                    className="mb-0"
-                    badgeVariant="outline"
-                    badgeClassName="border-border/60 bg-transparent"
-                />
-            ) : null}
+            {genres.length > 0
+                ? (
+                        <MovieGenres
+                            genres={genres}
+                            className="mb-0"
+                            badgeVariant="outline"
+                            badgeClassName="border-border/60 bg-transparent"
+                        />
+                    )
+                : null}
 
             {homepage ?? imdbId ?? (
                 <MovieLinks

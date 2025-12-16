@@ -1,7 +1,7 @@
 'use client';
 
-import { Search, XCircle } from 'lucide-react';
 import type { ChangeEvent } from 'react';
+import { Search, XCircle } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useDebounce } from 'react-use';
 
@@ -56,16 +56,17 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
                 className="w-full pr-10 pl-10"
             />
 
-            {query ? (
-                <button
-                    type="button"
-                    onClick={handleClear}
-                    className="text-muted-foreground hover:text-foreground absolute right-3"
-                    aria-label="Clear search"
-                >
-                    <XCircle size={20} />
-                </button>
-            ) : null}
+            {query
+                ? (
+                        <button
+                            type="button"
+                            onClick={handleClear}
+                            className="text-muted-foreground hover:text-foreground absolute right-3"
+                        >
+                            <XCircle size={20} />
+                        </button>
+                    )
+                : null}
         </div>
     );
 };

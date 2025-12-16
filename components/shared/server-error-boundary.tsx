@@ -1,5 +1,6 @@
 'use client';
 
+import process from 'node:process';
 import { AlertTriangle, ArrowLeft, Home, RotateCcw } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -22,26 +23,28 @@ export const ServerErrorBoundary = ({
     showBackButton = false,
     variant = 'page',
 }: ErrorBoundaryProps) => {
-    const containerClass =
-        variant === 'page'
+    const containerClass
+        = variant === 'page'
             ? 'flex min-h-screen items-center justify-center bg-gradient-to-b from-black to-gray-900 px-4'
             : 'from-muted to-card flex min-h-[calc(100dvh-5rem)] flex-col bg-gradient-to-b py-10';
 
     return (
         <div className={containerClass}>
-            {showBackButton && variant === 'section' ? (
-                <div className="mb-8">
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => window.history.back()}
-                        className="flex items-center gap-2"
-                    >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back
-                    </Button>
-                </div>
-            ) : null}
+            {showBackButton && variant === 'section'
+                ? (
+                        <div className="mb-8">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => window.history.back()}
+                                className="flex items-center gap-2"
+                            >
+                                <ArrowLeft className="h-4 w-4" />
+                                Back
+                            </Button>
+                        </div>
+                    )
+                : null}
 
             <div
                 className={
@@ -65,17 +68,19 @@ export const ServerErrorBoundary = ({
                                 <RotateCcw className="h-3 w-3" />
                                 Try again
                             </Button>
-                            {showBackButton ? (
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => window.history.back()}
-                                    className="flex items-center gap-2"
-                                >
-                                    <ArrowLeft className="h-3 w-3" />
-                                    Go back
-                                </Button>
-                            ) : null}
+                            {showBackButton
+                                ? (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => window.history.back()}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <ArrowLeft className="h-3 w-3" />
+                                            Go back
+                                        </Button>
+                                    )
+                                : null}
                             <Button
                                 variant="outline"
                                 size="sm"
@@ -86,17 +91,19 @@ export const ServerErrorBoundary = ({
                                 {variant === 'page' ? 'Go home' : 'Home'}
                             </Button>
                         </div>
-                        {process.env.NODE_ENV === 'development' ? (
-                            <details className="mt-4">
-                                <summary className="text-body-sm cursor-pointer font-medium">
-                                    Error details (dev only)
-                                </summary>
-                                <pre className="mt-2 overflow-auto rounded bg-gray-100 p-2 text-xs dark:bg-gray-800">
-                                    {error.message}
-                                    {error.stack}
-                                </pre>
-                            </details>
-                        ) : null}
+                        {process.env.NODE_ENV === 'development'
+                            ? (
+                                    <details className="mt-4">
+                                        <summary className="text-body-sm cursor-pointer font-medium">
+                                            Error details (dev only)
+                                        </summary>
+                                        <pre className="mt-2 overflow-auto rounded bg-gray-100 p-2 text-xs dark:bg-gray-800">
+                                            {error.message}
+                                            {error.stack}
+                                        </pre>
+                                    </details>
+                                )
+                            : null}
                     </AlertDescription>
                 </Alert>
             </div>

@@ -4,24 +4,28 @@ export const formatDate = (
     date: string | undefined,
     formatStr: string = 'MMM d, yyyy',
 ): string => {
-    if (!date) return 'Unknown';
+    if (date == null || date === '')
+        return 'Unknown';
     return format(new Date(date), formatStr);
 };
 
 export const formatYear = (date: string | undefined): string | number => {
-    if (!date) return 'Unknown';
+    if (date == null || date === '')
+        return 'Unknown';
     return getYear(new Date(date));
 };
 
 export const formatRuntime = (minutes: number | undefined): string => {
-    if (!minutes) return '0min';
+    if (minutes == null || minutes === 0)
+        return '0min';
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     return hours > 0 ? `${hours}h ${mins}min` : `${mins}min`;
 };
 
 export const formatCurrency = (amount: number | undefined): string => {
-    if (!amount) return '$0';
+    if (amount == null || amount === 0)
+        return '$0';
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',

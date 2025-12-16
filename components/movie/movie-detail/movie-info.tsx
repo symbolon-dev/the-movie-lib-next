@@ -1,11 +1,11 @@
-import { DollarSign } from 'lucide-react';
 import type { ReactNode } from 'react';
-
 import type {
     ProductionCompany,
     ProductionCountry,
     SpokenLanguage,
 } from '@/types/movie';
+
+import { DollarSign } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatter';
 
 type InfoCardProps = {
@@ -16,7 +16,8 @@ type InfoCardProps = {
 };
 
 const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
-    if (!visible || !content) return null;
+    if (!visible || content == null || content === '')
+        return null;
 
     return (
         <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
@@ -47,12 +48,12 @@ export const MovieInfo = ({
     revenue,
 }: MovieInfoProps) => {
     const companies = productionCompanies
-        .map((company) => company.name)
+        .map(company => company.name)
         .join(', ');
     const countries = productionCountries
-        .map((country) => country.name)
+        .map(country => country.name)
         .join(', ');
-    const languages = spokenLanguages.map((lang) => lang.name).join(', ');
+    const languages = spokenLanguages.map(lang => lang.name).join(', ');
 
     return (
         <>

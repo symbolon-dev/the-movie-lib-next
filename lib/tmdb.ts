@@ -1,11 +1,12 @@
 import type { z } from 'zod';
 
+import type { MovieDiscoverParams } from '@/types/movie';
+import process from 'node:process';
 import {
     GenreResponseSchema,
     MovieDetailSchema,
     MovieResponseSchema,
 } from '@/schemas/movie';
-import type { MovieDiscoverParams } from '@/types/movie';
 
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = process.env.TMDB_BASE_URL;
@@ -14,7 +15,7 @@ const fetchFromTMDB = async <T>(
     endpoint: string,
     schema: z.ZodSchema<T>,
 ): Promise<T> => {
-    if (!API_KEY || !BASE_URL) {
+    if (API_KEY == null || API_KEY === '' || BASE_URL == null || BASE_URL === '') {
         throw new Error('TMDB API key or TMDB base URL is not defined');
     }
 
@@ -35,17 +36,19 @@ const fetchFromTMDB = async <T>(
             );
         }
 
-        const data = await response.json();
+        const data: unknown = await response.json();
 
         try {
             return schema.parse(data);
-        } catch (validationError) {
+        }
+        catch (validationError) {
             console.error('Schema validation error:', validationError);
             throw new Error(
                 `Schema validation error: API response does not match the expected schema. ${validationError instanceof Error ? validationError.message : 'Unknown error'}`,
             );
         }
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(
             `Failed to fetch data from TMDB: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );
@@ -64,7 +67,7 @@ export const discoverMovies = async (options?: MovieDiscoverParams) => {
 };
 
 export const searchMovies = async (query: string, page: number = 1) => {
-    if (!query) {
+    if (query == null || query === '') {
         throw new Error('Search query cannot be empty');
     }
 
@@ -75,7 +78,7 @@ export const searchMovies = async (query: string, page: number = 1) => {
 };
 
 export const fetchMovieDetails = async (id: string) => {
-    if (!id) {
+    if (id == null || id === '') {
         throw new Error('Movie ID cannot be empty');
     }
 

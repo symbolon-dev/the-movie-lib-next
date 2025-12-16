@@ -33,18 +33,20 @@ export const MovieMetadata = ({
             </span>
         </div>
 
-        {runtime && runtime > 0 ? (
-            <div className="flex items-center gap-1">
-                <Clock
-                    className={cn(
-                        'text-muted-foreground h-4 w-4',
-                        iconClassName,
-                    )}
-                />
-                <span className={cn('font-medium', valueClassName)}>
-                    {formatRuntime(runtime)}
-                </span>
-            </div>
-        ) : null}
+        {runtime != null && runtime > 0
+            ? (
+                    <div className="flex items-center gap-1">
+                        <Clock
+                            className={cn(
+                                'text-muted-foreground h-4 w-4',
+                                iconClassName,
+                            )}
+                        />
+                        <span className={cn('font-medium', valueClassName)}>
+                            {formatRuntime(runtime)}
+                        </span>
+                    </div>
+                )
+            : null}
     </div>
 );

@@ -20,21 +20,21 @@ export const generateMetadata = async ({
         const movie = await getMovie(id);
 
         const title = `${movie.title} - Movie Library`;
-        const description =
-            movie.overview ||
-            `Watch ${movie.title} and discover more amazing movies.`;
-        const backdropUrl = movie.backdrop_path
+        const description
+            = movie.overview
+                || `Watch ${movie.title} and discover more amazing movies.`;
+        const backdropUrl = movie.backdrop_path != null
             ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
             : undefined;
-        const openGraphImages = backdropUrl
+        const openGraphImages = backdropUrl != null
             ? [
-                  {
-                      url: backdropUrl,
-                      width: 1280,
-                      height: 720,
-                      alt: `${movie.title} backdrop`,
-                  },
-              ]
+                    {
+                        url: backdropUrl,
+                        width: 1280,
+                        height: 720,
+                        alt: `${movie.title} backdrop`,
+                    },
+                ]
             : [];
 
         return {
@@ -55,7 +55,7 @@ export const generateMetadata = async ({
                 card: 'summary_large_image',
                 title: movie.title,
                 description,
-                images: backdropUrl ? [backdropUrl] : [],
+                images: backdropUrl != null ? [backdropUrl] : [],
             },
             keywords: [
                 movie.title,
@@ -65,7 +65,8 @@ export const generateMetadata = async ({
                 ...movie.genres.map((g: { name: string }) => g.name),
             ],
         };
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Failed to generate movie metadata', error);
         return {
             title: 'Movie Not Found - Movie Library',
