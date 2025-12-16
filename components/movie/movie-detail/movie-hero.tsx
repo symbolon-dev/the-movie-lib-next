@@ -45,7 +45,7 @@ export const MovieHero = ({
         <div className="flex flex-col gap-6">
             <div className="space-y-3 text-center lg:text-left">
                 <h1 className="heading-1 text-foreground">{title}</h1>
-                {tagline ?? (
+                {tagline != null && (
                     <p className="text-lead text-muted-foreground italic">
                         &ldquo;
                         {tagline}
@@ -71,7 +71,7 @@ export const MovieHero = ({
                     )
                 : null}
 
-            {homepage ?? imdbId ?? (
+            {(homepage != null || imdbId != null) && (
                 <MovieLinks
                     homepage={homepage}
                     imdbId={imdbId}
