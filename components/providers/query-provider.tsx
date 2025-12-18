@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
 
@@ -11,7 +11,7 @@ export const QueryProvider = ({ children }: { children: ReactNode }) => {
             new QueryClient({
                 defaultOptions: {
                     queries: {
-                        staleTime: 60000, // 1 Minute
+                        staleTime: isServer ? 'static' : 60000, // static on server, 1 minute on client
                         refetchOnWindowFocus: false,
                         refetchOnReconnect: false,
                         retry: 1,
