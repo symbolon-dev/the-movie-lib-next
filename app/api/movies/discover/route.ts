@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { connection, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
 import { discoverMovies } from '@/lib/tmdb';
@@ -7,6 +7,8 @@ import { DiscoverMoviesParamsSchema } from '@/schemas/api-params';
 import { createErrorResponse } from '@/utils/next-error-response';
 
 export const GET = async (request: NextRequest) => {
+    await connection();
+
     try {
         const searchParams = request.nextUrl.searchParams;
 
