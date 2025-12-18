@@ -3,7 +3,7 @@
 import type { Movie, MovieResponse } from '@/types/movie';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { useSearchParams } from 'next/navigation';
+import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from 'nuqs';
 import { sortMovies } from '@/lib/movie-filters';
 import { MovieResponseSchema } from '@/schemas/movie';
 
@@ -34,11 +34,14 @@ const fetcher = async (url: string): Promise<MovieResponse> => {
 };
 
 export const useMovies = () => {
-    const searchParams = useSearchParams();
+    const [query] = useQueryState('q', parseAsString.withDefault(''));
+    const [sortBy] = useQueryState('sort', parseAsString.withDefault('popularity.desc'));
+    const [genresArray] = useQueryState(
+        'genres',
+        parseAsArrayOf(parseAsInteger).withDefault([]),
+    );
 
-    const query = searchParams.get('q') ?? '';
-    const sortBy = searchParams.get('sort') ?? 'popularity.desc';
-    const genres = searchParams.get('genres') ?? '';
+    const genres = genresArray.join(',');
 
     const {
         data,

@@ -42,7 +42,7 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
     const { sortBy, setSortBy } = useMovieFilters();
 
     const handleValueChange = (value: string) => {
-        setSortBy(value as MovieSortOption);
+        void setSortBy(value as MovieSortOption);
     };
 
     return (

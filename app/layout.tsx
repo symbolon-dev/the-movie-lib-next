@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { Geist } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Header } from '@/components/layout/header';
 
 import { ScrollToTop } from '@/components/layout/scroll-to-top';
@@ -30,19 +31,21 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
             `}
         >
             <NextTopLoader color="#2563eb" height={3} showSpinner={false} />
-            <QueryProvider>
-                <ThemeProvider attribute="class">
-                    <ScrollToTop />
-                    <Header />
-                    <main className={`
-                        container mx-auto px-4
-                        md:px-8
-                    `}
-                    >
-                        {children}
-                    </main>
-                </ThemeProvider>
-            </QueryProvider>
+            <NuqsAdapter>
+                <QueryProvider>
+                    <ThemeProvider attribute="class">
+                        <ScrollToTop />
+                        <Header />
+                        <main className={`
+                            container mx-auto px-4
+                            md:px-8
+                        `}
+                        >
+                            {children}
+                        </main>
+                    </ThemeProvider>
+                </QueryProvider>
+            </NuqsAdapter>
         </body>
     </html>
 );

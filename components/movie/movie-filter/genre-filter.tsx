@@ -16,7 +16,7 @@ export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
     const isSelected = (genreId: number) => selectedGenres.includes(genreId);
 
     const handleGenreToggle = (genreId: number) => {
-        setSelectedGenres(
+        void setSelectedGenres(
             selectedGenres.includes(genreId)
                 ? selectedGenres.filter(id => id !== genreId)
                 : [...selectedGenres, genreId],

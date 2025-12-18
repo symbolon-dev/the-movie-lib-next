@@ -2,73 +2,63 @@
 
 import type { MovieSortOption } from '@/types/movie';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { createParser, parseAsArrayOf, parseAsInteger, parseAsString, useQueryState } from 'nuqs';
+import { MovieSortOptionSchema } from '@/schemas/api-params';
+
+const parseAsMovieSortOption = createParser({
+    parse: (value: string) => {
+        const result = MovieSortOptionSchema.safeParse(value);
+        return result.success ? result.data : null;
+    },
+    serialize: (value: MovieSortOption) => value,
+});
 
 export const useMovieFilters = () => {
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const [searchQuery, setSearchQuery] = useQueryState(
+        'q',
+        parseAsString.withDefault(''),
+    );
 
-    const searchQuery = searchParams.get('q') ?? '';
-    const sortBy
-        = (searchParams.get('sort') as MovieSortOption | undefined)
-            ?? 'popularity.desc';
-    const selectedGenres
-        = searchParams.get('genres')?.split(',').map(Number).filter(Boolean)
-            ?? [];
+    const [sortBy, setSortBy] = useQueryState(
+        'sort',
+        parseAsMovieSortOption.withDefault('popularity.desc'),
+    );
+
+    const [selectedGenres, setSelectedGenres] = useQueryState(
+        'genres',
+        parseAsArrayOf(parseAsInteger).withDefault([]),
+    );
 
     const updateFilters = (updates: {
         searchQuery?: string;
         sortBy?: MovieSortOption;
         selectedGenres?: number[];
     }) => {
-        const newParams = new URLSearchParams(searchParams.toString());
-
         if (updates.searchQuery !== undefined) {
-            if (updates.searchQuery.trim()) {
-                newParams.set('q', updates.searchQuery.trim());
-            }
-            else {
-                newParams.delete('q');
-            }
+            void setSearchQuery(updates.searchQuery.trim() || null);
         }
 
         if (updates.sortBy !== undefined) {
-            newParams.set('sort', updates.sortBy);
+            void setSortBy(updates.sortBy);
         }
 
         if (updates.selectedGenres !== undefined) {
-            if (updates.selectedGenres.length > 0) {
-                newParams.set('genres', updates.selectedGenres.join(','));
-            }
-            else {
-                newParams.delete('genres');
-            }
+            void setSelectedGenres(
+                updates.selectedGenres.length > 0 ? updates.selectedGenres : null,
+            );
         }
-
-        const url = newParams.toString()
-            ? `${pathname}?${newParams.toString()}`
-            : pathname;
-        router.replace(url, { scroll: false });
     };
 
     const resetFilters = () => {
-        router.replace(pathname, { scroll: false });
+        void setSearchQuery(null);
+        void setSortBy('popularity.desc');
+        void setSelectedGenres(null);
     };
 
     const hasActiveFilters
         = searchQuery.trim() !== ''
             || selectedGenres.length > 0
             || sortBy !== 'popularity.desc';
-
-    const setSearchQuery = (query: string) =>
-        updateFilters({ searchQuery: query });
-
-    const setSortBy = (sort: MovieSortOption) =>
-        updateFilters({ sortBy: sort });
-
-    const setSelectedGenres = (genres: number[]) =>
-        updateFilters({ selectedGenres: genres });
 
     return {
         searchQuery,

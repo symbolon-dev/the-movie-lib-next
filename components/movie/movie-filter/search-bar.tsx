@@ -24,7 +24,7 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
         () => {
             if (query !== searchQuery) {
                 prevSearchQueryRef.current = query;
-                setSearchQuery(query);
+                void setSearchQuery(query);
             }
         },
         DEBOUNCE_DELAY,
@@ -39,7 +39,7 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const handleClear = () => {
         setQuery('');
         prevSearchQueryRef.current = '';
-        setSearchQuery('');
+        void setSearchQuery('');
     };
 
     return (
