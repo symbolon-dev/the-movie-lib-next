@@ -16,6 +16,10 @@ export default antfu(
             semi: true,
         },
         formatters: true,
+        ignores: [
+            'eslint.config.mjs',
+            'postcss.config.mjs',
+        ],
     },
     ...pluginQuery.configs['flat/recommended'],
     {
